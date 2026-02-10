@@ -1,0 +1,16 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PF2EGM", "PF2EGM\PF2EGM.csproj", "{18699F22-EA7E-4B53-B5D9-DDB8FCD2871F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{18699F22-EA7E-4B53-B5D9-DDB8FCD2871F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18699F22-EA7E-4B53-B5D9-DDB8FCD2871F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18699F22-EA7E-4B53-B5D9-DDB8FCD2871F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18699F22-EA7E-4B53-B5D9-DDB8FCD2871F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
