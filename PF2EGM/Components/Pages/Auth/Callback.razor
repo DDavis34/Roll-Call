@@ -1,0 +1,27 @@
+@page "/auth/callback"
+@inject Supabase.Client Supabase
+@inject NavigationManager Nav
+ 
+@code {
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender) return;
+ 
+        // Extract tokens from the URL fragment (#access_token=...)
+        // Blazor WASM: use Uri.Fragment; Blazor Server: pass via JS interop.
+        var uri  = new Uri(Nav.Uri);
+        var frag = Microsoft.AspNetCore.WebUtilities.QueryHelpers
+                     .ParseQuery(uri.Fragment.TrimStart('#'));
+ 
+        if (frag.TryGetValue("access_token",  out var at) &&
+            frag.TryGetValue("refresh_token", out var rt))
+        {
+            await Supabase.Auth.SetSession(at!, rt!);
+            Nav.NavigateTo("/dashboard");
+        }
+        else
+        {
+            Nav.NavigateTo("/login?error=oauth_failed");
+        }
+    }
+}
