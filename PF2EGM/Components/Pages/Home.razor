@@ -1,7 +1,68 @@
 ﻿@page "/"
 
-<PageTitle>Home</PageTitle>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>["Home"]</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 text-gray-100 font-sans">
 
-<h1>Hello, world!</h1>
+    <!-- Navbar -->
+    <nav class="bg-gray-800 shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+            <h1 class="text-2xl font-bold text-amber-400">Pathfinder Creator</h1>
+            <div class="space-x-6">
+                <a href="#" class="hover:text-amber-400">Home</a>
+                <a href="#" class="hover:text-amber-400">Create Character</a>
+                <a href="#" class="hover:text-amber-400">Saved Characters</a>
+                <a href="#" class="hover:text-amber-400">About</a>
+            </div>
+        </div>
+    </nav>
 
-Welcome to your new app.
+    <!-- Hero Section -->
+    <section class="text-center py-20 bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900">
+        <h2 class="text-5xl font-extrabold mb-6 text-amber-400">Forge Your Legend</h2>
+        <p class="text-lg text-gray-300 mb-8 max-w-2xl mx-auto">
+            Create and customize your Pathfinder Adventures character with ease. Choose your class, race, skills, and equipment to begin your journey.
+        </p>
+        <a href="#" class="bg-amber-500 hover:bg-amber-600 text-gray-900 font-bold py-3 px-8 rounded-2xl shadow-lg transition">
+            Start Creating
+        </a>
+    </section>
+
+    <!-- Features Section -->
+    <section class="max-w-7xl mx-auto py-16 px-6 grid md:grid-cols-3 gap-10">
+        <div class="bg-gray-800 p-6 rounded-2xl shadow-lg">
+            <h3 class="text-xl font-semibold text-amber-400 mb-3">Custom Builds</h3>
+            <p class="text-gray-300">Design characters with full control over stats, abilities, and backgrounds.</p>
+        </div>
+        <div class="bg-gray-800 p-6 rounded-2xl shadow-lg">
+            <h3 class="text-xl font-semibold text-amber-400 mb-3">Save Progress</h3>
+            <p class="text-gray-300">Store your characters and return anytime to continue building.</p>
+        </div>
+        <div class="bg-gray-800 p-6 rounded-2xl shadow-lg">
+            <h3 class="text-xl font-semibold text-amber-400 mb-3">Export & Share</h3>
+            <p class="text-gray-300">Export character sheets or share them with your party.</p>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="text-center py-16 bg-gray-800">
+        <h2 class="text-3xl font-bold text-amber-400 mb-4">Ready to Begin?</h2>
+        <p class="text-gray-300 mb-6">Jump into the world of Pathfinder and create your hero today.</p>
+        <a href="#" class="bg-amber-500 hover:bg-amber-600 text-gray-900 font-bold py-3 px-6 rounded-xl">
+            Create Character
+        </a>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-center py-6 border-t border-gray-700">
+        <p class="text-gray-500">&copy; @DateTime.Now.Year Pathfinder Adventures Creator. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>
