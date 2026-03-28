@@ -1,102 +1,117 @@
 @page "/CharacterCreation"
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Character Creator</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-gray-900 text-gray-100 font-sans">
-    <!-- Header -->
-    <section class="text-center py-12">
-        <h2 class="text-4xl font-extrabold text-amber-400 mb-4">Create Your Character</h2>
-        <p class="text-gray-300">Build your hero by selecting race, class, and attributes.</p>
-    </section>
+<div class="bg-gray-900 text-gray-100 min-h-screen font-sans">
 
-    <!-- Form Section -->
-    <section class="max-w-5xl mx-auto bg-gray-800 p-8 rounded-2xl shadow-lg">
-        <form method="post" class="space-y-8">
+    <div class="flex h-[calc(100vh-80px)]">
 
-            <!-- Basic Info -->
-            <div>
-                <h3 class="text-2xl font-semibold text-amber-400 mb-4">Basic Information</h3>
-                <div class="grid md:grid-cols-2 gap-6">
-                    <div>
-                        <label class="block mb-2">Character Name</label>
-                        <input type="text" name="Name" class="w-full p-3 rounded-lg bg-gray-700 border border-gray-600 focus:outline-none" />
-                    </div>
-                    <div>
-                        <label class="block mb-2">Race</label>
-                        <select name="Race" class="w-full p-3 rounded-lg bg-gray-700 border border-gray-600">
-                            <option>Human</option>
-                            <option>Elf</option>
-                            <option>Dwarf</option>
-                            <option>Halfling</option>
-                            <option>Orc</option>
-                        </select>
+        <!-- Sidebar -->
+        <aside class="@(sidebarOpen ? "w-64" : "w-0 overflow-hidden") bg-gray-800 border-r border-gray-700 p-6 transition-all duration-300">
+            @if (sidebarOpen)
+            {
+                <div>
+                    <h3 class="text-xl font-semibold text-amber-400 mb-4">Character Info</h3>
+                    <div class="space-y-4">
+                        <input type="text" placeholder="Name" class="w-full p-2 rounded bg-gray-700 border border-gray-600" @bind="character.Name" />
+                        <input type="text" placeholder="Ancestry" class="w-full p-2 rounded bg-gray-700 border border-gray-600" @bind="character.Ancestry" />
+                        <input type="text" placeholder="Background" class="w-full p-2 rounded bg-gray-700 border border-gray-600" @bind="character.Background" />
+                        <input type="text" placeholder="Class" class="w-full p-2 rounded bg-gray-700 border border-gray-600" @bind="character.Class" />
                     </div>
                 </div>
-            </div>
+            }
+        </aside>
 
-            <!-- Class Selection -->
-            <div>
-                <h3 class="text-2xl font-semibold text-amber-400 mb-4">Class</h3>
-                <select name="Class" class="w-full p-3 rounded-lg bg-gray-700 border border-gray-600">
-                    <option>Fighter</option>
-                    <option>Wizard</option>
-                    <option>Rogue</option>
-                    <option>Cleric</option>
-                    <option>Ranger</option>
-                </select>
-            </div>
+        <!-- Main Content -->
+        <main class="flex-1 flex flex-col">
 
-            <!-- Attributes -->
-            <div>
-                <h3 class="text-2xl font-semibold text-amber-400 mb-4">Attributes</h3>
-                <div class="grid md:grid-cols-3 gap-6">
-                    <div>
-                        <label>Strength</label>
-                        <input type="number" name="Strength" min="1" max="20" class="w-full p-2 rounded bg-gray-700 border border-gray-600" />
-                    </div>
-                    <div>
-                        <label>Dexterity</label>
-                        <input type="number" name="Dexterity" min="1" max="20" class="w-full p-2 rounded bg-gray-700 border border-gray-600" />
-                    </div>
-                    <div>
-                        <label>Constitution</label>
-                        <input type="number" name="Constitution" min="1" max="20" class="w-full p-2 rounded bg-gray-700 border border-gray-600" />
-                    </div>
-                    <div>
-                        <label>Intelligence</label>
-                        <input type="number" name="Intelligence" min="1" max="20" class="w-full p-2 rounded bg-gray-700 border border-gray-600" />
-                    </div>
-                    <div>
-                        <label>Wisdom</label>
-                        <input type="number" name="Wisdom" min="1" max="20" class="w-full p-2 rounded bg-gray-700 border border-gray-600" />
-                    </div>
-                    <div>
-                        <label>Charisma</label>
-                        <input type="number" name="Charisma" min="1" max="20" class="w-full p-2 rounded bg-gray-700 border border-gray-600" />
-                    </div>
-                </div>
-            </div>
-
-            <!-- Equipment -->
-            <div>
-                <h3 class="text-2xl font-semibold text-amber-400 mb-4">Starting Equipment</h3>
-                <textarea name="Equipment" rows="4" class="w-full p-3 rounded-lg bg-gray-700 border border-gray-600" placeholder="Describe your starting gear..."></textarea>
-            </div>
-
-            <!-- Submit -->
-            <div class="text-center">
-                <button type="submit" class="bg-amber-500 hover:bg-amber-600 text-gray-900 font-bold py-3 px-8 rounded-2xl shadow-lg transition">
-                    Save Character
+            <!-- Top Bar -->
+            <div class="bg-gray-700 p-4 flex justify-between items-center border-b border-gray-600">
+                <p class="text-lg">Size | Speed | Level | Attributes</p>
+                <button @onclick="ToggleSidebar" class="bg-amber-500 text-gray-900 px-4 py-2 rounded">
+                    Toggle Sidebar
                 </button>
             </div>
 
-        </form>
-    </section>
-</body>
-</html>
+            <!-- Tabs -->
+            <div class="bg-gray-800 border-b border-gray-700 flex justify-center space-x-6 py-3">
+                @foreach (var tab in tabs)
+                {
+                    <button class="@(activeTab == tab ? "text-amber-400 font-semibold" : "hover:text-amber-400")"
+                            @onclick="() => SetTab(tab)">
+                        @tab
+                    </button>
+                }
+            </div>
+
+            <!-- Content -->
+            <div class="flex-1 p-8 bg-gray-800 overflow-y-auto">
+
+                @if (activeTab == "Feats")
+                {
+                    <h2 class="text-2xl text-amber-400 mb-4">Feats</h2>
+                    <p>Select feats for your character.</p>
+                }
+                else if (activeTab == "Weapons")
+                {
+                    <h2 class="text-2xl text-amber-400 mb-4">Weapons</h2>
+                    <p>Choose your weapons.</p>
+                }
+                else if (activeTab == "Defense")
+                {
+                    <h2 class="text-2xl text-amber-400 mb-4">Defense</h2>
+                    <p>Armor class and resistances.</p>
+                }
+                else if (activeTab == "Gear")
+                {
+                    <h2 class="text-2xl text-amber-400 mb-4">Gear</h2>
+                    <p>Manage inventory.</p>
+                }
+                else if (activeTab == "Spells")
+                {
+                    <h2 class="text-2xl text-amber-400 mb-4">Spells</h2>
+                    <p>Manage spells.</p>
+                }
+                else if (activeTab == "Actions")
+                {
+                    <h2 class="text-2xl text-amber-400 mb-4">Actions</h2>
+                    <p>View available actions.</p>
+                }
+                else if (activeTab == "Other")
+                {
+                    <h2 class="text-2xl text-amber-400 mb-4">Other</h2>
+                    <p>Other character details.</p>
+                }
+
+            </div>
+
+        </main>
+
+    </div>
+
+</div>
+
+@code {
+    string activeTab = "Feats";
+    bool sidebarOpen = true;
+
+    string[] tabs = new[] { "Feats", "Weapons", "Defense", "Gear", "Spells", "Actions", "Other" };
+
+    Character character = new();
+
+    void SetTab(string tab)
+    {
+        activeTab = tab;
+    }
+
+    void ToggleSidebar()
+    {
+        sidebarOpen = !sidebarOpen;
+    }
+
+    public class Character
+    {
+        public string Name { get; set; } = "";
+        public string Ancestry { get; set; } = "";
+        public string Background { get; set; } = "";
+        public string Class { get; set; } = "";
+    }
+}
