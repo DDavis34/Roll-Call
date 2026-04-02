@@ -13,6 +13,7 @@ public class Ancestry
     public List<string> Language { get; set; }
     public List<Attribute> AttributeFlaw { get; set; }
     public List<Attribute> AttributeBoost { get; set; }
+    public List<Feat> AncestryFeats { get; set; }
     public List<Heritage> Heritages { get; set; }
     public List<Ability> Abilities { get; set; }
 }
