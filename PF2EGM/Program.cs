@@ -1,6 +1,7 @@
 using PF2EGM.Components;
 using Supabase;
 using PF2EGM.Services;
+using LumexUI.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,13 +18,14 @@ builder.Services.AddSingleton(_ =>
     return new Supabase.Client(supabaseUrl, supabaseKey, options);
 });
 
+
 builder.Services.AddScoped<ISupabaseAuthService, SupabaseAuthService>();
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
-
+builder.Services.AddLumexServices();
 
 var app = builder.Build();
 

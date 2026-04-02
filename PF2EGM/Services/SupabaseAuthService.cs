@@ -9,7 +9,7 @@ public interface ISupabaseAuthService
     Task<AuthResult> SignInAsync(string email, string password);
     Task<AuthResult> SignUpAsync(string email, string password);
     Task SignOutAsync();
-    Task<string> GetOAuthUrlAsync(string provider);   // "google" | "github" | etc.
+    Task<string> GetOAuthUrlAsync(string provider);
     Task<bool> IsAuthenticatedAsync();
 }
  
@@ -25,8 +25,6 @@ public class SupabaseAuthService : ISupabaseAuthService
         _client = client;
         _logger  = logger;
     }
- 
-    // ── Email + Password sign-in ──────────────────────────────────────────────
     public async Task<AuthResult> SignInAsync(string email, string password)
     {
         try
@@ -47,8 +45,6 @@ public class SupabaseAuthService : ISupabaseAuthService
             return new AuthResult(false, "An unexpected error occurred.");
         }
     }
- 
-    // ── Email + Password sign-up ──────────────────────────────────────────────
     public async Task<AuthResult> SignUpAsync(string email, string password)
     {
         try
@@ -64,30 +60,24 @@ public class SupabaseAuthService : ISupabaseAuthService
         }
     }
  
-    // ── Sign out ──────────────────────────────────────────────────────────────
     public async Task SignOutAsync() => await _client.Auth.SignOut();
- 
-    // ── OAuth (Google, GitHub, …) ─────────────────────────────────────────────
-    // Returns a redirect URL; the page does a hard-navigate to it.
+
     public async Task<string> GetOAuthUrlAsync(string provider)
     {
         var p = Enum.Parse<Supabase.Gotrue.Constants.Provider>(provider, ignoreCase: true);
         var state = await _client.Auth.SignIn(p, new SignInOptions
         {
-            // After OAuth completes, Supabase redirects here.
-            RedirectTo = "https://yourapp.com/auth/callback"
+            RedirectTo = "https://localhost:5144/auth/callback"
         });
         return state!.Uri!.ToString();
     }
  
-    // ── Check session ─────────────────────────────────────────────────────────
     public async Task<bool> IsAuthenticatedAsync()
     {
         var session = _client.Auth.CurrentSession;
         return session?.User is not null && session.ExpiresAt() > DateTime.UtcNow;
     }
  
-    // ── Map raw Supabase errors to friendly messages ───────────────────────────
     private static string FriendlyError(string raw) => raw.ToLower() switch
     {
         var s when s.Contains("invalid login") => "Invalid email or password.",

@@ -2,13 +2,13 @@
 @inject Supabase.Client Supabase
 @inject NavigationManager Nav
  
+<p>Signing you in...</p>
+
 @code {
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (!firstRender) return;
  
-        // Extract tokens from the URL fragment (#access_token=...)
-        // Blazor WASM: use Uri.Fragment; Blazor Server: pass via JS interop.
         var uri  = new Uri(Nav.Uri);
         var frag = Microsoft.AspNetCore.WebUtilities.QueryHelpers
                      .ParseQuery(uri.Fragment.TrimStart('#'));
@@ -17,7 +17,7 @@
             frag.TryGetValue("refresh_token", out var rt))
         {
             await Supabase.Auth.SetSession(at!, rt!);
-            Nav.NavigateTo("/dashboard");
+            Nav.NavigateTo("/");
         }
         else
         {

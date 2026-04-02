@@ -1,6 +1,7 @@
 @page "/login"
 @using Microsoft.AspNetCore.Components.Forms
 @using PF2EGM.Services
+@using LumexUI
 @inject ISupabaseAuthService AuthService
 @inject NavigationManager Nav
 
@@ -23,7 +24,7 @@
             </div>
         }
 
-        <EditForm Model="loginModel" OnValidSubmit="HandleLogin">
+        <EditForm Model="loginModel" OnValidSubmit="HandleLogin" FormName="login">
             <DataAnnotationsValidator />
 
             <div class="field">
@@ -81,7 +82,8 @@
 </div>
 
 @code {
-    private LoginModel loginModel = new();
+    [SupplyParameterFromForm]
+    private LoginModel loginModel { get; set; } = new();
     private string? errorMessage;
     private bool isLoading = false;
 
@@ -95,7 +97,7 @@
             var result = await AuthService.SignInAsync(loginModel.Email, loginModel.Password);
 
             if (result.IsSuccess)
-                Nav.NavigateTo("/dashboard");
+                Nav.NavigateTo("/");
             else
                 errorMessage = result.ErrorMessage ?? "Invalid email or password.";
         }
