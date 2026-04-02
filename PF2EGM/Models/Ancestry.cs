@@ -8,7 +8,7 @@ namespace PF2EGM.Models
         public required string Name { get; set; }
 
         [JsonPropertyName("hp")]
-        public required string Hp { get; set; }
+        public required string HitPointsBase { get; set; }
 
         [JsonPropertyName("size")]
         public required string Size { get; set; }
@@ -33,5 +33,8 @@ namespace PF2EGM.Models
 
         [JsonPropertyName("pfs")]
         public required string Pfs { get; set; }
+        public List<Feat> AncestryFeats { get; set; }
+        public List<Heritage> Heritages { get; set; }
+        public List<Ability> Abilities { get; set; }
     }
 }

@@ -6,6 +6,7 @@ public class Character
     private int Level { get; set; }
     private int ArmorClass { get; set; }
     private Ancestry Ancestry { get; set; }
+    private Armor Armor { get; set; }
     private Background Background { get; set; }
     private Class Class { get; set; }
     private List<Attribute> Attributes { get; set; } 
