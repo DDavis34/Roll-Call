@@ -1,117 +1,239 @@
 @page "/CharacterCreation"
 
-<div class="bg-gray-900 text-gray-100 min-h-screen font-sans">
+@using System.Collections.Generic
+@using PF2EGM.Components
 
-    <div class="flex h-[calc(100vh-80px)]">
-
-        <!-- Sidebar -->
-        <aside class="@(sidebarOpen ? "w-64" : "w-0 overflow-hidden") bg-gray-800 border-r border-gray-700 p-6 transition-all duration-300">
-            @if (sidebarOpen)
-            {
-                <div>
-                    <h3 class="text-xl font-semibold text-amber-400 mb-4">Character Info</h3>
-                    <div class="space-y-4">
-                        <input type="text" placeholder="Name" class="w-full p-2 rounded bg-gray-700 border border-gray-600" @bind="character.Name" />
-                        <input type="text" placeholder="Ancestry" class="w-full p-2 rounded bg-gray-700 border border-gray-600" @bind="character.Ancestry" />
-                        <input type="text" placeholder="Background" class="w-full p-2 rounded bg-gray-700 border border-gray-600" @bind="character.Background" />
-                        <input type="text" placeholder="Class" class="w-full p-2 rounded bg-gray-700 border border-gray-600" @bind="character.Class" />
-                    </div>
-                </div>
-            }
-        </aside>
-
-        <!-- Main Content -->
-        <main class="flex-1 flex flex-col">
-
-            <!-- Top Bar -->
-            <div class="bg-gray-700 p-4 flex justify-between items-center border-b border-gray-600">
-                <p class="text-lg">Size | Speed | Level | Attributes</p>
-                <button @onclick="ToggleSidebar" class="bg-amber-500 text-gray-900 px-4 py-2 rounded">
-                    Toggle Sidebar
-                </button>
-            </div>
-
-            <!-- Tabs -->
-            <div class="bg-gray-800 border-b border-gray-700 flex justify-center space-x-6 py-3">
-                @foreach (var tab in tabs)
-                {
-                    <button class="@(activeTab == tab ? "text-amber-400 font-semibold" : "hover:text-amber-400")"
-                            @onclick="() => SetTab(tab)">
-                        @tab
-                    </button>
-                }
-            </div>
-
-            <!-- Content -->
-            <div class="flex-1 p-8 bg-gray-800 overflow-y-auto">
-
-                @if (activeTab == "Feats")
-                {
-                    <h2 class="text-2xl text-amber-400 mb-4">Feats</h2>
-                    <p>Select feats for your character.</p>
-                }
-                else if (activeTab == "Weapons")
-                {
-                    <h2 class="text-2xl text-amber-400 mb-4">Weapons</h2>
-                    <p>Choose your weapons.</p>
-                }
-                else if (activeTab == "Defense")
-                {
-                    <h2 class="text-2xl text-amber-400 mb-4">Defense</h2>
-                    <p>Armor class and resistances.</p>
-                }
-                else if (activeTab == "Gear")
-                {
-                    <h2 class="text-2xl text-amber-400 mb-4">Gear</h2>
-                    <p>Manage inventory.</p>
-                }
-                else if (activeTab == "Spells")
-                {
-                    <h2 class="text-2xl text-amber-400 mb-4">Spells</h2>
-                    <p>Manage spells.</p>
-                }
-                else if (activeTab == "Actions")
-                {
-                    <h2 class="text-2xl text-amber-400 mb-4">Actions</h2>
-                    <p>View available actions.</p>
-                }
-                else if (activeTab == "Other")
-                {
-                    <h2 class="text-2xl text-amber-400 mb-4">Other</h2>
-                    <p>Other character details.</p>
-                }
-
-            </div>
-
-        </main>
-
-    </div>
-
-</div>
+@* Using directives for icons/components/libraries would be replaced by Blazor equivalents *@
+@* Example: using MudBlazor or Radzen or custom components for Tabs, Sidebar, icons, etc. *@
 
 @code {
-    string activeTab = "Feats";
-    bool sidebarOpen = true;
-
-    string[] tabs = new[] { "Feats", "Weapons", "Defense", "Gear", "Spells", "Actions", "Other" };
-
-    Character character = new();
-
-    void SetTab(string tab)
+    // Initial Skills setup
+    private List<Skill> skills = new()
     {
-        activeTab = tab;
+        new Skill("Acrobatics", "DEX", "trained", 1),
+        new Skill("Arcana", "INT", "untrained", 0),
+        new Skill("Athletics", "STR", "trained", 3),
+        new Skill("Crafting", "INT", "untrained", 0),
+        new Skill("Deception", "CHA", "untrained", 0),
+        new Skill("Diplomacy", "CHA", "trained", 3),
+        new Skill("Intimidation", "CHA", "untrained", 0),
+        new Skill("Lore: Alcohol", "INT", "trained", 3),
+        new Skill("Medicine", "WIS", "untrained", 0),
+        new Skill("Nature", "WIS", "untrained", 0),
+        new Skill("Occultism", "INT", "untrained", 0),
+        new Skill("Performance", "CHA", "untrained", 0),
+        new Skill("Religion", "WIS", "untrained", 0),
+        new Skill("Society", "INT", "untrained", 0),
+        new Skill("Stealth", "DEX", "trained", 1),
+        new Skill("Survival", "WIS", "untrained", 0),
+        new Skill("Thievery", "DEX", "trained", 1)
+    };
+
+    private bool sidebarOpen = true;
+
+    private string name = "Unknown Adventurer";
+    private int level = 1;
+    private string ancestry = "Human";
+    private string background = "Barkeep";
+    private string characterClass = "Fighter";
+    private string activeTab = "weapons"; // Could use enum for extra type safety
+
+    private AbilityScores abilityScores = new()
+    {
+        Strength = 16,
+        Dexterity = 12,
+        Constitution = 14,
+        Intelligence = 10,
+        Wisdom = 10,
+        Charisma = 10
+    };
+
+    // Simple method to handle skill proficiency change
+    private void HandleSkillChange(int index, string proficiency)
+    {
+        if (index >= 0 && index < skills.Count)
+        {
+            skills[index] = skills[index] with { Proficiency = proficiency };
+        }
     }
 
-    void ToggleSidebar()
-    {
-        sidebarOpen = !sidebarOpen;
-    }
+    // Event handler examples (used for binding, e.g. for tabs)
+    private void SetActiveTab(string tab) => activeTab = tab;
 
-    public class Character
+    private void OnNameChange(string v) => name = v;
+    private void OnAbilityScoreChange(AbilityScores v) => abilityScores = v;
+
+    // Simulating an imported logo - replace with real static asset path
+    private string logoImage = "images/logo.png";
+}
+
+<div class="h-screen flex flex-col bg-[#f5f1e8] text-[#5c4a3a] overflow-hidden">
+
+    <!-- Main Content -->
+    <div class="flex flex-1 overflow-hidden">
+
+        <!-- Sidebar -->
+        @if (sidebarOpen)
+        {
+            <div class="w-48 bg-[#ede9dd] border-r border-[#c4b8a0] shrink-0">
+                <div class="h-full overflow-auto">
+                    <SidebarComponent
+                        Ancestry="@ancestry"
+                        Background="@background"
+                        CharacterClass="@characterClass"
+                        Level="@level"
+                        OnAncestryChange="@(a => ancestry = a)"
+                        OnBackgroundChange="@(b => background = b)"
+                        OnClassChange="@(c => characterClass = c)" />
+                </div>
+            </div>
+        }
+
+        <!-- Center Content - Stats and Skills -->
+        <div class="w-80 bg-[#ede9dd] border-r border-[#c4b8a0] shrink-0 flex flex-col">
+            <!-- Character Mini Header -->
+            <div class="border-b border-[#c4b8a0] p-3 shrink-0">
+                <div class="flex items-start gap-3">
+                    <div class="flex gap-2 text-xs">
+                        <button class="text-[#8b7355] hover:text-[#5c4a3a]">Hide</button>
+                        <button class="text-[#8b7355] hover:text-[#5c4a3a]">Path</button>
+                    </div>
+                    <div class="flex-1">
+                        <div class="flex gap-3 text-xs mb-2">
+                            <div>
+                                <span class="text-[#8b7355]">Level</span>
+                                <span class="ml-2">@level</span>
+                            </div>
+                            <div>
+                                <span class="text-[#8b7355]">XP</span>
+                                <span class="ml-2">0</span>
+                            </div>
+                        </div>
+                        <div class="text-xs text-[#5c4a3a] mb-2">@name</div>
+                        <div class="flex gap-4 text-xs">
+                            <div>
+                                <span class="text-red-700">SIZE</span>
+                                <span class="ml-1 text-[#5c4a3a]">Medium</span>
+                            </div>
+                            <div>
+                                <span class="text-red-700">SPEED</span>
+                                <span class="ml-1 text-[#5c4a3a]">25ft</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="flex-1 overflow-auto">
+                <div class="p-3">
+                    <StatsPanelComponent AbilityScores="@abilityScores" />
+                    <SkillsListComponent Skills="@skills" OnSkillChange="@HandleSkillChange" />
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Panel - Main Content -->
+        <div class="flex-1 flex flex-col overflow-hidden">
+            <!-- Character Stats Header - Compact -->
+            <div class="bg-[#ede9dd] border-b border-[#c4b8a0] p-3 shrink-0">
+                <CharacterHeaderComponent
+                    Name="@name"
+                    Level="@level"
+                    AbilityScores="@abilityScores"
+                    OnNameChange="@OnNameChange"
+                    OnAbilityScoreChange="@OnAbilityScoreChange"
+                />
+            </div>
+            <!-- Tabs and Content -->
+            <div class="flex-1 overflow-hidden flex flex-col">
+                <TabsComponent Value="@activeTab" OnValueChange="@SetActiveTab" Class="flex-1 flex flex-col overflow-hidden">
+                    <div class="border-b border-[#c4b8a0] px-4 shrink-0 bg-[#ede9dd]">
+                        <TabsListComponent Class="bg-transparent h-10 gap-4">
+                            <TabsTriggerComponent Value="weapons" ActiveValue="@activeTab">Weapons</TabsTriggerComponent>
+                            <TabsTriggerComponent Value="defense" ActiveValue="@activeTab">Defense</TabsTriggerComponent>
+                            <TabsTriggerComponent Value="gear" ActiveValue="@activeTab">Gear</TabsTriggerComponent>
+                            <TabsTriggerComponent Value="spells" ActiveValue="@activeTab">Spells</TabsTriggerComponent>
+                            <TabsTriggerComponent Value="pets" ActiveValue="@activeTab">Pets</TabsTriggerComponent>
+                            <TabsTriggerComponent Value="details" ActiveValue="@activeTab">Details</TabsTriggerComponent>
+                            <TabsTriggerComponent Value="feats" ActiveValue="@activeTab">Feats</TabsTriggerComponent>
+                            <TabsTriggerComponent Value="actions" ActiveValue="@activeTab">Actions</TabsTriggerComponent>
+                        </TabsListComponent>
+                    </div>
+                    <div class="flex-1 overflow-hidden">
+                        <div class="h-full overflow-auto p-4">
+                            @if (activeTab == "weapons")
+                            {
+                                <WeaponsTabComponent />
+                            }
+                            else if (activeTab == "defense")
+                            {
+                                <div class="text-[#8b7355] text-sm">
+                                    View armor, shields, and defensive stats.
+                                </div>
+                            }
+                            else if (activeTab == "gear")
+                            {
+                                <div class="text-[#8b7355] text-sm">
+                                    No gear equipped
+                                </div>
+                            }
+                            else if (activeTab == "spells")
+                            {
+                                <div class="text-[#8b7355] text-sm">
+                                    No spells available
+                                </div>
+                            }
+                            else if (activeTab == "pets")
+                            {
+                                <div class="text-[#8b7355] text-sm">
+                                    No pets or companions
+                                </div>
+                            }
+                            else if (activeTab == "details")
+                            {
+                                <div class="space-y-4">
+                                    <div>
+                                        <div class="text-xs text-[#8b7355] uppercase">Ancestry</div>
+                                        <div>@ancestry</div>
+                                    </div>
+                                    <div>
+                                        <div class="text-xs text-[#8b7355] uppercase">Background</div>
+                                        <div>@background</div>
+                                    </div>
+                                    <div>
+                                        <div class="text-xs text-[#8b7355] uppercase">Class</div>
+                                        <div>@characterClass</div>
+                                    </div>
+                                </div>
+                            }
+                            else if (activeTab == "feats")
+                            {
+                                <FeatsTabComponent Level="@level" />
+                            }
+                            else if (activeTab == "actions")
+                            {
+                                <div class="text-[#8b7355] text-sm">
+                                    No actions available
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </TabsComponent>
+            </div>
+        </div>
+    </div>
+</div>
+
+@* ----- Code Models & Typings ----- *@
+@code {
+    public record Skill(string Name, string Ability, string Proficiency, int Modifier);
+
+    public class AbilityScores
     {
-        public string Name { get; set; } = "";
-        public string Ancestry { get; set; } = "";
-        public string Background { get; set; } = "";
-        public string Class { get; set; } = "";
+        public int Strength { get; set; }
+        public int Dexterity { get; set; }
+        public int Constitution { get; set; }
+        public int Intelligence { get; set; }
+        public int Wisdom { get; set; }
+        public int Charisma { get; set; }
     }
 }
