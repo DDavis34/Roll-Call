@@ -1,239 +1,397 @@
-@page "/CharacterCreation"
+@page "/CharacterSheet"
+@using Microsoft.AspNetCore.Components
 
-@using System.Collections.Generic
-@using PF2EGM.Components
-
-@* Using directives for icons/components/libraries would be replaced by Blazor equivalents *@
-@* Example: using MudBlazor or Radzen or custom components for Tabs, Sidebar, icons, etc. *@
-
-@code {
-    // Initial Skills setup
-    private List<Skill> skills = new()
-    {
-        new Skill("Acrobatics", "DEX", "trained", 1),
-        new Skill("Arcana", "INT", "untrained", 0),
-        new Skill("Athletics", "STR", "trained", 3),
-        new Skill("Crafting", "INT", "untrained", 0),
-        new Skill("Deception", "CHA", "untrained", 0),
-        new Skill("Diplomacy", "CHA", "trained", 3),
-        new Skill("Intimidation", "CHA", "untrained", 0),
-        new Skill("Lore: Alcohol", "INT", "trained", 3),
-        new Skill("Medicine", "WIS", "untrained", 0),
-        new Skill("Nature", "WIS", "untrained", 0),
-        new Skill("Occultism", "INT", "untrained", 0),
-        new Skill("Performance", "CHA", "untrained", 0),
-        new Skill("Religion", "WIS", "untrained", 0),
-        new Skill("Society", "INT", "untrained", 0),
-        new Skill("Stealth", "DEX", "trained", 1),
-        new Skill("Survival", "WIS", "untrained", 0),
-        new Skill("Thievery", "DEX", "trained", 1)
-    };
-
-    private bool sidebarOpen = true;
-
-    private string name = "Unknown Adventurer";
-    private int level = 1;
-    private string ancestry = "Human";
-    private string background = "Barkeep";
-    private string characterClass = "Fighter";
-    private string activeTab = "weapons"; // Could use enum for extra type safety
-
-    private AbilityScores abilityScores = new()
-    {
-        Strength = 16,
-        Dexterity = 12,
-        Constitution = 14,
-        Intelligence = 10,
-        Wisdom = 10,
-        Charisma = 10
-    };
-
-    // Simple method to handle skill proficiency change
-    private void HandleSkillChange(int index, string proficiency)
-    {
-        if (index >= 0 && index < skills.Count)
-        {
-            skills[index] = skills[index] with { Proficiency = proficiency };
-        }
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Character Sheet</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #e8dcc8; }
+        ::-webkit-scrollbar-thumb { background: #a89070; border-radius: 3px; }
     }
+    </style>
+</head>
 
-    // Event handler examples (used for binding, e.g. for tabs)
-    private void SetActiveTab(string tab) => activeTab = tab;
+<body class="bg-[#f0ebe0] text-[#3a2a1a] min-h-screen">
+    <div class="min-h-screen bg-[#f0ebe0] font-['Crimson_Text',_Georgia,_serif] text-[#3a2a1a]">
 
-    private void OnNameChange(string v) => name = v;
-    private void OnAbilityScoreChange(AbilityScores v) => abilityScores = v;
-
-    // Simulating an imported logo - replace with real static asset path
-    private string logoImage = "images/logo.png";
-}
-
-<div class="h-screen flex flex-col bg-[#f5f1e8] text-[#5c4a3a] overflow-hidden">
-
-    <!-- Main Content -->
-    <div class="flex flex-1 overflow-hidden">
-
-        <!-- Sidebar -->
-        @if (sidebarOpen)
-        {
-            <div class="w-48 bg-[#ede9dd] border-r border-[#c4b8a0] shrink-0">
-                <div class="h-full overflow-auto">
-                    <SidebarComponent
-                        Ancestry="@ancestry"
-                        Background="@background"
-                        CharacterClass="@characterClass"
-                        Level="@level"
-                        OnAncestryChange="@(a => ancestry = a)"
-                        OnBackgroundChange="@(b => background = b)"
-                        OnClassChange="@(c => characterClass = c)" />
-                </div>
+        <!-- Top Bar -->
+        <div class="bg-[#c8b89a] border-b border-[#a89070] px-3 py-2 flex items-center justify-between flex-wrap gap-2">
+            <div class="flex items-center gap-2">
+                <span class="text-sm font-semibold text-[#5a3e28]">Level</span>
+                <span class="text-sm font-bold bg-white border border-[#a89070] rounded px-2 py-0.5">@character.Level</span>
+                <span class="text-sm font-semibold text-[#5a3e28]">XP</span>
+                <span class="text-sm font-bold bg-white border border-[#a89070] rounded px-2 py-0.5">@character.XP</span>
             </div>
-        }
-
-        <!-- Center Content - Stats and Skills -->
-        <div class="w-80 bg-[#ede9dd] border-r border-[#c4b8a0] shrink-0 flex flex-col">
-            <!-- Character Mini Header -->
-            <div class="border-b border-[#c4b8a0] p-3 shrink-0">
-                <div class="flex items-start gap-3">
-                    <div class="flex gap-2 text-xs">
-                        <button class="text-[#8b7355] hover:text-[#5c4a3a]">Hide</button>
-                        <button class="text-[#8b7355] hover:text-[#5c4a3a]">Path</button>
-                    </div>
-                    <div class="flex-1">
-                        <div class="flex gap-3 text-xs mb-2">
-                            <div>
-                                <span class="text-[#8b7355]">Level</span>
-                                <span class="ml-2">@level</span>
-                            </div>
-                            <div>
-                                <span class="text-[#8b7355]">XP</span>
-                                <span class="ml-2">0</span>
-                            </div>
-                        </div>
-                        <div class="text-xs text-[#5c4a3a] mb-2">@name</div>
-                        <div class="flex gap-4 text-xs">
-                            <div>
-                                <span class="text-red-700">SIZE</span>
-                                <span class="ml-1 text-[#5c4a3a]">Medium</span>
-                            </div>
-                            <div>
-                                <span class="text-red-700">SPEED</span>
-                                <span class="ml-1 text-[#5c4a3a]">25ft</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div class="flex items-center gap-2">
+                <span class="text-sm text-[#5a3e28]">Name</span>
+                <input type="text" @bind="character.Name" placeholder="Name"
+                    class="text-sm bg-white border border-[#a89070] rounded px-2 py-0.5 w-36 focus:outline-none focus:border-[#8b1a1a]" />
             </div>
-            <div class="flex-1 overflow-auto">
-                <div class="p-3">
-                    <StatsPanelComponent AbilityScores="@abilityScores" />
-                    <SkillsListComponent Skills="@skills" OnSkillChange="@HandleSkillChange" />
-                </div>
+            <div class="flex items-center gap-4 text-sm text-[#5a3e28]">
+                <span>SIZE <strong>@character.Size</strong></span>
+                <span>SPEED <strong>@character.Speed</strong></span>
+            </div>
+            <div class="flex gap-2">
+                <button class="bg-white border border-[#a89070] hover:bg-[#ede0cc] text-[#5a3e28] text-xs font-semibold px-3 py-1 rounded transition-colors">Rest</button>
+                <button class="bg-white border border-[#a89070] hover:bg-[#ede0cc] text-[#5a3e28] text-xs font-semibold px-3 py-1 rounded transition-colors">Add Condition</button>
+                <button class="bg-white border border-[#a89070] hover:bg-[#ede0cc] text-[#5a3e28] text-xs font-semibold px-3 py-1 rounded transition-colors">Add Custom Buff</button>
             </div>
         </div>
 
-        <!-- Right Panel - Main Content -->
-        <div class="flex-1 flex flex-col overflow-hidden">
-            <!-- Character Stats Header - Compact -->
-            <div class="bg-[#ede9dd] border-b border-[#c4b8a0] p-3 shrink-0">
-                <CharacterHeaderComponent
-                    Name="@name"
-                    Level="@level"
-                    AbilityScores="@abilityScores"
-                    OnNameChange="@OnNameChange"
-                    OnAbilityScoreChange="@OnAbilityScoreChange"
-                />
+        <div class="flex flex-col lg:flex-row">
+
+            <!-- LEFT SIDEBAR -->
+            <div class="w-full lg:w-48 xl:w-52 bg-[#e8dcc8] border-b lg:border-b-0 lg:border-r border-[#c8b49a] p-3 flex-shrink-0 overflow-y-auto" style="max-height: calc(100vh - 50px);">
+                <!-- Ancestry -->
+                <div class="mb-2">
+                    <button class="w-full text-left bg-white border border-[#c8b49a] rounded px-2 py-1.5 text-sm hover:bg-[#f5efe3] transition-colors">
+                        <div class="text-[#8b1a1a] text-xs font-bold uppercase tracking-wide">Ancestry</div>
+                        <div class="font-semibold">@character.Ancestry</div>
+                    </button>
+                </div>
+
+                <!-- Background -->
+                <div class="mb-2">
+                    <button class="w-full text-left bg-white border border-[#c8b49a] rounded px-2 py-1.5 text-sm hover:bg-[#f5efe3] transition-colors">
+                        <div class="text-[#8b1a1a] text-xs font-bold uppercase tracking-wide">Background</div>
+                        <div class="font-semibold">@character.Background</div>
+                    </button>
+                </div>
+
+                <!-- Class -->
+                <div class="mb-3">
+                    <button class="w-full text-left bg-white border border-[#c8b49a] rounded px-2 py-1.5 text-sm hover:bg-[#f5efe3] transition-colors">
+                        <div class="text-[#8b1a1a] text-xs font-bold uppercase tracking-wide flex items-center gap-1">
+                            <span class="text-[#8b1a1a]">⚔</span> Class
+                        </div>
+                        <div class="font-semibold">@character.Class</div>
+                    </button>
+                </div>
+
+                <!-- Level 1 -->
+                <div class="text-[#8b1a1a] text-xs font-bold uppercase tracking-wide mb-1">Level 1</div>
+
+                <button class="w-full text-left bg-white border border-[#c8b49a] rounded px-2 py-1.5 text-sm mb-1 hover:bg-[#f5efe3] transition-colors flex items-center gap-2">
+                    <span class="text-[#5a8a5a]">⚙</span>
+                    <span>Set Abilities</span>
+                </button>
+
+                <button class="w-full text-left bg-white border border-[#c8b49a] rounded px-2 py-1.5 text-sm mb-1 hover:bg-[#f5efe3] transition-colors flex items-center gap-2">
+                    <span class="text-[#5a8a5a]">⚙</span>
+                    <span>Skill Training</span>
+                </button>
+
+                <button class="w-full text-left bg-white border border-[#c8b49a] rounded px-2 py-1.5 text-sm mb-2 hover:bg-[#f5efe3] transition-colors flex items-center gap-2">
+                    <span class="text-[#5a8a5a]">⚙</span>
+                    <span>Class Skill</span>
+                </button>
+
+                <button class="w-full text-left bg-white border border-[#c8b49a] rounded px-2 py-1.5 text-sm mb-1 hover:bg-[#f5efe3] transition-colors">
+                    <div class="text-[#8b1a1a] text-xs flex items-center gap-1"><span>👤</span> Heritage</div>
+                    <div class="text-gray-500 text-xs">Not Selected</div>
+                </button>
+
+                <button class="w-full text-left bg-white border border-[#c8b49a] rounded px-2 py-1.5 text-sm mb-1 hover:bg-[#f5efe3] transition-colors">
+                    <div class="text-[#8b1a1a] text-xs flex items-center gap-1"><span>👤</span> Ancestry Feat</div>
+                    <div class="text-gray-500 text-xs">Not Selected</div>
+                </button>
+
+                <button class="w-full text-left bg-white border border-[#c8b49a] rounded px-2 py-1.5 text-sm mb-2 hover:bg-[#f5efe3] transition-colors">
+                    <div class="text-[#8b1a1a] text-xs flex items-center gap-1"><span>⚔</span> Class Feat</div>
+                    <div class="text-gray-500 text-xs">Not Selected</div>
+                </button>
+
+                <div class="text-xs text-[#5a3e28] mb-1">Reactive Strike →</div>
+                <div class="text-xs text-[#5a3e28] mb-1">Free Feat: Shield Block →</div>
+                <div class="text-xs text-[#5a3e28] mb-3">Free Feat: Hobnobber</div>
+
+                <!-- Level 2 -->
+                <div class="text-[#8b1a1a] text-xs font-bold uppercase tracking-wide mb-1">Level 2</div>
+
+                <button class="w-full text-left bg-white border border-[#c8b49a] rounded px-2 py-1.5 text-sm mb-1 hover:bg-[#f5efe3] transition-colors">
+                    <div class="text-[#8b1a1a] text-xs flex items-center gap-1"><span>⚔</span> Class Feat</div>
+                    <div class="text-gray-500 text-xs">Not Selected</div>
+                </button>
+
+                <button class="w-full text-left bg-white border border-[#c8b49a] rounded px-2 py-1.5 text-sm mb-3 hover:bg-[#f5efe3] transition-colors">
+                    <div class="text-[#8b1a1a] text-xs flex items-center gap-1"><span>⚙</span> Skill Feat</div>
+                    <div class="text-gray-500 text-xs">Not Selected</div>
+                </button>
+
+                <!-- Level 3 -->
+                <div class="text-[#8b1a1a] text-xs font-bold uppercase tracking-wide mb-1">Level 3</div>
+
+                <button class="w-full text-left bg-white border border-[#c8b49a] rounded px-2 py-1.5 text-sm hover:bg-[#f5efe3] transition-colors flex items-center justify-center gap-2">
+                    <span class="text-[#5a8a5a]">⚙</span>
+                    <span>Skill Increase</span>
+                </button>
             </div>
-            <!-- Tabs and Content -->
-            <div class="flex-1 overflow-hidden flex flex-col">
-                <TabsComponent Value="@activeTab" OnValueChange="@SetActiveTab" Class="flex-1 flex flex-col overflow-hidden">
-                    <div class="border-b border-[#c4b8a0] px-4 shrink-0 bg-[#ede9dd]">
-                        <TabsListComponent Class="bg-transparent h-10 gap-4">
-                            <TabsTriggerComponent Value="weapons" ActiveValue="@activeTab">Weapons</TabsTriggerComponent>
-                            <TabsTriggerComponent Value="defense" ActiveValue="@activeTab">Defense</TabsTriggerComponent>
-                            <TabsTriggerComponent Value="gear" ActiveValue="@activeTab">Gear</TabsTriggerComponent>
-                            <TabsTriggerComponent Value="spells" ActiveValue="@activeTab">Spells</TabsTriggerComponent>
-                            <TabsTriggerComponent Value="pets" ActiveValue="@activeTab">Pets</TabsTriggerComponent>
-                            <TabsTriggerComponent Value="details" ActiveValue="@activeTab">Details</TabsTriggerComponent>
-                            <TabsTriggerComponent Value="feats" ActiveValue="@activeTab">Feats</TabsTriggerComponent>
-                            <TabsTriggerComponent Value="actions" ActiveValue="@activeTab">Actions</TabsTriggerComponent>
-                        </TabsListComponent>
+
+            <!-- MIDDLE: Stats Panel -->
+            <div class="w-full lg:w-52 xl:w-56 bg-[#e8dcc8] border-b lg:border-b-0 lg:border-r border-[#c8b49a] p-3 flex-shrink-0 overflow-y-auto" style="max-height: calc(100vh - 50px);">
+
+                <!-- Hero Points -->
+                <div class="flex items-center gap-2 mb-3">
+                    <div class="w-7 h-7 rounded-full bg-[#8b1a1a] flex items-center justify-center text-white text-sm font-bold">@character.HeroPoints</div>
+                    <span class="text-sm font-semibold">Hero Points</span>
+                    <div class="flex gap-1 ml-1">
+                        <div class="w-4 h-4 rounded-full border-2 border-[#8b1a1a]"></div>
+                        <div class="w-4 h-4 rounded-full border-2 border-[#8b1a1a]"></div>
+                        <div class="w-4 h-4 rounded-full border-2 border-[#8b1a1a]"></div>
                     </div>
-                    <div class="flex-1 overflow-hidden">
-                        <div class="h-full overflow-auto p-4">
-                            @if (activeTab == "weapons")
+                </div>
+
+                <!-- Fighter DC -->
+                <div class="flex items-center gap-2 mb-4">
+                    <div class="w-7 h-7 rounded-full bg-[#9a9a9a] flex items-center justify-center text-white text-xs font-bold">⚔</div>
+                    <span class="text-sm font-semibold">+@character.FighterDC Fighter DC</span>
+                </div>
+
+                <!-- Perception -->
+                <div class="flex items-center gap-2 mb-2">
+                    <div class="w-6 h-6 rounded-full bg-[#c8a87a] border-2 border-[#8b6a3a] flex items-center justify-center text-[10px] font-bold text-[#3a2a1a]">👁</div>
+                    <span class="text-sm">+@character.Perception Perception</span>
+                </div>
+
+                <!-- Initiative -->
+                <div class="flex items-center gap-2 mb-4">
+                    <div class="w-6 h-6 rounded-full bg-[#c8d8b8] border-2 border-[#7a9a6a] flex items-center justify-center text-[10px] font-bold text-[#3a2a1a]">⚡</div>
+                    <span class="text-sm">+@character.Initiative Initiative</span>
+                </div>
+
+                <!-- Skills -->
+                @foreach (var skill in character.Skills)
+                {
+                    <div class="flex items-center gap-2 mb-1">
+                        <div class="w-5 h-5 rounded-full @(skill.Trained ? "bg-[#3a2a1a]" : "border-2 border-[#9a8a7a]") flex-shrink-0">
+                            @if (skill.Trained)
                             {
-                                <WeaponsTabComponent />
-                            }
-                            else if (activeTab == "defense")
-                            {
-                                <div class="text-[#8b7355] text-sm">
-                                    View armor, shields, and defensive stats.
+                                <div class="w-full h-full rounded-full flex items-center justify-center">
+                                    <span class="text-white text-[9px] font-bold">@skill.ProficiencyLetter</span>
                                 </div>
                             }
-                            else if (activeTab == "gear")
+                            else
                             {
-                                <div class="text-[#8b7355] text-sm">
-                                    No gear equipped
-                                </div>
-                            }
-                            else if (activeTab == "spells")
-                            {
-                                <div class="text-[#8b7355] text-sm">
-                                    No spells available
-                                </div>
-                            }
-                            else if (activeTab == "pets")
-                            {
-                                <div class="text-[#8b7355] text-sm">
-                                    No pets or companions
-                                </div>
-                            }
-                            else if (activeTab == "details")
-                            {
-                                <div class="space-y-4">
-                                    <div>
-                                        <div class="text-xs text-[#8b7355] uppercase">Ancestry</div>
-                                        <div>@ancestry</div>
-                                    </div>
-                                    <div>
-                                        <div class="text-xs text-[#8b7355] uppercase">Background</div>
-                                        <div>@background</div>
-                                    </div>
-                                    <div>
-                                        <div class="text-xs text-[#8b7355] uppercase">Class</div>
-                                        <div>@characterClass</div>
-                                    </div>
-                                </div>
-                            }
-                            else if (activeTab == "feats")
-                            {
-                                <FeatsTabComponent Level="@level" />
-                            }
-                            else if (activeTab == "actions")
-                            {
-                                <div class="text-[#8b7355] text-sm">
-                                    No actions available
+                                <div class="w-full h-full rounded-full bg-[#e8dcc8] flex items-center justify-center">
+                                    <span class="text-[#9a8a7a] text-[9px] font-bold">@skill.ProficiencyLetter</span>
                                 </div>
                             }
                         </div>
+                        <span class="text-xs w-7 text-right font-semibold @(skill.Modifier >= 0 ? "text-[#3a2a1a]" : "text-red-700")">
+                            @(skill.Modifier >= 0 ? "+" : "")@skill.Modifier
+                        </span>
+                        <span class="text-xs text-[#5a3e28]">@skill.Name</span>
                     </div>
-                </TabsComponent>
+                }
+            </div>
+
+            <!-- RIGHT: Main Character Panel -->
+            <div class="flex-1 flex flex-col min-w-0">
+
+                <!-- Character Header -->
+                <div class="bg-[#ede0cc] border-b border-[#c8b49a] p-3">
+                    <div class="flex flex-wrap items-start gap-4">
+
+                        <!-- Character Name & Info -->
+                        <div class="flex-1 min-w-0">
+                            <input type="text" @bind="character.Name" placeholder="Name"
+                                class="text-lg font-bold bg-white border border-[#c8b49a] rounded px-3 py-1.5 w-full max-w-xs focus:outline-none focus:border-[#8b1a1a]" />
+                            <div class="flex gap-4 mt-2 text-sm text-[#5a3e28]">
+                                <span>SIZE <strong>@character.Size</strong></span>
+                                <span>SPEED <strong>@character.Speed</strong></span>
+                            </div>
+                        </div>
+
+                        <!-- AC Shield -->
+                        <div class="flex flex-col items-center">
+                            <div class="relative w-16 h-20">
+                                <svg viewBox="0 0 64 80" class="w-full h-full">
+                                    <path d="M32 4 L60 16 L60 44 Q60 64 32 76 Q4 64 4 44 L4 16 Z"
+                                        fill="#8b1a1a" stroke="#6a0a0a" stroke-width="2" />
+                                    <path d="M32 10 L54 20 L54 44 Q54 60 32 70 Q10 60 10 44 L10 20 Z"
+                                        fill="#a02020" />
+                                </svg>
+                                <div class="absolute inset-0 flex flex-col items-center justify-center text-white">
+                                    <span class="text-[10px] font-bold">AC</span>
+                                    <span class="text-2xl font-bold leading-none">@character.AC</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Ability Scores -->
+                        <div class="flex gap-3 flex-wrap">
+                            @foreach (var ability in character.Abilities)
+                            {
+                                <div class="flex flex-col items-center">
+                                    <span class="text-xs font-bold text-[#8b1a1a] uppercase">@ability.Abbreviation</span>
+                                    <span class="text-xl font-bold">@ability.Score</span>
+                                    <span class="text-sm text-[#5a3e28]">@(ability.Modifier >= 0 ? "+" : "")@ability.Modifier</span>
+                                </div>
+                            }
+                        </div>
+
+                        <!-- Saves & HP -->
+                        <div class="flex flex-col gap-2">
+                            <div class="flex gap-4">
+                                @foreach (var save in character.Saves)
+                                {
+                                    <div class="flex flex-col items-center">
+                                        <div class="w-5 h-5 rounded-full bg-[#8b1a1a] mb-1"></div>
+                                        <span class="text-sm font-bold">+@save.Modifier</span>
+                                        <span class="text-xs text-[#5a3e28]">@save.Name</span>
+                                    </div>
+                                }
+                            </div>
+                            <div class="text-sm text-[#5a3e28] text-right">
+                                <div>HP <strong>@character.HP/@character.MaxHP</strong></div>
+                                <div>HP Shield</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tabs -->
+                <div class="bg-[#e8dcc8] border-b border-[#c8b49a] flex flex-wrap gap-0">
+                    @foreach (var tab in tabs)
+                    {
+                        <button @onclick="() => SetActiveTab(tab)"
+                                class="px-4 py-2 text-sm font-semibold border-b-2 transition-colors @(activeTab == tab ? "border-[#8b1a1a] text-[#8b1a1a] bg-[#f5efe3]" : "border-transparent text-[#5a3e28] hover:text-[#8b1a1a] hover:bg-[#f0e8d8]")">
+                            @tab
+                        </button>
+                    }
+                </div>
+
+                <!-- Tab Content -->
+                <div class="flex-1 p-4 bg-[#f5efe3]">
+
+                    @if (activeTab == "Weapons")
+                    {
+                        <WeaponsTab Character="character" />
+                    }
+                    else if (activeTab == "Defense")
+                    {
+                        <DefenseTab Character="character" />
+                    }
+                    else if (activeTab == "Gear")
+                    {
+                        <GearTab />
+                    }
+                    else if (activeTab == "Spells")
+                    {
+                        <SpellsTab />
+                    }
+                    else if (activeTab == "Pets")
+                    {
+                        <PetsTab />
+                    }
+                    else if (activeTab == "Details")
+                    {
+                        <DetailsTab Character="character" />
+                    }
+                    else if (activeTab == "Feats")
+                    {
+                        <FeatsTab />
+                    }
+                    else if (activeTab == "Actions")
+                    {
+                        <ActionsTab />
+                    }
+                </div>
             </div>
         </div>
     </div>
-</div>
+</body>
 
-@* ----- Code Models & Typings ----- *@
 @code {
-    public record Skill(string Name, string Ability, string Proficiency, int Modifier);
+    private string activeTab = "Weapons";
+    private string[] tabs = { "Weapons", "Defense", "Gear", "Spells", "Pets", "Details", "Feats", "Actions" };
 
-    public class AbilityScores
+    private CharacterData character = new CharacterData
     {
-        public int Strength { get; set; }
-        public int Dexterity { get; set; }
-        public int Constitution { get; set; }
-        public int Intelligence { get; set; }
-        public int Wisdom { get; set; }
-        public int Charisma { get; set; }
+        Level = 1, XP = 0,
+        Name = "",
+        Size = "Medium", Speed = "25ft",
+        Ancestry = "Human",
+        Background = "Barkeep",
+        Class = "Fighter",
+        HeroPoints = 16,
+        FighterDC = 5,
+        Perception = 5,
+        Initiative = 0,
+        AC = 14,
+        HP = 19, MaxHP = 19,
+        Abilities = new List<AbilityScore>
+        {
+            new() { Abbreviation = "STR", Score = 16, Modifier = 3 },
+            new() { Abbreviation = "DEX", Score = 12, Modifier = 1 },
+            new() { Abbreviation = "CON", Score = 14, Modifier = 2 },
+            new() { Abbreviation = "INT", Score = 10, Modifier = 0 },
+            new() { Abbreviation = "WIS", Score = 10, Modifier = 0 },
+            new() { Abbreviation = "CHA", Score = 10, Modifier = 0 },
+        },
+        Saves = new List<SaveData>
+        {
+            new() { Name = "Fortitude", Modifier = 6 },
+            new() { Name = "Reflex", Modifier = 4 },
+            new() { Name = "Will", Modifier = 3 },
+        },
+        Skills = new List<SkillData>
+        {
+            new() { Name = "Acrobatics",  Modifier = 1,  Trained = true,  ProficiencyLetter = "D" },
+            new() { Name = "Arcana",      Modifier = 0,  Trained = false, ProficiencyLetter = "I" },
+            new() { Name = "Athletics",   Modifier = 3,  Trained = true,  ProficiencyLetter = "S" },
+            new() { Name = "Crafting",    Modifier = 0,  Trained = false, ProficiencyLetter = "I" },
+            new() { Name = "Deception",   Modifier = 0,  Trained = false, ProficiencyLetter = "C" },
+            new() { Name = "Diplomacy",   Modifier = 3,  Trained = true,  ProficiencyLetter = "C" },
+            new() { Name = "Intimidation",Modifier = 0,  Trained = false, ProficiencyLetter = "C" },
+            new() { Name = "Lore: Alcohol",Modifier= 3,  Trained = true,  ProficiencyLetter = "I" },
+            new() { Name = "Medicine",    Modifier = 0,  Trained = false, ProficiencyLetter = "W" },
+            new() { Name = "Nature",      Modifier = 0,  Trained = false, ProficiencyLetter = "W" },
+            new() { Name = "Occultism",   Modifier = 0,  Trained = false, ProficiencyLetter = "I" },
+            new() { Name = "Performance", Modifier = 0,  Trained = false, ProficiencyLetter = "C" },
+            new() { Name = "Religion",    Modifier = 0,  Trained = false, ProficiencyLetter = "W" },
+            new() { Name = "Society",     Modifier = 0,  Trained = false, ProficiencyLetter = "I" },
+            new() { Name = "Stealth",     Modifier = 1,  Trained = true,  ProficiencyLetter = "D" },
+            new() { Name = "Survival",    Modifier = 0,  Trained = false, ProficiencyLetter = "W" },
+            new() { Name = "Thievery",    Modifier = 1,  Trained = true,  ProficiencyLetter = "D" },
+        }
+    };
+
+    private void SetActiveTab(string tab) => activeTab = tab;
+
+    public class CharacterData
+    {
+        public int Level { get; set; }
+        public int XP { get; set; }
+        public string Name { get; set; } = "";
+        public string Size { get; set; } = "Medium";
+        public string Speed { get; set; } = "25ft";
+        public string Ancestry { get; set; } = "";
+        public string Background { get; set; } = "";
+        public string Class { get; set; } = "";
+        public int HeroPoints { get; set; }
+        public int FighterDC { get; set; }
+        public int Perception { get; set; }
+        public int Initiative { get; set; }
+        public int AC { get; set; }
+        public int HP { get; set; }
+        public int MaxHP { get; set; }
+        public List<AbilityScore> Abilities { get; set; } = new();
+        public List<SaveData> Saves { get; set; } = new();
+        public List<SkillData> Skills { get; set; } = new();
+        public List<WeaponData> Weapons { get; set; } = new();
+        public List<ArmorData> Armors { get; set; } = new();
+        public List<GearItem> GearItems { get; set; } = new();
     }
+
+    public class AbilityScore { public string Abbreviation { get; set; } = ""; public int Score { get; set; } public int Modifier { get; set; } }
+    public class SaveData { public string Name { get; set; } = ""; public int Modifier { get; set; } }
+    public class SkillData { public string Name { get; set; } = ""; public int Modifier { get; set; } public bool Trained { get; set; } public string ProficiencyLetter { get; set; } = ""; }
+    public class WeaponData { public string Name { get; set; } = ""; public string Damage { get; set; } = ""; public int AttackBonus { get; set; } public string Traits { get; set; } = ""; }
+    public class ArmorData { public string Name { get; set; } = ""; public int ACBonus { get; set; } public string Category { get; set; } = ""; }
+    public class GearItem { public string Name { get; set; } = ""; public int Quantity { get; set; } public decimal Weight { get; set; } }
 }
