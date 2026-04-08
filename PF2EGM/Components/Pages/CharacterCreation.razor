@@ -34,11 +34,63 @@
             <div class="flex items-center gap-4 text-sm text-[#5a3e28]">
                 <span>SIZE <strong>@character.Size</strong></span>
                 <span>SPEED <strong>@character.Speed</strong></span>
+                <span>HP <strong>@character.HP/@character.MaxHP</strong></span>
+                <span>HP Shield</span>
             </div>
-            <div class="flex gap-2">
-                <button class="bg-white border border-[#a89070] hover:bg-[#ede0cc] text-[#5a3e28] text-xs font-semibold px-3 py-1 rounded transition-colors">Rest</button>
-                <button class="bg-white border border-[#a89070] hover:bg-[#ede0cc] text-[#5a3e28] text-xs font-semibold px-3 py-1 rounded transition-colors">Add Condition</button>
-                <button class="bg-white border border-[#a89070] hover:bg-[#ede0cc] text-[#5a3e28] text-xs font-semibold px-3 py-1 rounded transition-colors">Add Custom Buff</button>
+        </div>
+
+        <!-- Stats Header -->
+        <div class="bg-[#ede0cc] border-b border-[#c8b49a] p-3">
+            <div class="flex flex-wrap items-start gap-4">
+
+                <!-- AC Shield -->
+                <div class="flex flex-col items-center">
+                    <div class="relative w-16 h-20">
+                        <svg viewBox="0 0 64 80" class="w-full h-full">
+                            <path d="M32 4 L60 16 L60 44 Q60 64 32 76 Q4 64 4 44 L4 16 Z"
+                                fill="#8b1a1a" stroke="#6a0a0a" stroke-width="2" />
+                            <path d="M32 10 L54 20 L54 44 Q54 60 32 70 Q10 60 10 44 L10 20 Z"
+                                fill="#a02020" />
+                        </svg>
+                        <div class="absolute inset-0 flex flex-col items-center justify-center text-white">
+                            <span class="text-[10px] font-bold">AC</span>
+                            <span class="text-2xl font-bold leading-none">@character.AC</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ability Scores -->
+                <div class="flex gap-3 flex-wrap">
+                    @foreach (var ability in character.Abilities)
+                    {
+                        <div class="flex flex-col items-center">
+                            <span class="text-xs font-bold text-[#8b1a1a] uppercase">@ability.Abbreviation</span>
+                            <span class="text-xl font-bold">@ability.Score</span>
+                            <span class="text-sm text-[#5a3e28]">@(ability.Modifier >= 0 ? "+" : "")@ability.Modifier</span>
+                        </div>
+                    }
+                </div>
+
+                <!-- Saves & HP -->
+                <div class="flex flex-col gap-2">
+                    <div class="flex gap-4">
+                        @foreach (var save in character.Saves)
+                        {
+                            <div class="flex flex-col items-center">
+                                <div class="w-5 h-5 rounded-full bg-[#8b1a1a] mb-1"></div>
+                                <span class="text-sm font-bold">+@save.Modifier</span>
+                                <span class="text-xs text-[#5a3e28]">@save.Name</span>
+                            </div>
+                        }
+                    </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="flex gap-2">
+                    <button class="bg-white border border-[#a89070] hover:bg-[#ede0cc] text-[#5a3e28] text-xs font-semibold px-3 py-1 rounded transition-colors">Rest</button>
+                    <button class="bg-white border border-[#a89070] hover:bg-[#ede0cc] text-[#5a3e28] text-xs font-semibold px-3 py-1 rounded transition-colors">Add Condition</button>
+                    <button class="bg-white border border-[#a89070] hover:bg-[#ede0cc] text-[#5a3e28] text-xs font-semibold px-3 py-1 rounded transition-colors">Add Custom Buff</button>
+                </div>
             </div>
         </div>
 
@@ -191,68 +243,6 @@
 
             <!-- RIGHT: Main Character Panel -->
             <div class="flex-1 flex flex-col min-w-0">
-
-                <!-- Character Header -->
-                <div class="bg-[#ede0cc] border-b border-[#c8b49a] p-3">
-                    <div class="flex flex-wrap items-start gap-4">
-
-                        <!-- Character Name & Info -->
-                        <div class="flex-1 min-w-0">
-                            <input type="text" @bind="character.Name" placeholder="Name"
-                                class="text-lg font-bold bg-white border border-[#c8b49a] rounded px-3 py-1.5 w-full max-w-xs focus:outline-none focus:border-[#8b1a1a]" />
-                            <div class="flex gap-4 mt-2 text-sm text-[#5a3e28]">
-                                <span>SIZE <strong>@character.Size</strong></span>
-                                <span>SPEED <strong>@character.Speed</strong></span>
-                            </div>
-                        </div>
-
-                        <!-- AC Shield -->
-                        <div class="flex flex-col items-center">
-                            <div class="relative w-16 h-20">
-                                <svg viewBox="0 0 64 80" class="w-full h-full">
-                                    <path d="M32 4 L60 16 L60 44 Q60 64 32 76 Q4 64 4 44 L4 16 Z"
-                                        fill="#8b1a1a" stroke="#6a0a0a" stroke-width="2" />
-                                    <path d="M32 10 L54 20 L54 44 Q54 60 32 70 Q10 60 10 44 L10 20 Z"
-                                        fill="#a02020" />
-                                </svg>
-                                <div class="absolute inset-0 flex flex-col items-center justify-center text-white">
-                                    <span class="text-[10px] font-bold">AC</span>
-                                    <span class="text-2xl font-bold leading-none">@character.AC</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Ability Scores -->
-                        <div class="flex gap-3 flex-wrap">
-                            @foreach (var ability in character.Abilities)
-                            {
-                                <div class="flex flex-col items-center">
-                                    <span class="text-xs font-bold text-[#8b1a1a] uppercase">@ability.Abbreviation</span>
-                                    <span class="text-xl font-bold">@ability.Score</span>
-                                    <span class="text-sm text-[#5a3e28]">@(ability.Modifier >= 0 ? "+" : "")@ability.Modifier</span>
-                                </div>
-                            }
-                        </div>
-
-                        <!-- Saves & HP -->
-                        <div class="flex flex-col gap-2">
-                            <div class="flex gap-4">
-                                @foreach (var save in character.Saves)
-                                {
-                                    <div class="flex flex-col items-center">
-                                        <div class="w-5 h-5 rounded-full bg-[#8b1a1a] mb-1"></div>
-                                        <span class="text-sm font-bold">+@save.Modifier</span>
-                                        <span class="text-xs text-[#5a3e28]">@save.Name</span>
-                                    </div>
-                                }
-                            </div>
-                            <div class="text-sm text-[#5a3e28] text-right">
-                                <div>HP <strong>@character.HP/@character.MaxHP</strong></div>
-                                <div>HP Shield</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
                 <!-- Tabs -->
                 <div class="bg-[#e8dcc8] border-b border-[#c8b49a] flex flex-wrap gap-0">
