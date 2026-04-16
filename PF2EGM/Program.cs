@@ -22,6 +22,7 @@ builder.Services.AddSingleton(_ =>
 
 
 builder.Services.AddScoped<ISupabaseAuthService, SupabaseAuthService>();
+builder.Services.AddSingleton<IDataTableService, DataTableService>();
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
@@ -77,6 +78,7 @@ app.UseAntiforgery();
 app.MapStaticAssets();
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
+await app.Services.GetRequiredService<IDataTableService>().LoadAllAsync();
 
 app.Run();
 
