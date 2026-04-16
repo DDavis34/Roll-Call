@@ -1,0 +1,2490 @@
+﻿[
+  {
+    "category": "Affliction",
+    "name": "Curse"
+  },
+  {
+    "category": "Affliction",
+    "name": "Disease"
+  },
+  {
+    "category": "Affliction",
+    "name": "Poison"
+  },
+  {
+    "category": "Affliction",
+    "name": "Virulent"
+  },
+  {
+    "category": "Alignment",
+    "name": "Chaotic"
+  },
+  {
+    "category": "Alignment",
+    "name": "Evil"
+  },
+  {
+    "category": "Alignment",
+    "name": "Good"
+  },
+  {
+    "category": "Alignment",
+    "name": "Lawful"
+  },
+  {
+    "category": "Ancestry",
+    "name": "Aasimar"
+  },
+  {
+    "category": "Ancestry",
+    "name": "Aiuvarin"
+  },
+  {
+    "category": "Ancestry",
+    "name": "Anadi"
+  },
+  {
+    "category": "Ancestry",
+    "name": "Android"
+  },
+  {
+    "category": "Ancestry",
+    "name": "Aphorite"
+  },
+  {
+    "category": "Ancestry",
+    "name": "Ardande"
+  },
+  {
+    "category": "Ancestry",
+    "name": "Athamaru"
+  },
+  {
+    "category": "Ancestry",
+    "name": "Automaton"
+  },
+  {
+    "category": "Ancestry",
+    "name": "Awakened Animal"
+  },
+  {
+    "category": "Ancestry",
+    "name": "Azarketi"
+  },
+  {
+    "category": "Ancestry",
+    "name": "Beastkin"
+  },
+  {
+    "category": "Ancestry",
+    "name": "Catfolk"
+  },
+  {
+    "category": "Ancestry",
+    "name": "Centaur"
+  },
+  {
+    "category": "Ancestry",
+    "name": "Changeling"
+  },
+  {
+    "category": "Ancestry",
+    "name": "Conrasu"
+  },
+  {
+    "category": "Ancestry",
+    "name": "Dhampir"
+  },
+  {
+    "category": "Ancestry",
+    "name": "Dragonblood"
+  },
+  {
+    "category": "Ancestry",
+    "name": "Dragonet"
+  },
+  {
+    "category": "Ancestry",
+    "name": "Dromaar"
+  },
+  {
+    "category": "Ancestry",
+    "name": "Duskwalker"
+  },
+  {
+    "category": "Ancestry",
+    "name": "Dwarf"
+  },
+  {
+    "category": "Ancestry",
+    "name": "Elf"
+  },
+  {
+    "category": "Ancestry",
+    "name": "Fetchling"
+  },
+  {
+    "category": "Ancestry",
+    "name": "Fleshwarp"
+  },
+  {
+    "category": "Ancestry",
+    "name": "Ganzi"
+  },
+  {
+    "category": "Ancestry",
+    "name": "Geniekin"
+  },
+  {
+    "category": "Ancestry",
+    "name": "Ghoran"
+  },
+  {
+    "category": "Ancestry",
+    "name": "Gnome"
+  },
+  {
+    "category": "Ancestry",
+    "name": "Goblin"
+  },
+  {
+    "category": "Ancestry",
+    "name": "Goloma"
+  },
+  {
+    "category": "Ancestry",
+    "name": "Grippli"
+  },
+  {
+    "category": "Ancestry",
+    "name": "Halfling"
+  },
+  {
+    "category": "Ancestry",
+    "name": "Hobgoblin"
+  },
+  {
+    "category": "Ancestry",
+    "name": "Human"
+  },
+  {
+    "category": "Ancestry",
+    "name": "Hungerseed"
+  },
+  {
+    "category": "Ancestry",
+    "name": "Ifrit"
+  },
+  {
+    "category": "Ancestry",
+    "name": "Jotunborn"
+  },
+  {
+    "category": "Ancestry",
+    "name": "Kashrishi"
+  },
+  {
+    "category": "Ancestry",
+    "name": "Kholo"
+  },
+  {
+    "category": "Ancestry",
+    "name": "Kitsune"
+  },
+  {
+    "category": "Ancestry",
+    "name": "Kobold"
+  },
+  {
+    "category": "Ancestry",
+    "name": "Leshy"
+  },
+  {
+    "category": "Ancestry",
+    "name": "Lizardfolk"
+  },
+  {
+    "category": "Ancestry",
+    "name": "Merfolk"
+  },
+  {
+    "category": "Ancestry",
+    "name": "Minotaur"
+  },
+  {
+    "category": "Ancestry",
+    "name": "Nagaji"
+  },
+  {
+    "category": "Ancestry",
+    "name": "Nephilim"
+  },
+  {
+    "category": "Ancestry",
+    "name": "Orc"
+  },
+  {
+    "category": "Ancestry",
+    "name": "Oread"
+  },
+  {
+    "category": "Ancestry",
+    "name": "Poppet"
+  },
+  {
+    "category": "Ancestry",
+    "name": "Ratfolk"
+  },
+  {
+    "category": "Ancestry",
+    "name": "Samsaran"
+  },
+  {
+    "category": "Ancestry",
+    "name": "Sarangay"
+  },
+  {
+    "category": "Ancestry",
+    "name": "Shisk"
+  },
+  {
+    "category": "Ancestry",
+    "name": "Shoony"
+  },
+  {
+    "category": "Ancestry",
+    "name": "Skeleton"
+  },
+  {
+    "category": "Ancestry",
+    "name": "Sprite"
+  },
+  {
+    "category": "Ancestry",
+    "name": "Strix"
+  },
+  {
+    "category": "Ancestry",
+    "name": "Suli"
+  },
+  {
+    "category": "Ancestry",
+    "name": "Surki"
+  },
+  {
+    "category": "Ancestry",
+    "name": "Sylph"
+  },
+  {
+    "category": "Ancestry",
+    "name": "Talos"
+  },
+  {
+    "category": "Ancestry",
+    "name": "Tanuki"
+  },
+  {
+    "category": "Ancestry",
+    "name": "Tengu"
+  },
+  {
+    "category": "Ancestry",
+    "name": "Tiefling"
+  },
+  {
+    "category": "Ancestry",
+    "name": "Tripkee"
+  },
+  {
+    "category": "Ancestry",
+    "name": "Undine"
+  },
+  {
+    "category": "Ancestry",
+    "name": "Universal Ancestry"
+  },
+  {
+    "category": "Ancestry",
+    "name": "Vanara"
+  },
+  {
+    "category": "Ancestry",
+    "name": "Vishkanya"
+  },
+  {
+    "category": "Ancestry",
+    "name": "Wayang"
+  },
+  {
+    "category": "Ancestry",
+    "name": "Yaksha"
+  },
+  {
+    "category": "Ancestry",
+    "name": "Yaoguai"
+  },
+  {
+    "category": "AP-Specific",
+    "name": "Certain Kill"
+  },
+  {
+    "category": "AP-Specific",
+    "name": "Circus"
+  },
+  {
+    "category": "AP-Specific",
+    "name": "Harrow"
+  },
+  {
+    "category": "AP-Specific",
+    "name": "Court"
+  },
+  {
+    "category": "Armor",
+    "name": "Adjusted"
+  },
+  {
+    "category": "Armor",
+    "name": "Aquadynamic"
+  },
+  {
+    "category": "Armor",
+    "name": "Bulwark"
+  },
+  {
+    "category": "Armor",
+    "name": "Comfort"
+  },
+  {
+    "category": "Armor",
+    "name": "Flexible"
+  },
+  {
+    "category": "Armor",
+    "name": "Hindering"
+  },
+  {
+    "category": "Armor",
+    "name": "Inscribed"
+  },
+  {
+    "category": "Armor",
+    "name": "Laminar"
+  },
+  {
+    "category": "Armor",
+    "name": "Noisy"
+  },
+  {
+    "category": "Armor",
+    "name": "Ponderous"
+  },
+  {
+    "category": "Class",
+    "name": "Alchemist"
+  },
+  {
+    "category": "Class",
+    "name": "Animist"
+  },
+  {
+    "category": "Class",
+    "name": "Barbarian"
+  },
+  {
+    "category": "Class",
+    "name": "Bard"
+  },
+  {
+    "category": "Class",
+    "name": "Champion"
+  },
+  {
+    "category": "Class",
+    "name": "Cleric"
+  },
+  {
+    "category": "Class",
+    "name": "Commander"
+  },
+  {
+    "category": "Class",
+    "name": "Druid"
+  },
+  {
+    "category": "Class",
+    "name": "Exemplar"
+  },
+  {
+    "category": "Class",
+    "name": "Fighter"
+  },
+  {
+    "category": "Class",
+    "name": "Guardian"
+  },
+  {
+    "category": "Class",
+    "name": "Gunslinger"
+  },
+  {
+    "category": "Class",
+    "name": "Inventor"
+  },
+  {
+    "category": "Class",
+    "name": "Investigator"
+  },
+  {
+    "category": "Class",
+    "name": "Kineticist"
+  },
+  {
+    "category": "Class",
+    "name": "Magus"
+  },
+  {
+    "category": "Class",
+    "name": "Monk"
+  },
+  {
+    "category": "Class",
+    "name": "Oracle"
+  },
+  {
+    "category": "Class",
+    "name": "Ranger"
+  },
+  {
+    "category": "Class",
+    "name": "Rogue"
+  },
+  {
+    "category": "Class",
+    "name": "Sorcerer"
+  },
+  {
+    "category": "Class",
+    "name": "Summoner"
+  },
+  {
+    "category": "Class",
+    "name": "Swashbuckler"
+  },
+  {
+    "category": "Class",
+    "name": "Witch"
+  },
+  {
+    "category": "Class",
+    "name": "Wizard"
+  },
+  {
+    "category": "Class-Specific",
+    "name": "Additive"
+  },
+  {
+    "category": "Class-Specific",
+    "name": "Apparition"
+  },
+  {
+    "category": "Class-Specific",
+    "name": "Banner"
+  },
+  {
+    "category": "Class-Specific",
+    "name": "Brandish"
+  },
+  {
+    "category": "Class-Specific",
+    "name": "Bravado"
+  },
+  {
+    "category": "Class-Specific",
+    "name": "Coagulant"
+  },
+  {
+    "category": "Class-Specific",
+    "name": "Composite"
+  },
+  {
+    "category": "Class-Specific",
+    "name": "Composition"
+  },
+  {
+    "category": "Class-Specific",
+    "name": "Cursebound"
+  },
+  {
+    "category": "Class-Specific",
+    "name": "Eidolon"
+  },
+  {
+    "category": "Class-Specific",
+    "name": "Evolution"
+  },
+  {
+    "category": "Class-Specific",
+    "name": "Finisher"
+  },
+  {
+    "category": "Class-Specific",
+    "name": "Hex"
+  },
+  {
+    "category": "Class-Specific",
+    "name": "Ikon"
+  },
+  {
+    "category": "Class-Specific",
+    "name": "Impulse"
+  },
+  {
+    "category": "Class-Specific",
+    "name": "Infused"
+  },
+  {
+    "category": "Class-Specific",
+    "name": "Infusion"
+  },
+  {
+    "category": "Class-Specific",
+    "name": "Litany"
+  },
+  {
+    "category": "Class-Specific",
+    "name": "Modification"
+  },
+  {
+    "category": "Class-Specific",
+    "name": "Oath"
+  },
+  {
+    "category": "Class-Specific",
+    "name": "Overflow"
+  },
+  {
+    "category": "Class-Specific",
+    "name": "Rage"
+  },
+  {
+    "category": "Class-Specific",
+    "name": "Social"
+  },
+  {
+    "category": "Class-Specific",
+    "name": "Spellshot"
+  },
+  {
+    "category": "Class-Specific",
+    "name": "Stance"
+  },
+  {
+    "category": "Class-Specific",
+    "name": "Tactic"
+  },
+  {
+    "category": "Class-Specific",
+    "name": "Tandem"
+  },
+  {
+    "category": "Class-Specific",
+    "name": "Transcendence"
+  },
+  {
+    "category": "Class-Specific",
+    "name": "Unstable"
+  },
+  {
+    "category": "Class-Specific",
+    "name": "Vigilante"
+  },
+  {
+    "category": "Class-Specific",
+    "name": "Wandering"
+  },
+  {
+    "category": "Creature Type",
+    "name": "Aberration"
+  },
+  {
+    "category": "Creature Type",
+    "name": "Animal"
+  },
+  {
+    "category": "Creature Type",
+    "name": "Astral"
+  },
+  {
+    "category": "Creature Type",
+    "name": "Beast"
+  },
+  {
+    "category": "Creature Type",
+    "name": "Celestial"
+  },
+  {
+    "category": "Creature Type",
+    "name": "Construct"
+  },
+  {
+    "category": "Creature Type",
+    "name": "Dragon"
+  },
+  {
+    "category": "Creature Type",
+    "name": "Dream"
+  },
+  {
+    "category": "Creature Type",
+    "name": "Elemental"
+  },
+  {
+    "category": "Creature Type",
+    "name": "Ethereal"
+  },
+  {
+    "category": "Creature Type",
+    "name": "Fey"
+  },
+  {
+    "category": "Creature Type",
+    "name": "Fiend"
+  },
+  {
+    "category": "Creature Type",
+    "name": "Fungus"
+  },
+  {
+    "category": "Creature Type",
+    "name": "Giant"
+  },
+  {
+    "category": "Creature Type",
+    "name": "Humanoid"
+  },
+  {
+    "category": "Creature Type",
+    "name": "Monitor"
+  },
+  {
+    "category": "Creature Type",
+    "name": "Ooze"
+  },
+  {
+    "category": "Creature Type",
+    "name": "Plant"
+  },
+  {
+    "category": "Creature Type",
+    "name": "Shade"
+  },
+  {
+    "category": "Creature Type",
+    "name": "Spirit"
+  },
+  {
+    "category": "Creature Type",
+    "name": "Time"
+  },
+  {
+    "category": "Creature Type",
+    "name": "Undead"
+  },
+  {
+    "category": "Creature Type",
+    "name": "Vitality"
+  },
+  {
+    "category": "Creature Type",
+    "name": "Void"
+  },
+  {
+    "category": "Elemental",
+    "name": "Air"
+  },
+  {
+    "category": "Elemental",
+    "name": "Earth"
+  },
+  {
+    "category": "Elemental",
+    "name": "Fire"
+  },
+  {
+    "category": "Elemental",
+    "name": "Metal"
+  },
+  {
+    "category": "Elemental",
+    "name": "Water"
+  },
+  {
+    "category": "Elemental",
+    "name": "Wood"
+  },
+  {
+    "category": "Energy",
+    "name": "Acid"
+  },
+  {
+    "category": "Energy",
+    "name": "Cold"
+  },
+  {
+    "category": "Energy",
+    "name": "Electricity"
+  },
+  {
+    "category": "Energy",
+    "name": "Fire"
+  },
+  {
+    "category": "Energy",
+    "name": "Force"
+  },
+  {
+    "category": "Energy",
+    "name": "Sonic"
+  },
+  {
+    "category": "Energy",
+    "name": "Vitality"
+  },
+  {
+    "category": "Energy",
+    "name": "Void"
+  },
+  {
+    "category": "Equipment",
+    "name": "Adjustment"
+  },
+  {
+    "category": "Equipment",
+    "name": "Alchemical"
+  },
+  {
+    "category": "Equipment",
+    "name": "Apex"
+  },
+  {
+    "category": "Equipment",
+    "name": "Artifact"
+  },
+  {
+    "category": "Equipment",
+    "name": "Barding"
+  },
+  {
+    "category": "Equipment",
+    "name": "Bomb"
+  },
+  {
+    "category": "Equipment",
+    "name": "Bottled Breath"
+  },
+  {
+    "category": "Equipment",
+    "name": "Catalyst"
+  },
+  {
+    "category": "Equipment",
+    "name": "Censer"
+  },
+  {
+    "category": "Equipment",
+    "name": "Clockwork"
+  },
+  {
+    "category": "Equipment",
+    "name": "Coda"
+  },
+  {
+    "category": "Equipment",
+    "name": "Companion"
+  },
+  {
+    "category": "Equipment",
+    "name": "Consumable"
+  },
+  {
+    "category": "Equipment",
+    "name": "Contract"
+  },
+  {
+    "category": "Equipment",
+    "name": "Cursed"
+  },
+  {
+    "category": "Equipment",
+    "name": "Drug"
+  },
+  {
+    "category": "Equipment",
+    "name": "Elixir"
+  },
+  {
+    "category": "Equipment",
+    "name": "Entrench"
+  },
+  {
+    "category": "Equipment",
+    "name": "Expandable"
+  },
+  {
+    "category": "Equipment",
+    "name": "Figurehead"
+  },
+  {
+    "category": "Equipment",
+    "name": "Focused"
+  },
+  {
+    "category": "Equipment",
+    "name": "Fulu"
+  },
+  {
+    "category": "Equipment",
+    "name": "Gadget"
+  },
+  {
+    "category": "Equipment",
+    "name": "Graft"
+  },
+  {
+    "category": "Equipment",
+    "name": "Grimoire"
+  },
+  {
+    "category": "Equipment",
+    "name": "Intelligent"
+  },
+  {
+    "category": "Equipment",
+    "name": "Invested"
+  },
+  {
+    "category": "Equipment",
+    "name": "Lozenge"
+  },
+  {
+    "category": "Equipment",
+    "name": "Mechanical"
+  },
+  {
+    "category": "Equipment",
+    "name": "Missive"
+  },
+  {
+    "category": "Equipment",
+    "name": "Mutagen"
+  },
+  {
+    "category": "Equipment",
+    "name": "Oil"
+  },
+  {
+    "category": "Equipment",
+    "name": "Potion"
+  },
+  {
+    "category": "Equipment",
+    "name": "Precious"
+  },
+  {
+    "category": "Equipment",
+    "name": "Processed"
+  },
+  {
+    "category": "Equipment",
+    "name": "Relic"
+  },
+  {
+    "category": "Equipment",
+    "name": "Saggorak"
+  },
+  {
+    "category": "Equipment",
+    "name": "Scroll"
+  },
+  {
+    "category": "Equipment",
+    "name": "Snare"
+  },
+  {
+    "category": "Equipment",
+    "name": "Spellgun"
+  },
+  {
+    "category": "Equipment",
+    "name": "Spellheart"
+  },
+  {
+    "category": "Equipment",
+    "name": "Staff"
+  },
+  {
+    "category": "Equipment",
+    "name": "Steam"
+  },
+  {
+    "category": "Equipment",
+    "name": "Structure"
+  },
+  {
+    "category": "Equipment",
+    "name": "Talisman"
+  },
+  {
+    "category": "Equipment",
+    "name": "Tattoo"
+  },
+  {
+    "category": "Equipment",
+    "name": "Trap"
+  },
+  {
+    "category": "Equipment",
+    "name": "Wand"
+  },
+  {
+    "category": "Equipment",
+    "name": "Whetstone"
+  },
+  {
+    "category": "Feat",
+    "name": "Archetype"
+  },
+  {
+    "category": "Feat",
+    "name": "Class"
+  },
+  {
+    "category": "Feat",
+    "name": "Dedication"
+  },
+  {
+    "category": "Feat",
+    "name": "General"
+  },
+  {
+    "category": "Feat",
+    "name": "Legacy"
+  },
+  {
+    "category": "Feat",
+    "name": "Lineage"
+  },
+  {
+    "category": "Feat",
+    "name": "Multiclass"
+  },
+  {
+    "category": "Feat",
+    "name": "Skill"
+  },
+  {
+    "category": "Hazard",
+    "name": "Complex"
+  },
+  {
+    "category": "Hazard",
+    "name": "Environmental"
+  },
+  {
+    "category": "Hazard",
+    "name": "Haunt"
+  },
+  {
+    "category": "Hazard",
+    "name": "Mechanical"
+  },
+  {
+    "category": "Hazard",
+    "name": "Trap"
+  },
+  {
+    "category": "Hazard",
+    "name": "Weather"
+  },
+  {
+    "category": "Kingdom",
+    "name": "Camping"
+  },
+  {
+    "category": "Kingdom",
+    "name": "Civic"
+  },
+  {
+    "category": "Kingdom",
+    "name": "Commerce"
+  },
+  {
+    "category": "Kingdom",
+    "name": "Kingdom"
+  },
+  {
+    "category": "Kingdom",
+    "name": "Leadership"
+  },
+  {
+    "category": "Kingdom",
+    "name": "Meal"
+  },
+  {
+    "category": "Kingdom",
+    "name": "Region"
+  },
+  {
+    "category": "Kingdom",
+    "name": "Upkeep"
+  },
+  {
+    "category": "Kingdom\u2014Event",
+    "name": "Beneficial"
+  },
+  {
+    "category": "Kingdom\u2014Event",
+    "name": "Continuous"
+  },
+  {
+    "category": "Kingdom\u2014Event",
+    "name": "Dangerous"
+  },
+  {
+    "category": "Kingdom\u2014Event",
+    "name": "Hex-KM"
+  },
+  {
+    "category": "Kingdom\u2014Event",
+    "name": "Settlement"
+  },
+  {
+    "category": "Kingdom\u2014Settlement",
+    "name": "Building"
+  },
+  {
+    "category": "Kingdom\u2014Settlement",
+    "name": "Edifice"
+  },
+  {
+    "category": "Kingdom\u2014Settlement",
+    "name": "Famous"
+  },
+  {
+    "category": "Kingdom\u2014Settlement",
+    "name": "Infamous"
+  },
+  {
+    "category": "Kingdom\u2014Settlement",
+    "name": "Infrastructure"
+  },
+  {
+    "category": "Kingdom\u2014Settlement",
+    "name": "Residential"
+  },
+  {
+    "category": "Kingdom\u2014Settlement",
+    "name": "Yard"
+  },
+  {
+    "category": "Kingdom\u2014Warfare",
+    "name": "Army"
+  },
+  {
+    "category": "Kingdom\u2014Warfare",
+    "name": "Cavalry"
+  },
+  {
+    "category": "Kingdom\u2014Warfare",
+    "name": "Infantry"
+  },
+  {
+    "category": "Kingdom\u2014Warfare",
+    "name": "Maneuver"
+  },
+  {
+    "category": "Kingdom\u2014Warfare",
+    "name": "Morale"
+  },
+  {
+    "category": "Kingdom\u2014Warfare",
+    "name": "Siege"
+  },
+  {
+    "category": "Kingdom\u2014Warfare",
+    "name": "Skirmisher"
+  },
+  {
+    "category": "Mechanics",
+    "name": "Attack"
+  },
+  {
+    "category": "Mechanics",
+    "name": "Aura"
+  },
+  {
+    "category": "Mechanics",
+    "name": "Cantrip"
+  },
+  {
+    "category": "Mechanics",
+    "name": "Charm"
+  },
+  {
+    "category": "Mechanics",
+    "name": "Concentrate"
+  },
+  {
+    "category": "Mechanics",
+    "name": "Consecration"
+  },
+  {
+    "category": "Mechanics",
+    "name": "Contingency"
+  },
+  {
+    "category": "Mechanics",
+    "name": "Darkness"
+  },
+  {
+    "category": "Mechanics",
+    "name": "Death"
+  },
+  {
+    "category": "Mechanics",
+    "name": "Detection"
+  },
+  {
+    "category": "Mechanics",
+    "name": "Downtime"
+  },
+  {
+    "category": "Mechanics",
+    "name": "Emotion"
+  },
+  {
+    "category": "Mechanics",
+    "name": "Exploration"
+  },
+  {
+    "category": "Mechanics",
+    "name": "Extradimensional"
+  },
+  {
+    "category": "Mechanics",
+    "name": "Fear"
+  },
+  {
+    "category": "Mechanics",
+    "name": "Flourish"
+  },
+  {
+    "category": "Mechanics",
+    "name": "Focus"
+  },
+  {
+    "category": "Mechanics",
+    "name": "Fortune"
+  },
+  {
+    "category": "Mechanics",
+    "name": "Healing"
+  },
+  {
+    "category": "Mechanics",
+    "name": "Holy"
+  },
+  {
+    "category": "Mechanics",
+    "name": "Incapacitation"
+  },
+  {
+    "category": "Mechanics",
+    "name": "Incarnate"
+  },
+  {
+    "category": "Mechanics",
+    "name": "Light"
+  },
+  {
+    "category": "Mechanics",
+    "name": "Linguistic"
+  },
+  {
+    "category": "Mechanics",
+    "name": "Magical"
+  },
+  {
+    "category": "Mechanics",
+    "name": "Manipulate"
+  },
+  {
+    "category": "Mechanics",
+    "name": "Mental"
+  },
+  {
+    "category": "Mechanics",
+    "name": "Minion"
+  },
+  {
+    "category": "Mechanics",
+    "name": "Misfortune"
+  },
+  {
+    "category": "Mechanics",
+    "name": "Morph"
+  },
+  {
+    "category": "Mechanics",
+    "name": "Move"
+  },
+  {
+    "category": "Mechanics",
+    "name": "Open"
+  },
+  {
+    "category": "Mechanics",
+    "name": "Polymorph"
+  },
+  {
+    "category": "Mechanics",
+    "name": "Possession"
+  },
+  {
+    "category": "Mechanics",
+    "name": "Prediction"
+  },
+  {
+    "category": "Mechanics",
+    "name": "Press"
+  },
+  {
+    "category": "Mechanics",
+    "name": "Radiation"
+  },
+  {
+    "category": "Mechanics",
+    "name": "Reckless"
+  },
+  {
+    "category": "Mechanics",
+    "name": "Revelation"
+  },
+  {
+    "category": "Mechanics",
+    "name": "Sanctified"
+  },
+  {
+    "category": "Mechanics",
+    "name": "Scrying"
+  },
+  {
+    "category": "Mechanics",
+    "name": "Secret"
+  },
+  {
+    "category": "Mechanics",
+    "name": "Skirmish"
+  },
+  {
+    "category": "Mechanics",
+    "name": "Sleep"
+  },
+  {
+    "category": "Mechanics",
+    "name": "Spellshape"
+  },
+  {
+    "category": "Mechanics",
+    "name": "Splash"
+  },
+  {
+    "category": "Mechanics",
+    "name": "Subtle"
+  },
+  {
+    "category": "Mechanics",
+    "name": "Summon"
+  },
+  {
+    "category": "Mechanics",
+    "name": "Summoned"
+  },
+  {
+    "category": "Mechanics",
+    "name": "Tea"
+  },
+  {
+    "category": "Mechanics",
+    "name": "Tech"
+  },
+  {
+    "category": "Mechanics",
+    "name": "Telepathy"
+  },
+  {
+    "category": "Mechanics",
+    "name": "Teleportation"
+  },
+  {
+    "category": "Mechanics",
+    "name": "Trial"
+  },
+  {
+    "category": "Mechanics",
+    "name": "Unholy"
+  },
+  {
+    "category": "Mechanics",
+    "name": "Vocal"
+  },
+  {
+    "category": "Monster",
+    "name": "Aasimar"
+  },
+  {
+    "category": "Monster",
+    "name": "Acid"
+  },
+  {
+    "category": "Monster",
+    "name": "Aeon"
+  },
+  {
+    "category": "Monster",
+    "name": "Aesir"
+  },
+  {
+    "category": "Monster",
+    "name": "Agathion"
+  },
+  {
+    "category": "Monster",
+    "name": "Air"
+  },
+  {
+    "category": "Monster",
+    "name": "Alchemical"
+  },
+  {
+    "category": "Monster",
+    "name": "Amphibious"
+  },
+  {
+    "category": "Monster",
+    "name": "Anadi"
+  },
+  {
+    "category": "Monster",
+    "name": "Angel"
+  },
+  {
+    "category": "Monster",
+    "name": "Anugobu"
+  },
+  {
+    "category": "Monster",
+    "name": "Aquatic"
+  },
+  {
+    "category": "Monster",
+    "name": "Arcane"
+  },
+  {
+    "category": "Monster",
+    "name": "Archon"
+  },
+  {
+    "category": "Monster",
+    "name": "Asura"
+  },
+  {
+    "category": "Monster",
+    "name": "Athamaru"
+  },
+  {
+    "category": "Monster",
+    "name": "Azarketi"
+  },
+  {
+    "category": "Monster",
+    "name": "Azata"
+  },
+  {
+    "category": "Monster",
+    "name": "Blight"
+  },
+  {
+    "category": "Monster",
+    "name": "Boggard"
+  },
+  {
+    "category": "Monster",
+    "name": "Bugbear"
+  },
+  {
+    "category": "Monster",
+    "name": "Caligni"
+  },
+  {
+    "category": "Monster",
+    "name": "Catfolk"
+  },
+  {
+    "category": "Monster",
+    "name": "Centaur"
+  },
+  {
+    "category": "Monster",
+    "name": "Changeling"
+  },
+  {
+    "category": "Monster",
+    "name": "Charau-ka"
+  },
+  {
+    "category": "Monster",
+    "name": "Clockwork"
+  },
+  {
+    "category": "Monster",
+    "name": "Coatl"
+  },
+  {
+    "category": "Monster",
+    "name": "Cold"
+  },
+  {
+    "category": "Monster",
+    "name": "Daemon"
+  },
+  {
+    "category": "Monster",
+    "name": "Darvakka"
+  },
+  {
+    "category": "Monster",
+    "name": "Demon"
+  },
+  {
+    "category": "Monster",
+    "name": "Dero"
+  },
+  {
+    "category": "Monster",
+    "name": "Devil"
+  },
+  {
+    "category": "Monster",
+    "name": "Dhampir"
+  },
+  {
+    "category": "Monster",
+    "name": "Dinosaur"
+  },
+  {
+    "category": "Monster",
+    "name": "Div"
+  },
+  {
+    "category": "Monster",
+    "name": "Divine"
+  },
+  {
+    "category": "Monster",
+    "name": "Drow"
+  },
+  {
+    "category": "Monster",
+    "name": "Duskwalker"
+  },
+  {
+    "category": "Monster",
+    "name": "Earth"
+  },
+  {
+    "category": "Monster",
+    "name": "Electricity"
+  },
+  {
+    "category": "Monster",
+    "name": "Fetchling"
+  },
+  {
+    "category": "Monster",
+    "name": "Fire"
+  },
+  {
+    "category": "Monster",
+    "name": "Formian"
+  },
+  {
+    "category": "Monster",
+    "name": "Genie"
+  },
+  {
+    "category": "Monster",
+    "name": "Ghoran"
+  },
+  {
+    "category": "Monster",
+    "name": "Ghost"
+  },
+  {
+    "category": "Monster",
+    "name": "Ghoul"
+  },
+  {
+    "category": "Monster",
+    "name": "Ghul"
+  },
+  {
+    "category": "Monster",
+    "name": "Golem"
+  },
+  {
+    "category": "Monster",
+    "name": "Graveknight"
+  },
+  {
+    "category": "Monster",
+    "name": "Gremlin"
+  },
+  {
+    "category": "Monster",
+    "name": "Grioth"
+  },
+  {
+    "category": "Monster",
+    "name": "Grippli"
+  },
+  {
+    "category": "Monster",
+    "name": "Hag"
+  },
+  {
+    "category": "Monster",
+    "name": "Hantu"
+  },
+  {
+    "category": "Monster",
+    "name": "Herald"
+  },
+  {
+    "category": "Monster",
+    "name": "Hobgoblin"
+  },
+  {
+    "category": "Monster",
+    "name": "Hryngar"
+  },
+  {
+    "category": "Monster",
+    "name": "Ifrit"
+  },
+  {
+    "category": "Monster",
+    "name": "Ikeshti"
+  },
+  {
+    "category": "Monster",
+    "name": "Illusion"
+  },
+  {
+    "category": "Monster",
+    "name": "Incorporeal"
+  },
+  {
+    "category": "Monster",
+    "name": "Inevitable"
+  },
+  {
+    "category": "Monster",
+    "name": "Kaiju"
+  },
+  {
+    "category": "Monster",
+    "name": "Kami"
+  },
+  {
+    "category": "Monster",
+    "name": "Kholo"
+  },
+  {
+    "category": "Monster",
+    "name": "Kitsune"
+  },
+  {
+    "category": "Monster",
+    "name": "Kobold"
+  },
+  {
+    "category": "Monster",
+    "name": "Kovintus"
+  },
+  {
+    "category": "Monster",
+    "name": "Leshy"
+  },
+  {
+    "category": "Monster",
+    "name": "Lilu"
+  },
+  {
+    "category": "Monster",
+    "name": "Lizardfolk"
+  },
+  {
+    "category": "Monster",
+    "name": "Merfolk"
+  },
+  {
+    "category": "Monster",
+    "name": "Mindless"
+  },
+  {
+    "category": "Monster",
+    "name": "Morlock"
+  },
+  {
+    "category": "Monster",
+    "name": "Mortic"
+  },
+  {
+    "category": "Monster",
+    "name": "Mummy"
+  },
+  {
+    "category": "Monster",
+    "name": "Munavri"
+  },
+  {
+    "category": "Monster",
+    "name": "Mutant"
+  },
+  {
+    "category": "Monster",
+    "name": "Nagaji"
+  },
+  {
+    "category": "Monster",
+    "name": "Nymph"
+  },
+  {
+    "category": "Monster",
+    "name": "Occult"
+  },
+  {
+    "category": "Monster",
+    "name": "Oni"
+  },
+  {
+    "category": "Monster",
+    "name": "Orc"
+  },
+  {
+    "category": "Monster",
+    "name": "Oread"
+  },
+  {
+    "category": "Monster",
+    "name": "Paaridar"
+  },
+  {
+    "category": "Monster",
+    "name": "Palinthanos"
+  },
+  {
+    "category": "Monster",
+    "name": "Phantom"
+  },
+  {
+    "category": "Monster",
+    "name": "Primal"
+  },
+  {
+    "category": "Monster",
+    "name": "Protean"
+  },
+  {
+    "category": "Monster",
+    "name": "Psychopomp"
+  },
+  {
+    "category": "Monster",
+    "name": "Qlippoth"
+  },
+  {
+    "category": "Monster",
+    "name": "Rakshasa"
+  },
+  {
+    "category": "Monster",
+    "name": "Ratajin"
+  },
+  {
+    "category": "Monster",
+    "name": "Ratfolk"
+  },
+  {
+    "category": "Monster",
+    "name": "Sahkil"
+  },
+  {
+    "category": "Monster",
+    "name": "Samsaran"
+  },
+  {
+    "category": "Monster",
+    "name": "Sea Devil"
+  },
+  {
+    "category": "Monster",
+    "name": "Sedacthy"
+  },
+  {
+    "category": "Monster",
+    "name": "Serpentfolk"
+  },
+  {
+    "category": "Monster",
+    "name": "Seugathi"
+  },
+  {
+    "category": "Monster",
+    "name": "Shabti"
+  },
+  {
+    "category": "Monster",
+    "name": "Shapechanger"
+  },
+  {
+    "category": "Monster",
+    "name": "Siktempora"
+  },
+  {
+    "category": "Monster",
+    "name": "Skeleton"
+  },
+  {
+    "category": "Monster",
+    "name": "Skelm"
+  },
+  {
+    "category": "Monster",
+    "name": "Skulk"
+  },
+  {
+    "category": "Monster",
+    "name": "Sonic"
+  },
+  {
+    "category": "Monster",
+    "name": "Soulbound"
+  },
+  {
+    "category": "Monster",
+    "name": "Sporeborn"
+  },
+  {
+    "category": "Monster",
+    "name": "Spriggan"
+  },
+  {
+    "category": "Monster",
+    "name": "Sprite"
+  },
+  {
+    "category": "Monster",
+    "name": "Stheno"
+  },
+  {
+    "category": "Monster",
+    "name": "Strix"
+  },
+  {
+    "category": "Monster",
+    "name": "Suli"
+  },
+  {
+    "category": "Monster",
+    "name": "Swarm"
+  },
+  {
+    "category": "Monster",
+    "name": "Sylph"
+  },
+  {
+    "category": "Monster",
+    "name": "Tane"
+  },
+  {
+    "category": "Monster",
+    "name": "Tanggal"
+  },
+  {
+    "category": "Monster",
+    "name": "Tengu"
+  },
+  {
+    "category": "Monster",
+    "name": "Tiefling"
+  },
+  {
+    "category": "Monster",
+    "name": "Titan"
+  },
+  {
+    "category": "Monster",
+    "name": "Troll"
+  },
+  {
+    "category": "Monster",
+    "name": "Troop"
+  },
+  {
+    "category": "Monster",
+    "name": "Undine"
+  },
+  {
+    "category": "Monster",
+    "name": "Urdefhan"
+  },
+  {
+    "category": "Monster",
+    "name": "Vampire"
+  },
+  {
+    "category": "Monster",
+    "name": "Vanara"
+  },
+  {
+    "category": "Monster",
+    "name": "Velstrac"
+  },
+  {
+    "category": "Monster",
+    "name": "Vishkanya"
+  },
+  {
+    "category": "Monster",
+    "name": "Water"
+  },
+  {
+    "category": "Monster",
+    "name": "Wayang"
+  },
+  {
+    "category": "Monster",
+    "name": "Werecreature"
+  },
+  {
+    "category": "Monster",
+    "name": "Wight"
+  },
+  {
+    "category": "Monster",
+    "name": "Wild Hunt"
+  },
+  {
+    "category": "Monster",
+    "name": "Wraith"
+  },
+  {
+    "category": "Monster",
+    "name": "Wraithvine"
+  },
+  {
+    "category": "Monster",
+    "name": "Wyrwood"
+  },
+  {
+    "category": "Monster",
+    "name": "Xulgath"
+  },
+  {
+    "category": "Monster",
+    "name": "Zombie"
+  },
+  {
+    "category": "Mythic",
+    "name": "Calling"
+  },
+  {
+    "category": "Mythic",
+    "name": "Destiny"
+  },
+  {
+    "category": "Mythic",
+    "name": "Mythic"
+  },
+  {
+    "category": "Planar",
+    "name": "Air"
+  },
+  {
+    "category": "Planar",
+    "name": "Earth"
+  },
+  {
+    "category": "Planar",
+    "name": "Erratic"
+  },
+  {
+    "category": "Planar",
+    "name": "Finite"
+  },
+  {
+    "category": "Planar",
+    "name": "Fire"
+  },
+  {
+    "category": "Planar",
+    "name": "Flowing"
+  },
+  {
+    "category": "Planar",
+    "name": "High Gravity"
+  },
+  {
+    "category": "Planar",
+    "name": "Immeasurable"
+  },
+  {
+    "category": "Planar",
+    "name": "Low Gravity"
+  },
+  {
+    "category": "Planar",
+    "name": "Metamorphic"
+  },
+  {
+    "category": "Planar",
+    "name": "Microgravity"
+  },
+  {
+    "category": "Planar",
+    "name": "Sentient"
+  },
+  {
+    "category": "Planar",
+    "name": "Shadow"
+  },
+  {
+    "category": "Planar",
+    "name": "Static"
+  },
+  {
+    "category": "Planar",
+    "name": "Strange Gravity"
+  },
+  {
+    "category": "Planar",
+    "name": "Subjective Gravity"
+  },
+  {
+    "category": "Planar",
+    "name": "Timeless"
+  },
+  {
+    "category": "Planar",
+    "name": "Unbounded"
+  },
+  {
+    "category": "Planar",
+    "name": "Vitality"
+  },
+  {
+    "category": "Planar",
+    "name": "Void"
+  },
+  {
+    "category": "Planar",
+    "name": "Water"
+  },
+  {
+    "category": "Poison",
+    "name": "Contact"
+  },
+  {
+    "category": "Poison",
+    "name": "Ingested"
+  },
+  {
+    "category": "Poison",
+    "name": "Inhaled"
+  },
+  {
+    "category": "Poison",
+    "name": "Injury"
+  },
+  {
+    "category": "Poison",
+    "name": "Poison"
+  },
+  {
+    "category": "Rarity",
+    "name": "Common"
+  },
+  {
+    "category": "Rarity",
+    "name": "Rare"
+  },
+  {
+    "category": "Rarity",
+    "name": "Uncommon"
+  },
+  {
+    "category": "Rarity",
+    "name": "Unique"
+  },
+  {
+    "category": "School",
+    "name": "Abjuration"
+  },
+  {
+    "category": "School",
+    "name": "Conjuration"
+  },
+  {
+    "category": "School",
+    "name": "Divination"
+  },
+  {
+    "category": "School",
+    "name": "Enchantment"
+  },
+  {
+    "category": "School",
+    "name": "Evocation"
+  },
+  {
+    "category": "School",
+    "name": "Illusion"
+  },
+  {
+    "category": "School",
+    "name": "Necromancy"
+  },
+  {
+    "category": "School",
+    "name": "Transmutation"
+  },
+  {
+    "category": "Sense",
+    "name": "Auditory"
+  },
+  {
+    "category": "Sense",
+    "name": "Olfactory"
+  },
+  {
+    "category": "Sense",
+    "name": "Visual"
+  },
+  {
+    "category": "Settlement",
+    "name": "City"
+  },
+  {
+    "category": "Settlement",
+    "name": "Metropolis"
+  },
+  {
+    "category": "Settlement",
+    "name": "Town"
+  },
+  {
+    "category": "Settlement",
+    "name": "Village"
+  },
+  {
+    "category": "Shield",
+    "name": "Deflecting"
+  },
+  {
+    "category": "Shield",
+    "name": "Foldaway"
+  },
+  {
+    "category": "Shield",
+    "name": "Harnessed"
+  },
+  {
+    "category": "Shield",
+    "name": "Hefty"
+  },
+  {
+    "category": "Shield",
+    "name": "Integrated"
+  },
+  {
+    "category": "Shield",
+    "name": "Launching"
+  },
+  {
+    "category": "Shield",
+    "name": "Shield Throw"
+  },
+  {
+    "category": "Tradition",
+    "name": "Arcane"
+  },
+  {
+    "category": "Tradition",
+    "name": "Divine"
+  },
+  {
+    "category": "Tradition",
+    "name": "Occult"
+  },
+  {
+    "category": "Tradition",
+    "name": "Primal"
+  },
+  {
+    "category": "Uncategorized",
+    "name": "Gigas"
+  },
+  {
+    "category": "Uncategorized",
+    "name": "Girtablilu"
+  },
+  {
+    "category": "Uncategorized",
+    "name": "Maftet"
+  },
+  {
+    "category": "Uncategorized",
+    "name": "Munsahir"
+  },
+  {
+    "category": "Uncategorized",
+    "name": "Naari"
+  },
+  {
+    "category": "Uncategorized",
+    "name": "Satyr"
+  },
+  {
+    "category": "Uncategorized",
+    "name": "Simple"
+  },
+  {
+    "category": "Uncategorized",
+    "name": "Soulrider"
+  },
+  {
+    "category": "Uncategorized",
+    "name": "Strigoi"
+  },
+  {
+    "category": "Variant Rules",
+    "name": "Pervasive Magic"
+  },
+  {
+    "category": "Variant Rules",
+    "name": "Stamina"
+  },
+  {
+    "category": "Variant Rules",
+    "name": "True name"
+  },
+  {
+    "category": "Weapon",
+    "name": "Agile"
+  },
+  {
+    "category": "Weapon",
+    "name": "Alchemical"
+  },
+  {
+    "category": "Weapon",
+    "name": "Attached"
+  },
+  {
+    "category": "Weapon",
+    "name": "Azarketi"
+  },
+  {
+    "category": "Weapon",
+    "name": "Backstabber"
+  },
+  {
+    "category": "Weapon",
+    "name": "Backswing"
+  },
+  {
+    "category": "Weapon",
+    "name": "Brace"
+  },
+  {
+    "category": "Weapon",
+    "name": "Brutal"
+  },
+  {
+    "category": "Weapon",
+    "name": "Capacity"
+  },
+  {
+    "category": "Weapon",
+    "name": "Catfolk"
+  },
+  {
+    "category": "Weapon",
+    "name": "Climbing"
+  },
+  {
+    "category": "Weapon",
+    "name": "Clockwork"
+  },
+  {
+    "category": "Weapon",
+    "name": "Cobbled"
+  },
+  {
+    "category": "Weapon",
+    "name": "Combination"
+  },
+  {
+    "category": "Weapon",
+    "name": "Concealable"
+  },
+  {
+    "category": "Weapon",
+    "name": "Concussive"
+  },
+  {
+    "category": "Weapon",
+    "name": "Conrasu"
+  },
+  {
+    "category": "Weapon",
+    "name": "Critical Fusion"
+  },
+  {
+    "category": "Weapon",
+    "name": "Deadly"
+  },
+  {
+    "category": "Weapon",
+    "name": "Disarm"
+  },
+  {
+    "category": "Weapon",
+    "name": "Double Barrel"
+  },
+  {
+    "category": "Weapon",
+    "name": "Dwarf"
+  },
+  {
+    "category": "Weapon",
+    "name": "Elf"
+  },
+  {
+    "category": "Weapon",
+    "name": "Fatal"
+  },
+  {
+    "category": "Weapon",
+    "name": "Fatal Aim"
+  },
+  {
+    "category": "Weapon",
+    "name": "Finesse"
+  },
+  {
+    "category": "Weapon",
+    "name": "Forceful"
+  },
+  {
+    "category": "Weapon",
+    "name": "Free-Hand"
+  },
+  {
+    "category": "Weapon",
+    "name": "Geniekin"
+  },
+  {
+    "category": "Weapon",
+    "name": "Ghoran"
+  },
+  {
+    "category": "Weapon",
+    "name": "Gnome"
+  },
+  {
+    "category": "Weapon",
+    "name": "Goblin"
+  },
+  {
+    "category": "Weapon",
+    "name": "Grapple"
+  },
+  {
+    "category": "Weapon",
+    "name": "Grippli"
+  },
+  {
+    "category": "Weapon",
+    "name": "Halfling"
+  },
+  {
+    "category": "Weapon",
+    "name": "Hampering"
+  },
+  {
+    "category": "Weapon",
+    "name": "Injection"
+  },
+  {
+    "category": "Weapon",
+    "name": "Jousting"
+  },
+  {
+    "category": "Weapon",
+    "name": "Kickback"
+  },
+  {
+    "category": "Weapon",
+    "name": "Kobold"
+  },
+  {
+    "category": "Weapon",
+    "name": "Modular"
+  },
+  {
+    "category": "Weapon",
+    "name": "Monk"
+  },
+  {
+    "category": "Weapon",
+    "name": "Mounted"
+  },
+  {
+    "category": "Weapon",
+    "name": "Nonlethal"
+  },
+  {
+    "category": "Weapon",
+    "name": "Orc"
+  },
+  {
+    "category": "Weapon",
+    "name": "Parry"
+  },
+  {
+    "category": "Weapon",
+    "name": "Portable"
+  },
+  {
+    "category": "Weapon",
+    "name": "Propulsive"
+  },
+  {
+    "category": "Weapon",
+    "name": "Range"
+  },
+  {
+    "category": "Weapon",
+    "name": "Ranged Trip"
+  },
+  {
+    "category": "Weapon",
+    "name": "Razing"
+  },
+  {
+    "category": "Weapon",
+    "name": "Reach"
+  },
+  {
+    "category": "Weapon",
+    "name": "Recovery"
+  },
+  {
+    "category": "Weapon",
+    "name": "Reload"
+  },
+  {
+    "category": "Weapon",
+    "name": "Repeating"
+  },
+  {
+    "category": "Weapon",
+    "name": "Resonant"
+  },
+  {
+    "category": "Weapon",
+    "name": "Scatter"
+  },
+  {
+    "category": "Weapon",
+    "name": "Shove"
+  },
+  {
+    "category": "Weapon",
+    "name": "Sweep"
+  },
+  {
+    "category": "Weapon",
+    "name": "Tearing"
+  },
+  {
+    "category": "Weapon",
+    "name": "Tengu"
+  },
+  {
+    "category": "Weapon",
+    "name": "Tethered"
+  },
+  {
+    "category": "Weapon",
+    "name": "Thrown"
+  },
+  {
+    "category": "Weapon",
+    "name": "Training"
+  },
+  {
+    "category": "Weapon",
+    "name": "Trip"
+  },
+  {
+    "category": "Weapon",
+    "name": "Twin"
+  },
+  {
+    "category": "Weapon",
+    "name": "Two-Hand"
+  },
+  {
+    "category": "Weapon",
+    "name": "Unarmed"
+  },
+  {
+    "category": "Weapon",
+    "name": "Vanara"
+  },
+  {
+    "category": "Weapon",
+    "name": "Vehicular"
+  },
+  {
+    "category": "Weapon",
+    "name": "Venomous"
+  },
+  {
+    "category": "Weapon",
+    "name": "Versatile"
+  },
+  {
+    "category": "Weapon",
+    "name": "Vishkanya"
+  },
+  {
+    "category": "Weapon",
+    "name": "Volley"
+  }
+]

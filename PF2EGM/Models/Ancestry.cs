@@ -33,8 +33,11 @@ namespace PF2EGM.Models
 
         [JsonPropertyName("pfs")]
         public required string Pfs { get; set; }
+        
         public List<Feat> AncestryFeats { get; set; }
+        
         public List<Heritage> Heritages { get; set; }
+        
         public List<Ability> Abilities { get; set; }
     }
 }
