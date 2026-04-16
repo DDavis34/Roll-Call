@@ -1,5 +1,4 @@
 @page "/CharacterSheet"
-@using Microsoft.AspNetCore.Components
 
 <head>
     <meta charset="UTF-8" />
@@ -94,6 +93,7 @@
             </div>
         </div>
 
+        <!-- Main Content -->
         <div class="flex flex-col lg:flex-row">
 
             <!-- LEFT SIDEBAR -->
@@ -244,77 +244,549 @@
             <!-- RIGHT: Main Character Panel -->
             <div class="flex-1 flex flex-col min-w-0">
 
-                <!-- Tabs -->
-                <div class="bg-[#e8dcc8] border-b border-[#c8b49a] flex flex-wrap gap-0">
-                    @foreach (var tab in tabs)
+            <!-- Tab Buttons -->
+            <div class="bg-[#e8dcc8] border-b border-[#c8b49a] flex flex-wrap">
+                @foreach (var tab in tabs)
+                {
+                    <button @onclick="() => SetActiveTab(tab)"
+                            class="px-4 py-2 text-sm font-semibold border-b-2 transition-colors @(activeTab == tab ? "border-[#8b1a1a] text-[#8b1a1a] bg-[#f5efe3]" : "border-transparent text-[#5a3e28] hover:text-[#8b1a1a] hover:bg-[#f0e8d8]")">
+                        @tab
+                    </button>
+                }
+            </div>
+
+            <!-- Tab Content -->
+            <div class="flex-1 p-4 bg-[#f5efe3]">
+
+                <!-- ─── WEAPONS ─────────────────────────────────────────── -->
+                @if (activeTab == "Weapons")
+                {
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        @foreach (var cat in weaponCategories)
+                        {
+                            <button @onclick="() => ToggleWeaponCategory(cat.Key)"
+                                    class="px-3 py-1.5 text-sm font-semibold rounded transition-colors flex items-center gap-1
+                                           @(cat.Value ? "bg-[#8b1a1a] border-2 border-[#8b1a1a] text-white" : "bg-[#e8dcc8] border-2 border-[#c8b49a] text-[#5a3e28] hover:border-[#8b1a1a]")">
+                                <span>@(cat.Value ? "●" : "○")</span> @cat.Key
+                            </button>
+                        }
+                    </div>
+
+                    <button @onclick="() => showWeaponModal = true"
+                            class="w-full border-2 border-dashed border-[#c8b49a] hover:border-[#8b1a1a] text-[#8b1a1a] font-semibold py-2 px-4 rounded text-left mb-4 transition-colors hover:bg-[#faf5ee]">
+                        + Add Weapon
+                    </button>
+
+                    @if (!weapons.Any())
                     {
-                        <button @onclick="() => SetActiveTab(tab)"
-                                class="px-4 py-2 text-sm font-semibold border-b-2 transition-colors @(activeTab == tab ? "border-[#8b1a1a] text-[#8b1a1a] bg-[#f5efe3]" : "border-transparent text-[#5a3e28] hover:text-[#8b1a1a] hover:bg-[#f0e8d8]")">
-                            @tab
-                        </button>
+                        <div class="text-center text-[#9a8a7a] text-sm py-8">No weapons equipped. Click "Add Weapon" to equip weapons.</div>
                     }
+                    else
+                    {
+                        <div class="space-y-2">
+                            @foreach (var (weapon, index) in weapons.Select((w, i) => (w, i)))
+                            {
+                                <div class="bg-white border border-[#c8b49a] rounded p-3 flex flex-wrap items-center gap-3">
+                                    <div class="flex-1 min-w-0">
+                                        <div class="font-bold text-sm">@weapon.Name</div>
+                                        <div class="text-xs text-[#5a3e28]">@weapon.Traits</div>
+                                    </div>
+                                    <div class="text-center">
+                                        <div class="text-lg font-bold">@(weapon.AttackBonus >= 0 ? "+" : "")@weapon.AttackBonus</div>
+                                        <div class="text-xs text-[#5a3e28]">Attack</div>
+                                    </div>
+                                    <div class="text-center">
+                                        <div class="text-lg font-bold">@weapon.Damage</div>
+                                        <div class="text-xs text-[#5a3e28]">Damage</div>
+                                    </div>
+                                    <button @onclick="() => weapons.RemoveAt(index)" class="text-red-700 hover:text-red-900 text-sm px-2">✕</button>
+                                </div>
+                            }
+                        </div>
+                    }
+                    <div class="mt-4 text-right">
+                        <button class="text-sm text-[#5a3e28] hover:text-[#8b1a1a] underline">Print</button>
+                    </div>
+                }
+
+                <!-- ─── DEFENSE ─────────────────────────────────────────── -->
+                else if (activeTab == "Defense")
+                {
+                    <h3 class="text-base font-bold text-[#8b1a1a] mb-3">Defense</h3>
+
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        @foreach (var cat in armorCategories)
+                        {
+                            <button @onclick="() => ToggleArmorCategory(cat.Key)"
+                                    class="px-3 py-1.5 text-sm font-semibold rounded transition-colors
+                                           @(cat.Value ? "bg-[#8b1a1a] border-2 border-[#8b1a1a] text-white" : "bg-[#e8dcc8] border-2 border-[#c8b49a] text-[#5a3e28] hover:border-[#8b1a1a]")">
+                                @cat.Key
+                            </button>
+                        }
+                    </div>
+
+                    <button @onclick="() => showArmorModal = true"
+                            class="w-full border-2 border-dashed border-[#c8b49a] hover:border-[#8b1a1a] text-[#8b1a1a] font-semibold py-2 px-4 rounded text-left mb-4 transition-colors hover:bg-[#faf5ee]">
+                        + Add Armor / Shield
+                    </button>
+
+                    @if (!armors.Any())
+                    {
+                        <div class="text-center text-[#9a8a7a] text-sm py-8">No armor equipped. Click "Add Armor / Shield" to equip.</div>
+                    }
+                    else
+                    {
+                        <div class="space-y-2">
+                            @foreach (var (armor, index) in armors.Select((a, i) => (a, i)))
+                            {
+                                <div class="bg-white border border-[#c8b49a] rounded p-3 flex items-center gap-3">
+                                    <div class="flex-1">
+                                        <div class="font-bold text-sm">@armor.Name</div>
+                                        <div class="text-xs text-[#5a3e28]">@armor.Category</div>
+                                    </div>
+                                    <div class="text-center">
+                                        <div class="text-lg font-bold">+@armor.ACBonus</div>
+                                        <div class="text-xs text-[#5a3e28]">AC Bonus</div>
+                                    </div>
+                                    <button @onclick="() => armors.RemoveAt(index)" class="text-red-700 hover:text-red-900 text-sm px-2">✕</button>
+                                </div>
+                            }
+                        </div>
+                    }
+                }
+
+                <!-- ─── GEAR ────────────────────────────────────────────── -->
+                else if (activeTab == "Gear")
+                {
+                    <h3 class="text-base font-bold text-[#8b1a1a] mb-3">Gear & Equipment</h3>
+
+                    <button @onclick="() => showGearModal = true"
+                            class="w-full border-2 border-dashed border-[#c8b49a] hover:border-[#8b1a1a] text-[#8b1a1a] font-semibold py-2 px-4 rounded text-left mb-4 transition-colors hover:bg-[#faf5ee]">
+                        + Add Item
+                    </button>
+
+                    @if (!gearItems.Any())
+                    {
+                        <div class="text-center text-[#9a8a7a] text-sm py-8">No items in inventory.</div>
+                    }
+                    else
+                    {
+                        <table class="w-full text-sm">
+                            <thead>
+                                <tr class="border-b border-[#c8b49a] text-[#8b1a1a] text-left">
+                                    <th class="pb-2 font-semibold">Item</th>
+                                    <th class="pb-2 font-semibold text-center">Qty</th>
+                                    <th class="pb-2 font-semibold text-center">Bulk</th>
+                                    <th class="pb-2"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var (item, index) in gearItems.Select((g, i) => (g, i)))
+                                {
+                                    <tr class="border-b border-[#e8dcc8] hover:bg-[#faf5ee]">
+                                        <td class="py-2 font-medium">@item.Name</td>
+                                        <td class="py-2 text-center">@item.Quantity</td>
+                                        <td class="py-2 text-center">@item.Weight</td>
+                                        <td class="py-2 text-right">
+                                            <button @onclick="() => gearItems.RemoveAt(index)" class="text-red-700 hover:text-red-900">✕</button>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                        <div class="mt-3 text-sm text-right text-[#5a3e28]">
+                            Total Bulk: <strong>@gearItems.Sum(i => i.Weight * i.Quantity)</strong>
+                        </div>
+                    }
+                }
+
+                <!-- ─── SPELLS ───────────────────────────────────────────── -->
+                else if (activeTab == "Spells")
+                {
+                    <h3 class="text-base font-bold text-[#8b1a1a] mb-3">Spells</h3>
+
+                    @if (!spells.Any())
+                    {
+                        <div class="text-center text-[#9a8a7a] text-sm py-8">
+                            <div class="text-4xl mb-3">✦</div>
+                            <div>No spells prepared. This character has no spellcasting ability, or no spells have been added yet.</div>
+                        </div>
+                    }
+                    else
+                    {
+                        @foreach (var levelGroup in spells.GroupBy(s => s.Level).OrderBy(g => g.Key))
+                        {
+                            <div class="mb-4">
+                                <div class="text-sm font-bold text-[#8b1a1a] mb-2 border-b border-[#c8b49a] pb-1">
+                                    @(levelGroup.Key == 0 ? "Cantrips" : $"Level {levelGroup.Key} Spells")
+                                </div>
+                                @foreach (var spell in levelGroup)
+                                {
+                                    <div class="bg-white border border-[#c8b49a] rounded p-3 mb-2">
+                                        <div class="flex justify-between items-start">
+                                            <div>
+                                                <div class="font-bold text-sm">@spell.Name</div>
+                                                <div class="text-xs text-[#5a3e28]">@spell.School • @spell.CastTime</div>
+                                            </div>
+                                            <button @onclick="() => spells.Remove(spell)" class="text-red-700 hover:text-red-900 text-sm">✕</button>
+                                        </div>
+                                        <div class="text-xs text-[#5a3e28] mt-1">@spell.Description</div>
+                                    </div>
+                                }
+                            </div>
+                        }
+                    }
+
+                    <button @onclick="() => showSpellModal = true"
+                            class="w-full border-2 border-dashed border-[#c8b49a] hover:border-[#8b1a1a] text-[#8b1a1a] font-semibold py-2 px-4 rounded text-left mt-2 transition-colors hover:bg-[#faf5ee]">
+                        + Add Spell
+                    </button>
+                }
+
+                <!-- ─── PETS ─────────────────────────────────────────────── -->
+                else if (activeTab == "Pets")
+                {
+                    <h3 class="text-base font-bold text-[#8b1a1a] mb-3">Animal Companions & Familiars</h3>
+                    <div class="text-center text-[#9a8a7a] text-sm py-8">
+                        <div class="text-4xl mb-3">🐾</div>
+                        <div>No animal companions or familiars. Add a class feature that grants a pet to track it here.</div>
+                    </div>
+                }
+
+                <!-- ─── DETAILS ──────────────────────────────────────────── -->
+                else if (activeTab == "Details")
+                {
+                    <h3 class="text-base font-bold text-[#8b1a1a] mb-3">Character Details</h3>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+                        <div>
+                            <label class="text-sm font-semibold text-[#5a3e28]">Age</label>
+                            <input @bind="details.Age" placeholder="e.g., 25"
+                                   class="w-full mt-1 border border-[#c8b49a] rounded px-3 py-1.5 text-sm focus:outline-none focus:border-[#8b1a1a] bg-white" />
+                        </div>
+                        <div>
+                            <label class="text-sm font-semibold text-[#5a3e28]">Gender & Pronouns</label>
+                            <input @bind="details.Gender" placeholder="e.g., Male, he/him"
+                                   class="w-full mt-1 border border-[#c8b49a] rounded px-3 py-1.5 text-sm focus:outline-none focus:border-[#8b1a1a] bg-white" />
+                        </div>
+                        <div>
+                            <label class="text-sm font-semibold text-[#5a3e28]">Height</label>
+                            <input @bind="details.Height" placeholder="e.g., 6'1&quot;"
+                                   class="w-full mt-1 border border-[#c8b49a] rounded px-3 py-1.5 text-sm focus:outline-none focus:border-[#8b1a1a] bg-white" />
+                        </div>
+                        <div>
+                            <label class="text-sm font-semibold text-[#5a3e28]">Weight</label>
+                            <input @bind="details.Weight" placeholder="e.g., 180 lbs"
+                                   class="w-full mt-1 border border-[#c8b49a] rounded px-3 py-1.5 text-sm focus:outline-none focus:border-[#8b1a1a] bg-white" />
+                        </div>
+                        <div>
+                            <label class="text-sm font-semibold text-[#5a3e28]">Alignment</label>
+                            <select @bind="details.Alignment"
+                                    class="w-full mt-1 border border-[#c8b49a] rounded px-3 py-1.5 text-sm focus:outline-none focus:border-[#8b1a1a] bg-white">
+                                <option value="">— Select —</option>
+                                <option>Lawful Good</option><option>Neutral Good</option><option>Chaotic Good</option>
+                                <option>Lawful Neutral</option><option>True Neutral</option><option>Chaotic Neutral</option>
+                                <option>Lawful Evil</option><option>Neutral Evil</option><option>Chaotic Evil</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="text-sm font-semibold text-[#5a3e28]">Deity</label>
+                            <input @bind="details.Deity" placeholder="e.g., Cayden Cailean"
+                                   class="w-full mt-1 border border-[#c8b49a] rounded px-3 py-1.5 text-sm focus:outline-none focus:border-[#8b1a1a] bg-white" />
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="text-sm font-semibold text-[#5a3e28]">Appearance</label>
+                        <textarea @bind="details.Appearance" rows="3" placeholder="Describe your character's physical appearance..."
+                                  class="w-full mt-1 border border-[#c8b49a] rounded px-3 py-1.5 text-sm focus:outline-none focus:border-[#8b1a1a] bg-white resize-none"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label class="text-sm font-semibold text-[#5a3e28]">Personality</label>
+                        <textarea @bind="details.Personality" rows="3" placeholder="Describe your character's personality..."
+                                  class="w-full mt-1 border border-[#c8b49a] rounded px-3 py-1.5 text-sm focus:outline-none focus:border-[#8b1a1a] bg-white resize-none"></textarea>
+                    </div>
+                    <div class="mb-4">
+                        <label class="text-sm font-semibold text-[#5a3e28]">Backstory</label>
+                        <textarea @bind="details.Backstory" rows="5" placeholder="Write your character's backstory..."
+                                  class="w-full mt-1 border border-[#c8b49a] rounded px-3 py-1.5 text-sm focus:outline-none focus:border-[#8b1a1a] bg-white resize-none"></textarea>
+                    </div>
+
+                    <h4 class="text-sm font-bold text-[#8b1a1a] mb-2">Currency</h4>
+                    <div class="flex flex-wrap gap-4">
+                        @foreach (var coin in currencies)
+                        {
+                            <div class="flex flex-col items-center">
+                                <div class="w-8 h-8 rounded-full @coin.Color flex items-center justify-center text-white text-xs font-bold shadow">@coin.Abbr</div>
+                                <input @bind="coin.Amount" type="number" min="0"
+                                       class="w-16 mt-1 border border-[#c8b49a] rounded px-1 py-0.5 text-sm text-center focus:outline-none focus:border-[#8b1a1a] bg-white" />
+                                <span class="text-xs text-[#5a3e28] mt-0.5">@coin.Name</span>
+                            </div>
+                        }
+                    </div>
+                }
+
+                <!-- ─── FEATS ─────────────────────────────────────────────── -->
+                else if (activeTab == "Feats")
+                {
+                    <h3 class="text-base font-bold text-[#8b1a1a] mb-3">Feats & Abilities</h3>
+
+                    @foreach (var category in featsByCategory.Keys)
+                    {
+                        <div class="mb-4">
+                            <div class="flex items-center justify-between border-b border-[#c8b49a] pb-1 mb-2">
+                                <h4 class="text-sm font-bold text-[#5a3e28]">@category</h4>
+                                <button @onclick="() => OpenFeatModal(category)"
+                                        class="text-xs text-[#8b1a1a] hover:text-[#6a0a0a] font-semibold">+ Add</button>
+                            </div>
+                            @if (!featsByCategory[category].Any())
+                            {
+                                <div class="text-xs text-[#9a8a7a] italic px-2">No @category.ToLower() added.</div>
+                            }
+                            else
+                            {
+                                @foreach (var feat in featsByCategory[category])
+                                {
+                                    <div class="bg-white border border-[#c8b49a] rounded p-2 mb-1 flex items-start justify-between gap-2">
+                                        <div>
+                                            <div class="text-sm font-semibold">@feat.Name</div>
+                                            @if (!string.IsNullOrEmpty(feat.Description))
+                                            {
+                                                <div class="text-xs text-[#5a3e28] mt-0.5">@feat.Description</div>
+                                            }
+                                        </div>
+                                        <button @onclick="() => featsByCategory[category].Remove(feat)"
+                                                class="text-red-700 hover:text-red-900 text-xs flex-shrink-0">✕</button>
+                                    </div>
+                                }
+                            }
+                        </div>
+                    }
+                }
+
+                <!-- ─── ACTIONS ───────────────────────────────────────────── -->
+                else if (activeTab == "Actions")
+                {
+                    <h3 class="text-base font-bold text-[#8b1a1a] mb-3">Actions & Activities</h3>
+
+                    @foreach (var section in actionSections)
+                    {
+                        <div class="mb-5">
+                            <div class="text-sm font-bold text-[#5a3e28] border-b border-[#c8b49a] pb-1 mb-2">/*section.Title*/</div>
+                            <div class="space-y-2">
+                                @foreach (var action in section.Actions)
+                                {
+                                    <div class="bg-white border border-[#c8b49a] rounded p-3">
+                                        <div class="flex items-center gap-2 mb-1">
+                                            <span class="text-sm font-bold">@action.Name</span>
+                                            <span class="text-xs bg-[#8b1a1a] text-white rounded-full px-2 py-0.5">@action.ActionCost</span>
+                                            @if (!string.IsNullOrEmpty(action.Traits))
+                                            {
+                                                <span class="text-xs text-[#5a3e28] italic">@action.Traits</span>
+                                            }
+                                        </div>
+                                        <p class="text-xs text-[#5a3e28]">@action.Description</p>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    }
+                }
+
+            </div><!-- end tab content -->
+        </div><!-- end right panel -->
+    </div><!-- end flex row -->
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!-- MODALS                                                             -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+
+    @if (showWeaponModal)
+    {
+        <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4" @onclick="() => showWeaponModal = false">
+            <div class="bg-[#f5efe3] border border-[#c8b49a] rounded-lg p-6 w-full max-w-md shadow-xl" @onclick:stopPropagation>
+                <h3 class="text-lg font-bold mb-4 text-[#8b1a1a]">Add Weapon</h3>
+                <div class="space-y-3">
+                    <div>
+                        <label class="text-sm font-semibold text-[#5a3e28]">Weapon Name</label>
+                        <input @bind="newWeapon.Name" placeholder="e.g., Longsword"
+                               class="w-full mt-1 border border-[#c8b49a] rounded px-3 py-1.5 text-sm focus:outline-none focus:border-[#8b1a1a] bg-white" />
+                    </div>
+                    <div>
+                        <label class="text-sm font-semibold text-[#5a3e28]">Damage</label>
+                        <input @bind="newWeapon.Damage" placeholder="e.g., 1d8+3 S"
+                               class="w-full mt-1 border border-[#c8b49a] rounded px-3 py-1.5 text-sm focus:outline-none focus:border-[#8b1a1a] bg-white" />
+                    </div>
+                    <div>
+                        <label class="text-sm font-semibold text-[#5a3e28]">Attack Bonus</label>
+                        <input @bind="newWeapon.AttackBonus" type="number"
+                               class="w-full mt-1 border border-[#c8b49a] rounded px-3 py-1.5 text-sm focus:outline-none focus:border-[#8b1a1a] bg-white" />
+                    </div>
+                    <div>
+                        <label class="text-sm font-semibold text-[#5a3e28]">Traits</label>
+                        <input @bind="newWeapon.Traits" placeholder="e.g., versatile P, sweep"
+                               class="w-full mt-1 border border-[#c8b49a] rounded px-3 py-1.5 text-sm focus:outline-none focus:border-[#8b1a1a] bg-white" />
+                    </div>
                 </div>
-
-                <!-- Tab Content -->
-                <div class="flex-1 p-4 bg-[#f5efe3]">
-
-                    @if (activeTab == "Weapons")
-                    {
-                        <WeaponsTab Character="character" />
-                    }
-                    else if (activeTab == "Defense")
-                    {
-                        <DefenseTab Character="character" />
-                    }
-                    else if (activeTab == "Gear")
-                    {
-                        <GearTab />
-                    }
-                    else if (activeTab == "Spells")
-                    {
-                        <SpellsTab />
-                    }
-                    else if (activeTab == "Pets")
-                    {
-                        <PetsTab />
-                    }
-                    else if (activeTab == "Details")
-                    {
-                        <DetailsTab Character="character" />
-                    }
-                    else if (activeTab == "Feats")
-                    {
-                        <FeatsTab />
-                    }
-                    else if (activeTab == "Actions")
-                    {
-                        <ActionsTab />
-                    }
+                <div class="flex gap-2 mt-4">
+                    <button @onclick="ConfirmAddWeapon" class="flex-1 bg-[#8b1a1a] hover:bg-[#6a0a0a] text-white font-semibold py-2 rounded transition-colors">Add</button>
+                    <button @onclick="() => showWeaponModal = false" class="flex-1 bg-[#e8dcc8] hover:bg-[#d8ccb8] text-[#5a3e28] font-semibold py-2 rounded transition-colors">Cancel</button>
                 </div>
             </div>
         </div>
+    }
+
+    @if (showArmorModal)
+    {
+        <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4" @onclick="() => showArmorModal = false">
+            <div class="bg-[#f5efe3] border border-[#c8b49a] rounded-lg p-6 w-full max-w-md shadow-xl" @onclick:stopPropagation>
+                <h3 class="text-lg font-bold mb-4 text-[#8b1a1a]">Add Armor / Shield</h3>
+                <div class="space-y-3">
+                    <div>
+                        <label class="text-sm font-semibold text-[#5a3e28]">Name</label>
+                        <input @bind="newArmor.Name" placeholder="e.g., Chain Mail"
+                               class="w-full mt-1 border border-[#c8b49a] rounded px-3 py-1.5 text-sm focus:outline-none focus:border-[#8b1a1a] bg-white" />
+                    </div>
+                    <div>
+                        <label class="text-sm font-semibold text-[#5a3e28]">Category</label>
+                        <select @bind="newArmor.Category"
+                                class="w-full mt-1 border border-[#c8b49a] rounded px-3 py-1.5 text-sm focus:outline-none focus:border-[#8b1a1a] bg-white">
+                            <option>Light Armor</option>
+                            <option>Medium Armor</option>
+                            <option>Heavy Armor</option>
+                            <option>Shield</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="text-sm font-semibold text-[#5a3e28]">AC Bonus</label>
+                        <input @bind="newArmor.ACBonus" type="number"
+                               class="w-full mt-1 border border-[#c8b49a] rounded px-3 py-1.5 text-sm focus:outline-none focus:border-[#8b1a1a] bg-white" />
+                    </div>
+                </div>
+                <div class="flex gap-2 mt-4">
+                    <button @onclick="ConfirmAddArmor" class="flex-1 bg-[#8b1a1a] hover:bg-[#6a0a0a] text-white font-semibold py-2 rounded transition-colors">Add</button>
+                    <button @onclick="() => showArmorModal = false" class="flex-1 bg-[#e8dcc8] hover:bg-[#d8ccb8] text-[#5a3e28] font-semibold py-2 rounded transition-colors">Cancel</button>
+                </div>
+            </div>
+        </div>
+    }
+
+    @if (showGearModal)
+    {
+        <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4" @onclick="() => showGearModal = false">
+            <div class="bg-[#f5efe3] border border-[#c8b49a] rounded-lg p-6 w-full max-w-md shadow-xl" @onclick:stopPropagation>
+                <h3 class="text-lg font-bold mb-4 text-[#8b1a1a]">Add Item</h3>
+                <div class="space-y-3">
+                    <div>
+                        <label class="text-sm font-semibold text-[#5a3e28]">Item Name</label>
+                        <input @bind="newGear.Name" placeholder="e.g., Healing Potion"
+                               class="w-full mt-1 border border-[#c8b49a] rounded px-3 py-1.5 text-sm focus:outline-none focus:border-[#8b1a1a] bg-white" />
+                    </div>
+                    <div class="flex gap-3">
+                        <div class="flex-1">
+                            <label class="text-sm font-semibold text-[#5a3e28]">Quantity</label>
+                            <input @bind="newGear.Quantity" type="number" min="1"
+                                   class="w-full mt-1 border border-[#c8b49a] rounded px-3 py-1.5 text-sm focus:outline-none focus:border-[#8b1a1a] bg-white" />
+                        </div>
+                        <div class="flex-1">
+                            <label class="text-sm font-semibold text-[#5a3e28]">Bulk</label>
+                            <input @bind="newGear.Weight" type="number" step="0.1" min="0"
+                                   class="w-full mt-1 border border-[#c8b49a] rounded px-3 py-1.5 text-sm focus:outline-none focus:border-[#8b1a1a] bg-white" />
+                        </div>
+                    </div>
+                </div>
+                <div class="flex gap-2 mt-4">
+                    <button @onclick="ConfirmAddGear" class="flex-1 bg-[#8b1a1a] hover:bg-[#6a0a0a] text-white font-semibold py-2 rounded transition-colors">Add</button>
+                    <button @onclick="() => showGearModal = false" class="flex-1 bg-[#e8dcc8] hover:bg-[#d8ccb8] text-[#5a3e28] font-semibold py-2 rounded transition-colors">Cancel</button>
+                </div>
+            </div>
+        </div>
+    }
+
+    @if (showSpellModal)
+    {
+        <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4" @onclick="() => showSpellModal = false">
+            <div class="bg-[#f5efe3] border border-[#c8b49a] rounded-lg p-6 w-full max-w-md shadow-xl" @onclick:stopPropagation>
+                <h3 class="text-lg font-bold mb-4 text-[#8b1a1a]">Add Spell</h3>
+                <div class="space-y-3">
+                    <div>
+                        <label class="text-sm font-semibold text-[#5a3e28]">Spell Name</label>
+                        <input @bind="newSpell.Name" placeholder="e.g., Fireball"
+                               class="w-full mt-1 border border-[#c8b49a] rounded px-3 py-1.5 text-sm focus:outline-none focus:border-[#8b1a1a] bg-white" />
+                    </div>
+                    <div class="flex gap-3">
+                        <div class="flex-1">
+                            <label class="text-sm font-semibold text-[#5a3e28]">Level</label>
+                            <input @bind="newSpell.Level" type="number" min="0" max="10"
+                                   class="w-full mt-1 border border-[#c8b49a] rounded px-3 py-1.5 text-sm focus:outline-none focus:border-[#8b1a1a] bg-white" />
+                        </div>
+                        <div class="flex-1">
+                            <label class="text-sm font-semibold text-[#5a3e28]">School</label>
+                            <input @bind="newSpell.School" placeholder="e.g., Evocation"
+                                   class="w-full mt-1 border border-[#c8b49a] rounded px-3 py-1.5 text-sm focus:outline-none focus:border-[#8b1a1a] bg-white" />
+                        </div>
+                    </div>
+                    <div>
+                        <label class="text-sm font-semibold text-[#5a3e28]">Cast Time</label>
+                        <input @bind="newSpell.CastTime" placeholder="e.g., 2 Actions"
+                               class="w-full mt-1 border border-[#c8b49a] rounded px-3 py-1.5 text-sm focus:outline-none focus:border-[#8b1a1a] bg-white" />
+                    </div>
+                    <div>
+                        <label class="text-sm font-semibold text-[#5a3e28]">Description</label>
+                        <textarea @bind="newSpell.Description" rows="3" placeholder="Spell description..."
+                                  class="w-full mt-1 border border-[#c8b49a] rounded px-3 py-1.5 text-sm focus:outline-none focus:border-[#8b1a1a] bg-white resize-none"></textarea>
+                    </div>
+                </div>
+                <div class="flex gap-2 mt-4">
+                    <button @onclick="ConfirmAddSpell" class="flex-1 bg-[#8b1a1a] hover:bg-[#6a0a0a] text-white font-semibold py-2 rounded transition-colors">Add</button>
+                    <button @onclick="() => showSpellModal = false" class="flex-1 bg-[#e8dcc8] hover:bg-[#d8ccb8] text-[#5a3e28] font-semibold py-2 rounded transition-colors">Cancel</button>
+                </div>
+            </div>
+        </div>
+    }
+
+    @if (showFeatModal)
+    {
+        <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4" @onclick="() => showFeatModal = false">
+            <div class="bg-[#f5efe3] border border-[#c8b49a] rounded-lg p-6 w-full max-w-md shadow-xl" @onclick:stopPropagation>
+                <h3 class="text-lg font-bold mb-4 text-[#8b1a1a]">Add @currentFeatCategory Feat</h3>
+                <div class="space-y-3">
+                    <div>
+                        <label class="text-sm font-semibold text-[#5a3e28]">Feat Name</label>
+                        <input @bind="newFeat.Name" placeholder="e.g., Power Attack"
+                               class="w-full mt-1 border border-[#c8b49a] rounded px-3 py-1.5 text-sm focus:outline-none focus:border-[#8b1a1a] bg-white" />
+                    </div>
+                    <div>
+                        <label class="text-sm font-semibold text-[#5a3e28]">Description (optional)</label>
+                        <textarea @bind="newFeat.Description" rows="3" placeholder="Feat description..."
+                                  class="w-full mt-1 border border-[#c8b49a] rounded px-3 py-1.5 text-sm focus:outline-none focus:border-[#8b1a1a] bg-white resize-none"></textarea>
+                    </div>
+                </div>
+                <div class="flex gap-2 mt-4">
+                    <button @onclick="ConfirmAddFeat" class="flex-1 bg-[#8b1a1a] hover:bg-[#6a0a0a] text-white font-semibold py-2 rounded transition-colors">Add</button>
+                    <button @onclick="() => showFeatModal = false" class="flex-1 bg-[#e8dcc8] hover:bg-[#d8ccb8] text-[#5a3e28] font-semibold py-2 rounded transition-colors">Cancel</button>
+                </div>
+            </div>
+        </div>
+    }
     </div>
 </body>
 
 @code {
+
+    // ── Tab state ──────────────────────────────────────────────────────────
     private string activeTab = "Weapons";
     private string[] tabs = { "Weapons", "Defense", "Gear", "Spells", "Pets", "Details", "Feats", "Actions" };
+    private void SetActiveTab(string tab) => activeTab = tab;
 
-    private CharacterData character = new CharacterData
+    // ── Character data ─────────────────────────────────────────────────────
+    private CharacterData character = new()
     {
-        Level = 1, XP = 0,
-        Name = "",
-        Size = "Medium", Speed = "25ft",
-        Ancestry = "Human",
-        Background = "Barkeep",
-        Class = "Fighter",
-        HeroPoints = 16,
-        FighterDC = 5,
-        Perception = 5,
-        Initiative = 0,
-        AC = 14,
-        HP = 19, MaxHP = 19,
-        Abilities = new List<AbilityScore>
+        Level = 1, XP = 0, Name = "", Size = "Medium", Speed = "25ft",
+        Ancestry = "Human", Background = "Barkeep", Class = "Fighter",
+        HeroPoints = 16, FighterDC = 5, Perception = 5, Initiative = 0,
+        AC = 14, HP = 19, MaxHP = 19,
+        Abilities = new()
         {
             new() { Abbreviation = "STR", Score = 16, Modifier = 3 },
             new() { Abbreviation = "DEX", Score = 12, Modifier = 1 },
@@ -323,36 +795,146 @@
             new() { Abbreviation = "WIS", Score = 10, Modifier = 0 },
             new() { Abbreviation = "CHA", Score = 10, Modifier = 0 },
         },
-        Saves = new List<SaveData>
+        Saves = new()
         {
             new() { Name = "Fortitude", Modifier = 6 },
-            new() { Name = "Reflex", Modifier = 4 },
-            new() { Name = "Will", Modifier = 3 },
+            new() { Name = "Reflex",    Modifier = 4 },
+            new() { Name = "Will",      Modifier = 3 },
         },
-        Skills = new List<SkillData>
+        Skills = new()
         {
-            new() { Name = "Acrobatics",  Modifier = 1,  Trained = true,  ProficiencyLetter = "D" },
-            new() { Name = "Arcana",      Modifier = 0,  Trained = false, ProficiencyLetter = "I" },
-            new() { Name = "Athletics",   Modifier = 3,  Trained = true,  ProficiencyLetter = "S" },
-            new() { Name = "Crafting",    Modifier = 0,  Trained = false, ProficiencyLetter = "I" },
-            new() { Name = "Deception",   Modifier = 0,  Trained = false, ProficiencyLetter = "C" },
-            new() { Name = "Diplomacy",   Modifier = 3,  Trained = true,  ProficiencyLetter = "C" },
-            new() { Name = "Intimidation",Modifier = 0,  Trained = false, ProficiencyLetter = "C" },
-            new() { Name = "Lore: Alcohol",Modifier= 3,  Trained = true,  ProficiencyLetter = "I" },
-            new() { Name = "Medicine",    Modifier = 0,  Trained = false, ProficiencyLetter = "W" },
-            new() { Name = "Nature",      Modifier = 0,  Trained = false, ProficiencyLetter = "W" },
-            new() { Name = "Occultism",   Modifier = 0,  Trained = false, ProficiencyLetter = "I" },
-            new() { Name = "Performance", Modifier = 0,  Trained = false, ProficiencyLetter = "C" },
-            new() { Name = "Religion",    Modifier = 0,  Trained = false, ProficiencyLetter = "W" },
-            new() { Name = "Society",     Modifier = 0,  Trained = false, ProficiencyLetter = "I" },
-            new() { Name = "Stealth",     Modifier = 1,  Trained = true,  ProficiencyLetter = "D" },
-            new() { Name = "Survival",    Modifier = 0,  Trained = false, ProficiencyLetter = "W" },
-            new() { Name = "Thievery",    Modifier = 1,  Trained = true,  ProficiencyLetter = "D" },
+            new() { Name = "Acrobatics",   Modifier = 1, Trained = true,  ProficiencyLetter = "D" },
+            new() { Name = "Arcana",       Modifier = 0, Trained = false, ProficiencyLetter = "I" },
+            new() { Name = "Athletics",    Modifier = 3, Trained = true,  ProficiencyLetter = "S" },
+            new() { Name = "Crafting",     Modifier = 0, Trained = false, ProficiencyLetter = "I" },
+            new() { Name = "Deception",    Modifier = 0, Trained = false, ProficiencyLetter = "C" },
+            new() { Name = "Diplomacy",    Modifier = 3, Trained = true,  ProficiencyLetter = "C" },
+            new() { Name = "Intimidation", Modifier = 0, Trained = false, ProficiencyLetter = "C" },
+            new() { Name = "Lore: Alcohol",Modifier = 3, Trained = true,  ProficiencyLetter = "I" },
+            new() { Name = "Medicine",     Modifier = 0, Trained = false, ProficiencyLetter = "W" },
+            new() { Name = "Nature",       Modifier = 0, Trained = false, ProficiencyLetter = "W" },
+            new() { Name = "Occultism",    Modifier = 0, Trained = false, ProficiencyLetter = "I" },
+            new() { Name = "Performance",  Modifier = 0, Trained = false, ProficiencyLetter = "C" },
+            new() { Name = "Religion",     Modifier = 0, Trained = false, ProficiencyLetter = "W" },
+            new() { Name = "Society",      Modifier = 0, Trained = false, ProficiencyLetter = "I" },
+            new() { Name = "Stealth",      Modifier = 1, Trained = true,  ProficiencyLetter = "D" },
+            new() { Name = "Survival",     Modifier = 0, Trained = false, ProficiencyLetter = "W" },
+            new() { Name = "Thievery",     Modifier = 1, Trained = true,  ProficiencyLetter = "D" },
         }
     };
 
-    private void SetActiveTab(string tab) => activeTab = tab;
+    // ── Weapons tab ────────────────────────────────────────────────────────
+    private Dictionary<string, bool> weaponCategories = new()
+    {
+        { "Simple Weapons",   true  },
+        { "Martial Weapons",  true  },
+        { "Advanced Weapons", false },
+        { "Unarmed Attacks",  false },
+    };
+    private List<WeaponData> weapons = new();
+    private bool showWeaponModal;
+    private WeaponData newWeapon = new();
+    private void ToggleWeaponCategory(string cat) => weaponCategories[cat] = !weaponCategories[cat];
+    private void ConfirmAddWeapon()
+    {
+        if (!string.IsNullOrWhiteSpace(newWeapon.Name)) weapons.Add(newWeapon);
+        newWeapon = new(); showWeaponModal = false;
+    }
 
+    // ── Defense tab ────────────────────────────────────────────────────────
+    private Dictionary<string, bool> armorCategories = new()
+    {
+        { "Unarmored",    false },
+        { "Light Armor",  true  },
+        { "Medium Armor", true  },
+        { "Heavy Armor",  false },
+    };
+    private List<ArmorData> armors = new();
+    private bool showArmorModal;
+    private ArmorData newArmor = new() { Category = "Medium Armor" };
+    private void ToggleArmorCategory(string cat) => armorCategories[cat] = !armorCategories[cat];
+    private void ConfirmAddArmor()
+    {
+        if (!string.IsNullOrWhiteSpace(newArmor.Name)) armors.Add(newArmor);
+        newArmor = new() { Category = "Medium Armor" }; showArmorModal = false;
+    }
+
+    // ── Gear tab ───────────────────────────────────────────────────────────
+    private List<GearItem> gearItems = new();
+    private bool showGearModal;
+    private GearItem newGear = new() { Quantity = 1 };
+    private void ConfirmAddGear()
+    {
+        if (!string.IsNullOrWhiteSpace(newGear.Name)) gearItems.Add(newGear);
+        newGear = new() { Quantity = 1 }; showGearModal = false;
+    }
+
+    // ── Spells tab ─────────────────────────────────────────────────────────
+    private List<SpellEntry> spells = new();
+    private bool showSpellModal;
+    private SpellEntry newSpell = new();
+    private void ConfirmAddSpell()
+    {
+        if (!string.IsNullOrWhiteSpace(newSpell.Name)) spells.Add(newSpell);
+        newSpell = new(); showSpellModal = false;
+    }
+
+    // ── Details tab ────────────────────────────────────────────────────────
+    private CharacterDetails details = new();
+    private List<CurrencyEntry> currencies = new()
+    {
+        new() { Name = "Platinum", Abbr = "PP", Color = "bg-[#9aabb8]", Amount = 0 },
+        new() { Name = "Gold",     Abbr = "GP", Color = "bg-[#c8a820]", Amount = 0 },
+        new() { Name = "Silver",   Abbr = "SP", Color = "bg-[#a8a8a8]", Amount = 0 },
+        new() { Name = "Copper",   Abbr = "CP", Color = "bg-[#b8783a]", Amount = 0 },
+    };
+
+    // ── Feats tab ──────────────────────────────────────────────────────────
+    private Dictionary<string, List<FeatEntry>> featsByCategory = new()
+    {
+        { "Ancestry Feats", new() },
+        { "Class Feats",    new() { new() { Name = "Reactive Strike", Description = "When a creature within your reach uses a manipulate or move action, you may make a Strike against it as a reaction." } } },
+        { "General Feats",  new() },
+        { "Skill Feats",    new() },
+        { "Bonus Feats",    new() {
+            new() { Name = "Shield Block",  Description = "Trigger: You have a shield raised. Block an incoming blow with your shield." },
+            new() { Name = "Hobnobber",     Description = "You are skilled at learning information through conversation and carousing." },
+        }},
+    };
+    private bool showFeatModal;
+    private string currentFeatCategory = "";
+    private FeatEntry newFeat = new();
+    private void OpenFeatModal(string cat) { currentFeatCategory = cat; newFeat = new(); showFeatModal = true; }
+    private void ConfirmAddFeat()
+    {
+        if (!string.IsNullOrWhiteSpace(newFeat.Name)) featsByCategory[currentFeatCategory].Add(newFeat);
+        showFeatModal = false;
+    }
+
+    // ── Actions tab ────────────────────────────────────────────────────────
+    private List<ActionSection> actionSections = new()
+    {
+        new() { Title = "Basic Actions", Actions = new()
+        {
+            new() { Name = "Strike",         ActionCost = "◆", Traits = "Attack",           Description = "Make an attack with a weapon or unarmed attack. MAP applies." },
+            new() { Name = "Move",           ActionCost = "◆", Traits = "Move",             Description = "Move up to your Speed." },
+            new() { Name = "Step",           ActionCost = "◆", Traits = "Move",             Description = "Move 5 feet without triggering reactions." },
+            new() { Name = "Take Cover",     ActionCost = "◆", Traits = "",                 Description = "Gain cover until the start of your next turn." },
+            new() { Name = "Raise a Shield", ActionCost = "◆", Traits = "",                 Description = "+2 circumstance bonus to AC until start of your next turn." },
+        }},
+        new() { Title = "Fighter Actions", Actions = new()
+        {
+            new() { Name = "Reactive Strike", ActionCost = "⟳", Traits = "Attack, Fighter", Description = "Trigger: A creature within reach uses a manipulate or move action. Make a Strike against the triggering creature." },
+        }},
+        new() { Title = "Skill Actions", Actions = new()
+        {
+            new() { Name = "Grapple", ActionCost = "◆", Traits = "Attack, Athletics", Description = "Attempt an Athletics check against the target's Fortitude DC." },
+            new() { Name = "Shove",   ActionCost = "◆", Traits = "Attack, Athletics", Description = "Push a creature away from you using Athletics." },
+            new() { Name = "Trip",    ActionCost = "◆", Traits = "Attack, Athletics", Description = "Knock a creature prone using Athletics." },
+        }},
+    };
+
+    // ── Model classes ──────────────────────────────────────────────────────
     public class CharacterData
     {
         public int Level { get; set; }
@@ -373,15 +955,29 @@
         public List<AbilityScore> Abilities { get; set; } = new();
         public List<SaveData> Saves { get; set; } = new();
         public List<SkillData> Skills { get; set; } = new();
-        public List<WeaponData> Weapons { get; set; } = new();
-        public List<ArmorData> Armors { get; set; } = new();
-        public List<GearItem> GearItems { get; set; } = new();
     }
 
-    public class AbilityScore { public string Abbreviation { get; set; } = ""; public int Score { get; set; } public int Modifier { get; set; } }
-    public class SaveData { public string Name { get; set; } = ""; public int Modifier { get; set; } }
-    public class SkillData { public string Name { get; set; } = ""; public int Modifier { get; set; } public bool Trained { get; set; } public string ProficiencyLetter { get; set; } = ""; }
-    public class WeaponData { public string Name { get; set; } = ""; public string Damage { get; set; } = ""; public int AttackBonus { get; set; } public string Traits { get; set; } = ""; }
-    public class ArmorData { public string Name { get; set; } = ""; public int ACBonus { get; set; } public string Category { get; set; } = ""; }
-    public class GearItem { public string Name { get; set; } = ""; public int Quantity { get; set; } public decimal Weight { get; set; } }
+    public class AbilityScore   { public string Abbreviation { get; set; } = ""; public int Score { get; set; } public int Modifier { get; set; } }
+    public class SaveData       { public string Name { get; set; } = ""; public int Modifier { get; set; } }
+    public class SkillData      { public string Name { get; set; } = ""; public int Modifier { get; set; } public bool Trained { get; set; } public string ProficiencyLetter { get; set; } = ""; }
+    public class WeaponData     { public string Name { get; set; } = ""; public string Damage { get; set; } = ""; public int AttackBonus { get; set; } public string Traits { get; set; } = ""; }
+    public class ArmorData      { public string Name { get; set; } = ""; public int ACBonus { get; set; } public string Category { get; set; } = "Medium Armor"; }
+    public class GearItem       { public string Name { get; set; } = ""; public int Quantity { get; set; } = 1; public decimal Weight { get; set; } }
+    public class SpellEntry     { public string Name { get; set; } = ""; public int Level { get; set; } public string School { get; set; } = ""; public string CastTime { get; set; } = ""; public string Description { get; set; } = ""; }
+    public class FeatEntry      { public string Name { get; set; } = ""; public string Description { get; set; } = ""; }
+    public class ActionEntry    { public string Name { get; set; } = ""; public string ActionCost { get; set; } = ""; public string Traits { get; set; } = ""; public string Description { get; set; } = ""; }
+    public class ActionSection  { public string Title { get; set; } = ""; public List<ActionEntry> Actions { get; set; } = new(); }
+    public class CurrencyEntry  { public string Name { get; set; } = ""; public string Abbr { get; set; } = ""; public string Color { get; set; } = ""; public int Amount { get; set; } }
+    public class CharacterDetails
+    {
+        public string Age { get; set; } = "";
+        public string Gender { get; set; } = "";
+        public string Height { get; set; } = "";
+        public string Weight { get; set; } = "";
+        public string Alignment { get; set; } = "";
+        public string Deity { get; set; } = "";
+        public string Appearance { get; set; } = "";
+        public string Personality { get; set; } = "";
+        public string Backstory { get; set; } = "";
+    }
 }
