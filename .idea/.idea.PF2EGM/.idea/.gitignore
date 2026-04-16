@@ -1,4 +1,4 @@
-﻿# Default ignored files
+# Default ignored files
 /shelf/
 /workspace.xml
 # Rider ignored files
@@ -6,8 +6,10 @@
 /contentModel.xml
 /projectSettingsUpdater.xml
 /modules.xml
-# Editor-based HTTP Client requests
-/httpRequests/
+# Ignored default folder with query files
+/queries/
 # Datasource local storage ignored files
 /dataSources/
 /dataSources.local.xml
+# Editor-based HTTP Client requests
+/httpRequests/

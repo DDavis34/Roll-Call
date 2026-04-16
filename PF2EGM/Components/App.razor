@@ -10,15 +10,17 @@
     <link rel="stylesheet" href="@Assets["app.css"]"/>
     <link rel="stylesheet" href="@Assets["PF2EGM.styles.css"]"/>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="app.css" rel="stylesheet" />
     <ImportMap/>
     <link rel="icon" type="image/png" href="favicon.png"/>
     <HeadOutlet/>
 </head>
 
 <body>
-<Routes/>
-<ReconnectModal/>
-<script src="@Assets["_framework/blazor.web.js"]"></script>
+    <Routes/>
+    <ReconnectModal/>
+    <script src="_content/LumexUI/js/LumexUI.js" type="module"></script>
+    <script src="@Assets["_framework/blazor.web.js"]"></script>
 </body>
 
 </html>

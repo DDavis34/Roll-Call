@@ -1,14 +1,41 @@
 using System.Text.Json;
 using PF2EGM.Components;
+using Supabase;
+using PF2EGM.Services;
+using LumexUI.Extensions;
 using PF2EGM.Models;
 
 var builder = WebApplication.CreateBuilder(args);
+
+var supabaseUrl = builder.Configuration["Supabase:Url"]!;
+var supabaseKey = builder.Configuration["Supabase:AnonKey"]!;
+
+builder.Services.AddSingleton(_ =>
+{
+    var options = new SupabaseOptions
+    {
+        AutoRefreshToken    = true,
+        AutoConnectRealtime = false   // enable if you need Realtime
+    };
+    return new Supabase.Client(supabaseUrl, supabaseKey, options);
+});
+
+
+builder.Services.AddScoped<ISupabaseAuthService, SupabaseAuthService>();
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
+builder.Services.AddLumexServices();
+
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var supabase = scope.ServiceProvider.GetRequiredService<Supabase.Client>();
+    await supabase.InitializeAsync();
+}
 
 try 
 {
@@ -52,3 +79,4 @@ app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
 
 app.Run();
+
