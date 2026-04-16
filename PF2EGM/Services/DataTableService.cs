@@ -57,7 +57,7 @@ public class DataTableService : IDataTableService
 
     public async Task LoadAllAsync(CancellationToken ct = default)
     {
-        var dataDir = Path.Combine(_env.WebRootPath, "data");
+        var dataDir = Path.Combine(_env.ContentRootPath, "DataTables");
 
         _ancestries.AddRange(await LoadAsync<Ancestry>(dataDir, "AncestriesDataTable.json", ct));
         _armors.AddRange(await LoadAsync<Armor>(dataDir, "ArmorDataTable.json", ct));
