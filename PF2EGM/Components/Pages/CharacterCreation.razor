@@ -248,15 +248,14 @@
             <div class="bg-[#e8dcc8] border-b border-[#c8b49a] flex flex-wrap">
                 @foreach (var tab in tabs)
                 {
-                    <button @onclick="() => SetActiveTab(tab)"
-                            class="px-4 py-2 text-sm font-semibold border-b-2 transition-colors @(activeTab == tab ? "border-[#8b1a1a] text-[#8b1a1a] bg-[#f5efe3]" : "border-transparent text-[#5a3e28] hover:text-[#8b1a1a] hover:bg-[#f0e8d8]")">
+                    <button @onclick="() => SetActiveTab(tab)" class="@TabClass(tab)">
                         @tab
                     </button>
                 }
             </div>
 
             <!-- Tab Content -->
-            <div class="flex-1 p-4 bg-[#f5efe3]">
+            <div class="flex-1 p-4 bg-[#f5efe3] overflow-y-auto" style="max-height: calc(100vh - 190px);">
 
                 <!-- ─── WEAPONS ─────────────────────────────────────────── -->
                 @if (activeTab == "Weapons")
@@ -309,9 +308,9 @@
                     </div>
                 }
 
-                <!-- ─── DEFENSE ─────────────────────────────────────────── -->
                 else if (activeTab == "Defense")
                 {
+                    <!-- ─── DEFENSE ─────────────────────────────────────────── -->
                     <h3 class="text-base font-bold text-[#8b1a1a] mb-3">Defense</h3>
 
                     <div class="flex flex-wrap gap-2 mb-4">
@@ -355,9 +354,9 @@
                     }
                 }
 
-                <!-- ─── GEAR ────────────────────────────────────────────── -->
                 else if (activeTab == "Gear")
                 {
+                    <!-- ─── GEAR ────────────────────────────────────────────── -->
                     <h3 class="text-base font-bold text-[#8b1a1a] mb-3">Gear & Equipment</h3>
 
                     <button @onclick="() => showGearModal = true"
@@ -400,9 +399,9 @@
                     }
                 }
 
-                <!-- ─── SPELLS ───────────────────────────────────────────── -->
                 else if (activeTab == "Spells")
                 {
+                    <!-- ─── SPELLS ───────────────────────────────────────────── -->
                     <h3 class="text-base font-bold text-[#8b1a1a] mb-3">Spells</h3>
 
                     @if (!spells.Any())
@@ -443,9 +442,9 @@
                     </button>
                 }
 
-                <!-- ─── PETS ─────────────────────────────────────────────── -->
                 else if (activeTab == "Pets")
                 {
+                    <!-- ─── PETS ─────────────────────────────────────────────── -->
                     <h3 class="text-base font-bold text-[#8b1a1a] mb-3">Animal Companions & Familiars</h3>
                     <div class="text-center text-[#9a8a7a] text-sm py-8">
                         <div class="text-4xl mb-3">🐾</div>
@@ -453,9 +452,9 @@
                     </div>
                 }
 
-                <!-- ─── DETAILS ──────────────────────────────────────────── -->
                 else if (activeTab == "Details")
                 {
+                    <!-- ─── DETAILS ──────────────────────────────────────────── -->
                     <h3 class="text-base font-bold text-[#8b1a1a] mb-3">Character Details</h3>
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
@@ -526,9 +525,9 @@
                     </div>
                 }
 
-                <!-- ─── FEATS ─────────────────────────────────────────────── -->
                 else if (activeTab == "Feats")
                 {
+                    <!-- ─── FEATS ─────────────────────────────────────────────── -->
                     <h3 class="text-base font-bold text-[#8b1a1a] mb-3">Feats & Abilities</h3>
 
                     @foreach (var category in featsByCategory.Keys)
@@ -564,15 +563,15 @@
                     }
                 }
 
-                <!-- ─── ACTIONS ───────────────────────────────────────────── -->
                 else if (activeTab == "Actions")
                 {
+                    <!-- ─── ACTIONS ───────────────────────────────────────────── -->
                     <h3 class="text-base font-bold text-[#8b1a1a] mb-3">Actions & Activities</h3>
 
                     @foreach (var section in actionSections)
                     {
                         <div class="mb-5">
-                            <div class="text-sm font-bold text-[#5a3e28] border-b border-[#c8b49a] pb-1 mb-2">/*section.Title*/</div>
+                            <div class="text-sm font-bold text-[#5a3e28] border-b border-[#c8b49a] pb-1 mb-2"></div>
                             <div class="space-y-2">
                                 @foreach (var action in section.Actions)
                                 {
@@ -778,6 +777,10 @@
     private string activeTab = "Weapons";
     private string[] tabs = { "Weapons", "Defense", "Gear", "Spells", "Pets", "Details", "Feats", "Actions" };
     private void SetActiveTab(string tab) => activeTab = tab;
+
+    private string TabClass(string tab) => activeTab == tab
+        ? "border-[#8b1a1a] text-[#8b1a1a] bg-[#f5efe3] px-4 py-2 text-sm font-semibold border-b-2 transition-colors"
+        : "border-transparent text-[#5a3e28] hover:text-[#8b1a1a] hover:bg-[#f0e8d8] px-4 py-2 text-sm font-semibold border-b-2 transition-colors";
 
     // ── Character data ─────────────────────────────────────────────────────
     private CharacterData character = new()
