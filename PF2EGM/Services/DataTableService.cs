@@ -14,6 +14,7 @@ public interface IDataTableService
     IReadOnlyList<Item> Items { get; }
     IReadOnlyList<Ritual> Rituals { get; }
     IReadOnlyList<Spell> Spells { get; }
+    IReadOnlyList<Trait> Traits { get; }
 
     Task LoadAllAsync(CancellationToken ct = default);
 }
@@ -38,6 +39,7 @@ public class DataTableService : IDataTableService
     private readonly ILogger<DataTableService> _logger;
     private readonly List<Ritual> _rituals = [];
     private readonly List<Spell> _spells = [];
+    private readonly List<Trait> _traits = [];
 
     public DataTableService(IWebHostEnvironment env, ILogger<DataTableService> logger)
     {
@@ -54,6 +56,7 @@ public class DataTableService : IDataTableService
     public IReadOnlyList<Item> Items => _items;
     public IReadOnlyList<Ritual> Rituals => _rituals;
     public IReadOnlyList<Spell> Spells => _spells;
+    public IReadOnlyList<Trait> Traits => _traits;
 
     public async Task LoadAllAsync(CancellationToken ct = default)
     {
@@ -68,6 +71,7 @@ public class DataTableService : IDataTableService
         _items.AddRange(await LoadAsync<Item>(dataDir, "ItemsDataTable.json", ct));
         _rituals.AddRange(await LoadAsync<Ritual>(dataDir, "RitualsDataTable.json", ct));
         _spells.AddRange(await LoadAsync<Spell>(dataDir, "SpellsDataTable.json", ct));
+        _traits.AddRange(await LoadAsync<Trait>(dataDir, "TraitsDataTable.json", ct));
 
         _logger.LogInformation(
             "DataTableService loaded: {A} ancestries, {Ar} armors, {B} backgrounds, " +
