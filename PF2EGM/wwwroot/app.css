@@ -62,3 +62,29 @@ h1:focus {
 .form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
     text-align: start;
 }
+
+.auth-wrapper {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+}
+ 
+.auth-card {
+    width: 100%;
+    max-width: 420px;
+}
+ 
+.brand-mark {
+    font-size: 2rem;
+    color: var(--lumex-primary);
+    margin-bottom: 0.25rem;
+    filter: drop-shadow(0 0 12px color-mix(in srgb, var(--lumex-primary) 60%, transparent));
+    animation: brand-pulse 3s ease-in-out infinite;
+}
+ 
+@keyframes brand-pulse {
+    0%, 100% { filter: drop-shadow(0 0 8px color-mix(in srgb, var(--lumex-primary) 50%, transparent)); }
+    50%       { filter: drop-shadow(0 0 20px color-mix(in srgb, var(--lumex-primary) 90%, transparent)); }
+}

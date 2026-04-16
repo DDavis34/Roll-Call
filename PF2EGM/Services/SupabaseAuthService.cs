@@ -25,13 +25,15 @@ public class SupabaseAuthService : ISupabaseAuthService
         _client = client;
         _logger  = logger;
     }
+
+    //get sign in data
     public async Task<AuthResult> SignInAsync(string email, string password)
     {
         try
         {
             var session = await _client.Auth.SignIn(email, password);
             return session?.User is not null
-                ? new AuthResult(true)
+                ? new AuthResult(true) //authenticate sign in data from database
                 : new AuthResult(false, "Sign-in failed. Please check your credentials.");
         }
         catch (GotrueException ex)
@@ -45,13 +47,15 @@ public class SupabaseAuthService : ISupabaseAuthService
             return new AuthResult(false, "An unexpected error occurred.");
         }
     }
+
+    //get sign up data
     public async Task<AuthResult> SignUpAsync(string email, string password)
     {
         try
         {
             var session = await _client.Auth.SignUp(email, password);
             return session?.User is not null
-                ? new AuthResult(true)
+                ? new AuthResult(true) //create new sign in data in database
                 : new AuthResult(false, "Sign-up failed.");
         }
         catch (GotrueException ex)
