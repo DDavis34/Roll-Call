@@ -31,15 +31,15 @@
                 <DataAnnotationsValidator />
 
                 <div class="flex flex-col gap-4">
-                    <LumexTextbox @bind-Value="loginModel.Email"
-                                  Type="@InputType.Email"
-                                  Label="Email"
-                                  Placeholder="you@example.com"
-                                  Variant="@InputVariant.Flat"
-                                  LabelPlacement="@LabelPlacement.Outside"
-                                  Required="@true"
-                                  ErrorMessage="@emailError"
-                                  Invalid="@(!string.IsNullOrEmpty(emailError))" />
+                    <div class="flex flex-col gap-1">
+                        <span class="text-xs font-medium text-default-600">Email</span>
+                        <LumexTextbox @bind-Value="loginModel.Email"
+                                      Type="@InputType.Email"
+                                      Placeholder="you@example.com"
+                                      Variant="@InputVariant.Flat"
+                                      ErrorMessage="@emailError"
+                                      Invalid="@(!string.IsNullOrEmpty(emailError))" />
+                    </div>
 
                     <div class="flex flex-col gap-1">
                         <div class="flex justify-between items-center">
