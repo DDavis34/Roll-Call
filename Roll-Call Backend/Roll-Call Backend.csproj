@@ -11,10 +11,4 @@
         <PackageReference Include="Supabase" Version="1.1.1" />
     </ItemGroup>
 
-    <ItemGroup>
-        <Content Include="DataTables\**\*.json">
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </Content>
-    </ItemGroup>
-
 </Project>
