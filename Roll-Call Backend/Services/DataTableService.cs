@@ -1,7 +1,7 @@
-﻿using System.Text.Json;
-using PF2EGM.Models;
+using System.Text.Json;
+using RollCallBackend.Models;
 
-namespace PF2EGM.Services;
+namespace RollCallBackend.Services;
 
 public interface IDataTableService
 {
@@ -32,14 +32,14 @@ public class DataTableService : IDataTableService
     private readonly List<Background> _backgrounds = [];
     private readonly List<Class> _classes = [];
     private readonly List<Creature> _creatures = [];
-
-    private readonly IWebHostEnvironment _env;
     private readonly List<Feat> _feats = [];
     private readonly List<Item> _items = [];
-    private readonly ILogger<DataTableService> _logger;
     private readonly List<Ritual> _rituals = [];
     private readonly List<Spell> _spells = [];
     private readonly List<Trait> _traits = [];
+
+    private readonly IWebHostEnvironment _env;
+    private readonly ILogger<DataTableService> _logger;
 
     public DataTableService(IWebHostEnvironment env, ILogger<DataTableService> logger)
     {
