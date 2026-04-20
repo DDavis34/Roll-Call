@@ -9,6 +9,7 @@ public interface IApiAuthService
     Task SignOutAsync();
     Task<string> GetOAuthUrlAsync(string provider);
     Task<bool> IsAuthenticatedAsync();
+    Task<AuthResult> SetSessionAsync(string accessToken, string refreshToken);
 }
 
 public record AuthResult(bool IsSuccess, string? ErrorMessage = null);
@@ -97,6 +98,24 @@ public class ApiAuthService : IApiAuthService
         {
             _logger.LogError(ex, "Auth status request failed");
             return false;
+        }
+    }
+
+    public async Task<AuthResult> SetSessionAsync(string accessToken, string refreshToken)
+    {
+        try
+        {
+            var response = await _http.PostAsJsonAsync("api/auth/session",
+                new { accessToken, refreshToken });
+            var result = await response.Content.ReadFromJsonAsync<ApiAuthResponse>();
+            return result is not null
+                ? new AuthResult(result.IsSuccess, result.ErrorMessage)
+                : new AuthResult(false, "Unexpected response from server.");
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Set session request failed");
+            return new AuthResult(false, "Could not establish session.");
         }
     }
 
