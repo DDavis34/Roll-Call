@@ -52,7 +52,18 @@ public class AuthController : ControllerBase
         var isAuthenticated = await _authService.IsAuthenticatedAsync();
         return Ok(new { isAuthenticated });
     }
+
+    [HttpPost("session")]
+    public async Task<IActionResult> SetSession([FromBody] SessionRequest request)
+    {
+        var result = await _authService.SetSessionAsync(request.AccessToken, request.RefreshToken);
+        return result.IsSuccess
+            ? Ok(new AuthResponse(true, null))
+            : BadRequest(new AuthResponse(false, result.ErrorMessage));
+    }
 }
+
+public record SessionRequest(string AccessToken, string RefreshToken);
 
 public record AuthRequest(string Email, string Password);
 public record AuthResponse(bool IsSuccess, string? ErrorMessage);

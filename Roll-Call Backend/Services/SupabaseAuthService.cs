@@ -11,6 +11,7 @@ public interface ISupabaseAuthService
     Task SignOutAsync();
     Task<string> GetOAuthUrlAsync(string provider, string redirectTo);
     Task<bool> IsAuthenticatedAsync();
+    Task<AuthResult> SetSessionAsync(string accessToken, string refreshToken);
 }
 
 public record AuthResult(bool IsSuccess, string? ErrorMessage = null);
@@ -75,6 +76,20 @@ public class SupabaseAuthService : ISupabaseAuthService
     {
         var session = _client.Auth.CurrentSession;
         return session?.User is not null && session.ExpiresAt() > DateTime.UtcNow;
+    }
+
+    public async Task<AuthResult> SetSessionAsync(string accessToken, string refreshToken)
+    {
+        try
+        {
+            await _client.Auth.SetSession(accessToken, refreshToken);
+            return new AuthResult(true);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Failed to set OAuth session");
+            return new AuthResult(false, "Failed to establish session.");
+        }
     }
 
     private static string FriendlyError(string raw) => raw.ToLower() switch
