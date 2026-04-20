@@ -101,7 +101,7 @@
 
 @code {
     [SupplyParameterFromForm]
-    private LoginModel loginModel { get; set; } = default!;
+    private LoginModel loginModel { get; set; } = new();
 
     private string? errorMessage;
     private string? emailError;
