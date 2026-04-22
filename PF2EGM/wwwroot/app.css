@@ -6,6 +6,24 @@ html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
+/*-------------------------*/
+/* Custom scrollbar styles */
+
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: #9e7604;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #ffb900; 
+    border-radius: 3px;
+}
+
+/*-------------------------*/
+
 a, .btn-link {
     color: #006bb7;
 }
