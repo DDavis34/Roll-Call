@@ -1,6 +1,23 @@
 @import "tailwindcss";
 @import "../bin/lumexui/theme";
 @source "../bin/lumexui/*.cs";
+@source "./**/*.razor";
+@source "../**/*.razor";
+
+:root {
+    --lumex-color-primary-DEFAULT: #1e3a5f;
+    --lumex-color-primary-50:  #e8eef5;
+    --lumex-color-primary-100: #c5d4e8;
+    --lumex-color-primary-200: #9eb8d8;
+    --lumex-color-primary-300: #779cc8;
+    --lumex-color-primary-400: #5a86bb;
+    --lumex-color-primary-500: #1e3a5f;
+    --lumex-color-primary-600: #1a3356;
+    --lumex-color-primary-700: #152a4a;
+    --lumex-color-primary-800: #10213d;
+    --lumex-color-primary-900: #091628;
+    --lumex-color-primary-foreground: #ffffff;
+}
 
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -64,9 +81,9 @@ h1:focus {
     color: white;
 }
 
-    .blazor-error-boundary::after {
-        content: "An error has occurred."
-    }
+.blazor-error-boundary::after {
+    content: "An error has occurred."
+}
 
 .darker-border-checkbox.form-check-input {
     border-color: #929292;
@@ -87,6 +104,7 @@ h1:focus {
     align-items: center;
     justify-content: center;
     padding: 1.5rem;
+    background: var(--lumex-background);
 }
  
 .auth-card {
