@@ -5,7 +5,8 @@
 @using LumexUI
 @using LumexUI.Common
 @using LumexUI.Shared.Icons
-@inject IApiAuthService AuthService
+@inject ISupabaseAuthService AuthService
+@inject AuthStateService AuthState
 @inject NavigationManager Nav
 
 @rendermode InteractiveServer
@@ -141,7 +142,10 @@
             var result = await AuthService.SignInAsync(loginModel.Email, loginModel.Password);
 
             if (result.IsSuccess)
-                Nav.NavigateTo("/dashboard");
+            {
+                AuthState.NotifyStateChanged();
+                Nav.NavigateTo("/");
+            }
             else
                 errorMessage = result.ErrorMessage ?? "Invalid email or password.";
         }
