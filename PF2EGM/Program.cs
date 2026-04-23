@@ -12,9 +12,7 @@ builder.Services.AddHttpClient<IApiAuthService, ApiAuthService>(client =>
 });
 
 
-builder.Services.AddScoped<ISupabaseAuthService, SupabaseAuthService>();
 builder.Services.AddScoped<AuthStateService>();
-builder.Services.AddSingleton<IDataTableService, DataTableService>();
 
 // Add services to the container.
 builder.Services.AddRazorComponents()

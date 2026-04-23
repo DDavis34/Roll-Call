@@ -12,8 +12,6 @@ public interface IApiAuthService
     Task<AuthResult> SetSessionAsync(string accessToken, string refreshToken);
 }
 
-public record AuthResult(bool IsSuccess, string? ErrorMessage = null);
-
 public class ApiAuthService : IApiAuthService
 {
     private readonly HttpClient _http;
