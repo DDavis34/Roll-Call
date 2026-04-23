@@ -22,6 +22,7 @@ builder.Services.AddSingleton(_ =>
 
 
 builder.Services.AddScoped<ISupabaseAuthService, SupabaseAuthService>();
+builder.Services.AddScoped<AuthStateService>();
 builder.Services.AddSingleton<IDataTableService, DataTableService>();
 
 // Add services to the container.

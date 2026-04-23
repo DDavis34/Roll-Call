@@ -2,6 +2,11 @@
 @using LumexUI.Common
 @using LumexUI.Shared.Icons
 
+@using PF2EGM.Services
+@inject ISupabaseAuthService AuthService
+
+@rendermode InteractiveServer
+
 <LumexNavbar Height="4.5rem"
              Bordered="@true"
              Sticky="@true">
@@ -47,22 +52,35 @@
 
     <LumexNavbarContent Align="@Align.End">
         <LumexNavbarItem>
-            <LumexButton Size="@Size.Large"
-                        Color="@ThemeColor.Primary"
-                        Variant="@Variant.Light">
-                <LumexLink Href="/login" Class="text-white">
-                    Log In
-                </LumexLink>
-            </LumexButton>
+            @if (isAuthenticated)
+            {
+                <LumexButton Size="@Size.Small"
+                             Color="@ThemeColor.Primary"
+                             Variant="@Variant.Flat">
+                    <LumexLink Href="/account" Class="text-white">
+                        Account
+                    </LumexLink>
+                </LumexButton>
+            }
+            else
+            {
+                <LumexButton Size="@Size.Small"
+                             Color="@ThemeColor.Primary"
+                             Variant="@Variant.Flat">
+                    <LumexLink Href="/login" Class="text-white">
+                        Log In
+                    </LumexLink>
+                </LumexButton>
+            }
         </LumexNavbarItem>
     </LumexNavbarContent>
 </LumexNavbar>
 
+@code {
+    private bool isAuthenticated;
 
-@* @if (User.Identity.IsAuthenticated) {
-                    <span>Welcome, @User.Identity.Name!</span>
-                } else {
-                    <LumexLink Href="/login" Color="@ThemeColor.None">
-                        Log In
-                    </LumexLink>
-                } *@
+    protected override async Task OnInitializedAsync()
+    {
+        isAuthenticated = await AuthService.IsAuthenticatedAsync();
+    }
+}
