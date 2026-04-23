@@ -8,6 +8,8 @@
 @inject ISupabaseAuthService AuthService
 @inject NavigationManager Nav
 
+@rendermode InteractiveServer
+
 <PageTitle>Sign In</PageTitle>
 
 <div class="auth-wrapper">
@@ -36,7 +38,7 @@
                                   Label="Email"
                                   Placeholder="you@example.com"
                                   Variant="@InputVariant.Flat"
-                                  LabelPlacement="@LabelPlacement.Outside"
+                                  LabelPlacement="@LabelPlacement.Inside"
                                   Required="@true"
                                   ErrorMessage="@emailError"
                                   Invalid="@(!string.IsNullOrEmpty(emailError))" />
@@ -101,12 +103,17 @@
 
 @code {
     [SupplyParameterFromForm]
-    private LoginModel loginModel { get; set; } = default!;
+    private LoginModel loginModel { get; set; } = new();
 
     private string? errorMessage;
     private string? emailError;
     private string? passwordError;
     private bool isLoading = false;
+
+    protected override void OnInitialized()
+    {
+        loginModel ??= new();
+    }
 
     private async Task HandleLogin()
     {

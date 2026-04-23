@@ -1,23 +1,20 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
 
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <base href="/"/>
     <ResourcePreloader/>
-    <link rel="stylesheet" href="@Assets["lib/bootstrap/dist/css/bootstrap.min.css"]"/>
-    <link rel="stylesheet" href="@Assets["app.css"]"/>
+    <link rel="stylesheet" href="app.built.css" />
     <link rel="stylesheet" href="@Assets["PF2EGM.styles.css"]"/>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="app.css" rel="stylesheet" />
     <ImportMap/>
     <link rel="icon" type="image/png" href="favicon.png"/>
     <HeadOutlet @rendermode="InteractiveServer"/>
 </head>
 
 <body>
-    <Routes @rendermode="InteractiveServer"/>
+    <Routes @rendermode="InteractiveServer" />
     <ReconnectModal/>
     <script src="_content/LumexUI/js/LumexUI.js" type="module"></script>
     <script src="@Assets["_framework/blazor.web.js"]"></script>
