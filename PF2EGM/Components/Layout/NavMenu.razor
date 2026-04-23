@@ -1,32 +1,68 @@
-﻿@using PF2EGM.Components.Pages
-<nav class="bg-gray-800 shadow-lg w-full">
-    <div class="w-full px-4 py-4 flex flex-wrap justify-between items-center">
-        
-        <!-- Logo + Hamburger row -->
-        <div class="flex justify-between items-center w-full lg:w-auto">
-            <h1 class="text-2xl font-bold text-amber-400">Roll Call</h1>
+@using LumexUI
+@using LumexUI.Common
+@using LumexUI.Shared.Icons
 
-            <!-- Hamburger button (hidden on lg+) -->
-            <button 
-                onclick="this.closest('nav').querySelector('#nav-menu').classList.toggle('hidden')"
-                class="lg:hidden text-gray-300 hover:text-amber-400 focus:outline-none"
-                aria-label="Toggle navigation">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
-            </button>
-        </div>
+<LumexNavbar Height="4.5rem"
+             Bordered="@true"
+             Sticky="@true">
+    <LumexNavbarBrand>
+        <span class="flex items-center gap-2">
+            <span class="nav-brand-mark text-2xl">⬡</span>
+            <span class="text-2xl font-bold text-amber-400">Roll Call</span>
+        </span>
+    </LumexNavbarBrand>
 
-        <!-- Nav links -->
-        <div id="nav-menu" class="hidden w-full lg:flex lg:w-auto lg:space-x-6 flex-col lg:flex-row mt-3 lg:mt-0 space-y-2 lg:space-y-0">
-            <a href="/" class="text-gray-300 hover:text-amber-400 block lg:inline">Home</a>
-            <a href="/CharacterSheet" class="text-gray-300 hover:text-amber-400 block lg:inline">Create Character</a>
-            <a href="#" class="text-gray-300 hover:text-amber-400 block lg:inline">Saved Characters</a>
-            <a href="#" class="text-gray-300 hover:text-amber-400 block lg:inline">Campaigns</a>
-            <a href="#" class="text-gray-300 hover:text-amber-400 block lg:inline">Tutorials</a>
-            <a href="#" class="text-gray-300 hover:text-amber-400 block lg:inline">Account</a>
-            <a href="/login" class="text-gray-300 hover:text-amber-400 block lg:inline">Login</a>
-        </div>
-    </div>
-</nav>
+    <LumexNavbarContent Class="hidden sm:flex gap-4">
+        <LumexNavbarItem>
+            <LumexLink Href="/" Class="text-white hover:text-amber-400 transition-colors">
+                Home
+            </LumexLink>
+        </LumexNavbarItem>
+        <LumexNavbarItem>
+            <LumexLink Href="/create-character" Class="text-white hover:text-amber-400 transition-colors">
+                Create Character
+            </LumexLink>
+        </LumexNavbarItem>
+        <LumexNavbarItem>
+            <LumexLink Href="/saved-characters" Class="text-white hover:text-amber-400 transition-colors">
+                Saved Characters
+            </LumexLink>
+        </LumexNavbarItem>
+        <LumexNavbarItem>
+            <LumexLink Href="/campaigns" Class="text-white hover:text-amber-400 transition-colors">
+                Campaigns
+            </LumexLink>
+        </LumexNavbarItem>
+        <LumexNavbarItem>
+            <LumexLink Href="/tutorials" Class="text-white hover:text-amber-400 transition-colors">
+                Tutorials
+            </LumexLink>
+        </LumexNavbarItem>
+        <LumexNavbarItem>
+            <LumexLink Href="/account" Class="text-white hover:text-amber-400 transition-colors">
+                Account
+            </LumexLink>
+        </LumexNavbarItem>
+    </LumexNavbarContent>
+
+    <LumexNavbarContent Align="@Align.End">
+        <LumexNavbarItem>
+            <LumexButton Size="@Size.Large"
+                        Color="@ThemeColor.Primary"
+                        Variant="@Variant.Light">
+                <LumexLink Href="/login" Class="text-white">
+                    Log In
+                </LumexLink>
+            </LumexButton>
+        </LumexNavbarItem>
+    </LumexNavbarContent>
+</LumexNavbar>
+
+
+@* @if (User.Identity.IsAuthenticated) {
+                    <span>Welcome, @User.Identity.Name!</span>
+                } else {
+                    <LumexLink Href="/login" Color="@ThemeColor.None">
+                        Log In
+                    </LumexLink>
+                } *@

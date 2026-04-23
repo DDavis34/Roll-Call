@@ -5,9 +5,12 @@ Microsoft.AspNetCore.Components.Forms
 @using PF2EGM.Services
 @using LumexUI
 @using LumexUI.Common
-@using LumexUI.Shared.Icons
-@inject IApiAuthService AuthService
+@using LumexUI.Shared 
+
+@inject ISupabaseAuthService AuthService
 @inject NavigationManager Nav
+
+@rendermode InteractiveServer
 
 <PageTitle>Create Account</PageTitle>
 
@@ -66,7 +69,7 @@ Microsoft.AspNetCore.Components.Forms
                                       Label="Confirm Password"
                                       Placeholder="••••••••"
                                       Variant="@InputVariant.Flat"
-                                      LabelPlacement="@LabelPlacement.Outside"
+                                      LabelPlacement="@LabelPlacement.Inside"
                                       Required="@true"
                                       ErrorMessage="@confirmError"
                                       Invalid="@(!string.IsNullOrEmpty(confirmError))" />
@@ -127,6 +130,11 @@ Microsoft.AspNetCore.Components.Forms
     private string? confirmError;
     private bool isLoading = false;
     private bool registrationSuccess = false;
+
+    protected override void OnInitialized()
+    {
+        registerModel ??= new();
+    }
 
     private async Task HandleRegister()
     {
