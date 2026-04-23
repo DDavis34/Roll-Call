@@ -13,7 +13,10 @@ builder.Services.AddHttpClient<IApiAuthService, ApiAuthService>(client =>
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
-    .AddInteractiveServerComponents();
+    .AddInteractiveServerComponents(options =>
+    {
+        options.DetailedErrors = builder.Environment.IsDevelopment();
+    });
 
 builder.Services.AddLumexServices();
 
