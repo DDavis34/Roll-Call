@@ -3,8 +3,13 @@
 @using System.ComponentModel.DataAnnotations
 @using PF2EGM.Services
 @using LumexUI
+@using LumexUI.Common
+@using LumexUI.Shared 
+
 @inject ISupabaseAuthService AuthService
 @inject NavigationManager Nav
+
+@rendermode InteractiveServer
 
 <PageTitle>Create Account</PageTitle>
 
@@ -63,7 +68,7 @@
                                       Label="Confirm Password"
                                       Placeholder="••••••••"
                                       Variant="@InputVariant.Flat"
-                                      LabelPlacement="@LabelPlacement.Outside"
+                                      LabelPlacement="@LabelPlacement.Inside"
                                       Required="@true"
                                       ErrorMessage="@confirmError"
                                       Invalid="@(!string.IsNullOrEmpty(confirmError))" />
@@ -74,7 +79,7 @@
                                      Disabled="@isLoading">
                             @if (isLoading)
                             {
-                                <LumexSpinner Size="@Size.Small" Color="@ThemeColor.Current" />
+                                <LumexSpinner Size="@Size.Small" Color="@ThemeColor.Primary" />
                                 <span>Creating account…</span>
                             }
                             else
@@ -91,7 +96,7 @@
                     <LumexDivider Class="flex-1" />
                 </div>
 
-                <LumexButton Variant="@ButtonVariant.Outlined"
+                <LumexButton Variant="@Variant.Outlined"
                              Class="w-full"
                              OnClick="HandleGoogleLogin">
                     <svg width="18" height="18" viewBox="0 0 18 18" class="shrink-0">
@@ -124,6 +129,11 @@
     private string? confirmError;
     private bool isLoading = false;
     private bool registrationSuccess = false;
+
+    protected override void OnInitialized()
+    {
+        registerModel ??= new();
+    }
 
     private async Task HandleRegister()
     {
