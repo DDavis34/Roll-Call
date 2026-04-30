@@ -26,12 +26,7 @@ builder.Services.AddSingleton(_ =>
 builder.Services.AddScoped<ISupabaseAuthService, SupabaseAuthService>();
 builder.Services.AddSingleton<IDataTableService, DataTableService>();
 
-builder.Services.AddHttpClient("aon", client =>
-{
-    client.BaseAddress = new Uri("https://elasticsearch.aonprd.com");
-    client.DefaultRequestHeaders.Add("Accept", "application/json");
-    client.Timeout = TimeSpan.FromMinutes(5);
-});
+builder.Services.AddHttpClient();
 builder.Services.AddScoped<Scrapper>();
 
 builder.Services.AddControllers();

@@ -1,7 +1,6 @@
-using System.Net.Http.Json;
 using System.Text;
-using System.Text.Json;
 using System.Text.RegularExpressions;
+using System.Xml.Linq;
 using HtmlAgilityPack;
 using RollCallBackend.Models;
 
@@ -9,10 +8,9 @@ namespace RollCallBackend.Services;
 
 public class Scrapper
 {
-    private const string AonBase      = "https://2e.aonprd.com";
-    private const string SearchUrl    = "https://elasticsearch.aonprd.com/aon/_search";
-    private const int    EsPageSize   = 1000;
-    private static readonly TimeSpan  RequestDelay = TimeSpan.FromMilliseconds(350);
+    private const string AonBase     = "https://2e.aonprd.com";
+    private const string SitemapUrl  = "https://2e.aonprd.com/sitemap.xml";
+    private static readonly TimeSpan RequestDelay = TimeSpan.FromMilliseconds(350);
 
     private readonly IHttpClientFactory    _httpFactory;
     private readonly IWebHostEnvironment   _env;
@@ -151,60 +149,109 @@ public class Scrapper
     }
 
     /// <summary>
-    /// Uses the AoN Elasticsearch API to discover page URLs for categories whose
-    /// list pages are JS-rendered. Only the "url" field is requested — no game data.
+    /// Discovers all URLs for a given page type (e.g. "Feats.aspx").
+    /// Tries AoN's public sitemap.xml first; falls back to sequential ID iteration
+    /// if the sitemap is unavailable or returns no matches.
     /// </summary>
-    private async Task<List<string>> DiscoverUrlsFromApiAsync(
-        string category, CancellationToken ct, string? extraFilter = null)
+    private async Task<List<string>> DiscoverUrlsAsync(string aspxPage, CancellationToken ct)
     {
-        using var client = _httpFactory.CreateClient("aon");
-        var all  = new List<string>();
-        int from = 0;
-        int? total = null;
-
-        while (true)
+        var fromSitemap = await DiscoverUrlsFromSitemapAsync(aspxPage, ct);
+        if (fromSitemap.Count > 0)
         {
-            ct.ThrowIfCancellationRequested();
-
-            var filters = new List<object>
-            {
-                new { term = new Dictionary<string, string> { ["category"] = category } }
-            };
-            if (!string.IsNullOrWhiteSpace(extraFilter))
-                filters.Add(new { query_string = new { query = extraFilter } });
-
-            var body = new
-            {
-                query   = new { @bool = new { filter = filters } },
-                _source = new[] { "url" },
-                from,
-                size    = EsPageSize
-            };
-
-            using var resp = await client.PostAsJsonAsync(SearchUrl, body, ct);
-            resp.EnsureSuccessStatusCode();
-
-            var json     = await resp.Content.ReadFromJsonAsync<JsonElement>(cancellationToken: ct);
-            var hitsNode = json.GetProperty("hits");
-            total ??= hitsNode.GetProperty("total").GetProperty("value").GetInt32();
-
-            var page = hitsNode.GetProperty("hits").EnumerateArray().ToList();
-            foreach (var hit in page)
-            {
-                if (hit.GetProperty("_source").TryGetProperty("url", out var urlProp)
-                    && urlProp.ValueKind == JsonValueKind.String)
-                {
-                    var url = urlProp.GetString() ?? "";
-                    if (url.Length > 0) all.Add(url);
-                }
-            }
-
-            _logger.LogDebug("Discovered {Count}/{Total} {Category} URLs.", all.Count, total, category);
-            if (page.Count < EsPageSize || all.Count >= total) break;
-            from += EsPageSize;
+            _logger.LogInformation("Discovered {Count} {Page} URLs from sitemap.", fromSitemap.Count, aspxPage);
+            return fromSitemap;
         }
 
-        return all.Distinct(StringComparer.OrdinalIgnoreCase).ToList();
+        _logger.LogInformation("Sitemap had no {Page} entries — falling back to ID iteration.", aspxPage);
+        return await DiscoverUrlsByIdIterationAsync(aspxPage, ct);
+    }
+
+    /// <summary>Parses sitemap.xml for all ?ID= links matching aspxPage.</summary>
+    private async Task<List<string>> DiscoverUrlsFromSitemapAsync(string aspxPage, CancellationToken ct)
+    {
+        try
+        {
+            using var client = _httpFactory.CreateClient();
+            using var req    = new HttpRequestMessage(HttpMethod.Get, SitemapUrl);
+            req.Headers.Add("User-Agent", "RollCallBot/1.0 (PF2e character creator research)");
+            using var resp = await client.SendAsync(req, ct);
+            if (!resp.IsSuccessStatusCode) return [];
+
+            var xml  = await resp.Content.ReadAsStringAsync(ct);
+            var xdoc = XDocument.Parse(xml);
+            var ns   = xdoc.Root?.GetDefaultNamespace() ?? XNamespace.None;
+
+            // Handle sitemap index (sitemap of sitemaps)
+            var sitemapLinks = xdoc.Descendants(ns + "sitemap")
+                                   .Select(e => e.Element(ns + "loc")?.Value)
+                                   .Where(u => u is not null)
+                                   .Cast<string>()
+                                   .ToList();
+
+            if (sitemapLinks.Count > 0)
+            {
+                // Fetch whichever child sitemap likely contains the target page
+                var relevant = sitemapLinks.FirstOrDefault(u =>
+                    u.Contains(aspxPage.Replace(".aspx", ""), StringComparison.OrdinalIgnoreCase))
+                    ?? sitemapLinks[0];
+
+                using var req2 = new HttpRequestMessage(HttpMethod.Get, relevant);
+                req2.Headers.Add("User-Agent", "RollCallBot/1.0 (PF2e character creator research)");
+                using var resp2 = await client.SendAsync(req2, ct);
+                if (!resp2.IsSuccessStatusCode) return [];
+                xml  = await resp2.Content.ReadAsStringAsync(ct);
+                xdoc = XDocument.Parse(xml);
+                ns   = xdoc.Root?.GetDefaultNamespace() ?? XNamespace.None;
+            }
+
+            return xdoc.Descendants(ns + "loc")
+                       .Select(e => e.Value)
+                       .Where(u => u.Contains(aspxPage, StringComparison.OrdinalIgnoreCase)
+                                && u.Contains("?ID=", StringComparison.OrdinalIgnoreCase))
+                       .Select(u => u[AonBase.Length..].TrimStart('/'))
+                       .Distinct(StringComparer.OrdinalIgnoreCase)
+                       .ToList();
+        }
+        catch (Exception ex) when (ex is not OperationCanceledException)
+        {
+            _logger.LogWarning("Sitemap fetch failed: {Error}", ex.Message);
+            return [];
+        }
+    }
+
+    /// <summary>
+    /// Iterates IDs from 1 upward, fetching each page and stopping after
+    /// maxConsecutiveMisses pages that have no valid h1.title content.
+    /// </summary>
+    private async Task<List<string>> DiscoverUrlsByIdIterationAsync(
+        string aspxPage, CancellationToken ct, int maxConsecutiveMisses = 50)
+    {
+        var urls   = new List<string>();
+        int id     = 1;
+        int misses = 0;
+
+        while (misses < maxConsecutiveMisses)
+        {
+            ct.ThrowIfCancellationRequested();
+            var path = $"{aspxPage}?ID={id}";
+            var doc  = await FetchHtmlAsync(path, ct);
+            var content = doc is not null ? GetContentNode(doc) : null;
+
+            if (content?.SelectSingleNode(".//h1[@class='title']") is not null)
+            {
+                urls.Add(path);
+                misses = 0;
+            }
+            else
+            {
+                misses++;
+            }
+
+            id++;
+            await Task.Delay(RequestDelay, ct);
+        }
+
+        return urls;
     }
 
     // ── HTML extraction helpers ──────────────────────────────────────────────────
@@ -739,7 +786,7 @@ public class Scrapper
 
     private async Task<List<Feat>> ScrapeFeatsAsync(IProgress<string>? progress, CancellationToken ct)
     {
-        var urls = await DiscoverUrlsFromApiAsync("feat", ct);
+        var urls = await DiscoverUrlsAsync("Feats.aspx", ct);
         progress?.Report($"Feats: found {urls.Count} URLs.");
         var results = new List<Feat>();
 
@@ -785,8 +832,8 @@ public class Scrapper
     private async Task<List<Spell>> ScrapeSpellsAsync(IProgress<string>? progress, CancellationToken ct)
     {
         var urls = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
-        foreach (var cat in new[] { "spell", "focus" })
-            foreach (var u in await DiscoverUrlsFromApiAsync(cat, ct))
+        foreach (var page in new[] { "Spells.aspx", "FocusSpells.aspx" })
+            foreach (var u in await DiscoverUrlsAsync(page, ct))
                 urls.Add(u);
 
         progress?.Report($"Spells: found {urls.Count} URLs.");
@@ -837,7 +884,7 @@ public class Scrapper
 
     private async Task<List<Background>> ScrapeBackgroundsAsync(IProgress<string>? progress, CancellationToken ct)
     {
-        var urls = await DiscoverUrlsFromApiAsync("background", ct);
+        var urls = await DiscoverUrlsAsync("Backgrounds.aspx", ct);
         progress?.Report($"Backgrounds: found {urls.Count} URLs.");
         var results = new List<Background>();
 
@@ -875,7 +922,7 @@ public class Scrapper
 
     private async Task<List<object>> ScrapeArmorAsync(IProgress<string>? progress, CancellationToken ct)
     {
-        var urls = await DiscoverUrlsFromApiAsync("armor", ct);
+        var urls = await DiscoverUrlsAsync("Armor.aspx", ct);
         progress?.Report($"Armor: found {urls.Count} URLs.");
         var results = new List<object>();
 
@@ -916,7 +963,7 @@ public class Scrapper
 
     private async Task<List<object>> ScrapeItemsAsync(IProgress<string>? progress, CancellationToken ct)
     {
-        var urls = await DiscoverUrlsFromApiAsync("equipment", ct);
+        var urls = await DiscoverUrlsAsync("Equipment.aspx", ct);
         progress?.Report($"Items: found {urls.Count} URLs.");
         var results = new List<object>();
 
@@ -955,7 +1002,7 @@ public class Scrapper
 
     private async Task<List<object>> ScrapeCreaturesAsync(IProgress<string>? progress, CancellationToken ct)
     {
-        var urls = await DiscoverUrlsFromApiAsync("creature", ct);
+        var urls = await DiscoverUrlsAsync("Monsters.aspx", ct);
         progress?.Report($"Creatures: found {urls.Count} URLs.");
         var results = new List<object>();
 
@@ -1003,7 +1050,7 @@ public class Scrapper
 
     private async Task<List<object>> ScrapeRitualsAsync(IProgress<string>? progress, CancellationToken ct)
     {
-        var urls = await DiscoverUrlsFromApiAsync("ritual", ct);
+        var urls = await DiscoverUrlsAsync("Rituals.aspx", ct);
         progress?.Report($"Rituals: found {urls.Count} URLs.");
         var results = new List<object>();
 
@@ -1049,40 +1096,30 @@ public class Scrapper
 
     private async Task<List<object>> ScrapeSkillFeatsAsync(IProgress<string>? progress, CancellationToken ct)
     {
-        var urls = await DiscoverUrlsFromApiAsync("feat", ct, extraFilter: "trait_raw:Skill");
-        progress?.Report($"Skills: found {urls.Count} URLs.");
-        var results = new List<object>();
+        // Skill feats are a subset of all feats — scrape every feat page and filter
+        // by the Skill trait rather than using any external pre-filter.
+        progress?.Report("Skills: fetching all feat pages to filter by Skill trait...");
+        var allFeats = await ScrapeFeatsAsync(progress, ct);
 
-        foreach (var url in urls)
-        {
-            ct.ThrowIfCancellationRequested();
-            var doc = await FetchHtmlAsync(url, ct);
-            var content = doc is not null ? GetContentNode(doc) : null;
-            if (content is null) { await Task.Delay(RequestDelay, ct); continue; }
-
-            try
+        var results = allFeats
+            .Where(f => f.Trait.Split(',')
+                          .Any(t => t.Trim().Equals("Skill", StringComparison.OrdinalIgnoreCase)))
+            .Select(f => (object)new
             {
-                var f = ParseFeat(content);
-                results.Add(new
-                {
-                    name         = f.Name,
-                    pfs          = f.Pfs,
-                    source       = f.Source,
-                    rarity       = f.Rarity,
-                    trait        = f.Trait,
-                    level        = f.Level,
-                    prerequisite = f.Prerequisite,
-                    summary      = f.Summary,
-                    description  = f.Description,
-                    spoilers     = "",
-                });
-            }
-            catch (Exception ex) { _logger.LogWarning("Skill feat {Url}: {Error}", url, ex.Message); }
+                name         = f.Name,
+                pfs          = f.Pfs,
+                source       = f.Source,
+                rarity       = f.Rarity,
+                trait        = f.Trait,
+                level        = f.Level,
+                prerequisite = f.Prerequisite,
+                summary      = f.Summary,
+                description  = f.Description,
+                spoilers     = "",
+            })
+            .ToList();
 
-            await Task.Delay(RequestDelay, ct);
-        }
-
-        progress?.Report($"Skills: scraped {results.Count} skill feats.");
+        progress?.Report($"Skills: found {results.Count} skill feats.");
         return results;
     }
 
@@ -1090,7 +1127,7 @@ public class Scrapper
 
     private async Task<List<object>> ScrapeTraitsAsync(IProgress<string>? progress, CancellationToken ct)
     {
-        var urls = await DiscoverUrlsFromApiAsync("trait", ct);
+        var urls = await DiscoverUrlsAsync("Traits.aspx", ct);
         progress?.Report($"Traits: found {urls.Count} URLs.");
         var results = new List<object>();
 
