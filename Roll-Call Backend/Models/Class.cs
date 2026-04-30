@@ -39,4 +39,25 @@ public class Class
 
     [JsonPropertyName("pfs")]
     public required string Pfs { get; set; }
+
+    [JsonPropertyName("source")]
+    public string Source { get; set; } = "";
+
+    [JsonPropertyName("description")]
+    public string Description { get; set; } = "";
+
+    [JsonPropertyName("class_dc")]
+    public string ClassDc { get; set; } = "";
+
+    [JsonPropertyName("class_features")]
+    public List<ClassFeatureEntry> ClassFeatures { get; set; } = [];
+}
+
+public class ClassFeatureEntry
+{
+    [JsonPropertyName("level")]
+    public string Level { get; set; } = "";
+
+    [JsonPropertyName("features")]
+    public string Features { get; set; } = "";
 }

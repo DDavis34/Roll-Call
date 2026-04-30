@@ -54,4 +54,13 @@ public class Spell
 
     [JsonPropertyName("pfs")]
     public required string Pfs { get; set; }
+
+    [JsonPropertyName("source")]
+    public string Source { get; set; } = "";
+
+    [JsonPropertyName("description")]
+    public string Description { get; set; } = "";
+
+    [JsonPropertyName("heightened_text")]
+    public string HeightenedText { get; set; } = "";
 }

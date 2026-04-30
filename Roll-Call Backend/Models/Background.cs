@@ -24,4 +24,7 @@ public class Background
 
     [JsonPropertyName("source")]
     public required string Source { get; set; }
+
+    [JsonPropertyName("description")]
+    public string Description { get; set; } = "";
 }

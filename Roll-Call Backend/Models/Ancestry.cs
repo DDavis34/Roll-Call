@@ -25,6 +25,9 @@ public class Ancestry
     [JsonPropertyName("language")]
     public required string Language { get; set; }
 
+    [JsonPropertyName("additional_languages")]
+    public string AdditionalLanguages { get; set; } = "";
+
     [JsonPropertyName("vision")]
     public required string Vision { get; set; }
 
@@ -34,7 +37,28 @@ public class Ancestry
     [JsonPropertyName("pfs")]
     public required string Pfs { get; set; }
 
+    [JsonPropertyName("source")]
+    public string Source { get; set; } = "";
+
+    [JsonPropertyName("traits")]
+    public List<string> Traits { get; set; } = [];
+
+    [JsonPropertyName("description")]
+    public string Description { get; set; } = "";
+
+    [JsonPropertyName("special_abilities")]
+    public List<NamedAbility> SpecialAbilities { get; set; } = [];
+
     public List<Feat> AncestryFeats { get; set; } = [];
     public List<Heritage> Heritages { get; set; } = [];
     public List<Ability> Abilities { get; set; } = [];
+}
+
+public class NamedAbility
+{
+    [JsonPropertyName("name")]
+    public string Name { get; set; } = "";
+
+    [JsonPropertyName("description")]
+    public string Description { get; set; } = "";
 }

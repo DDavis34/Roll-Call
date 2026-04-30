@@ -27,4 +27,16 @@ public class Feat
 
     [JsonPropertyName("source")]
     public required string Source { get; set; }
+
+    [JsonPropertyName("actions")]
+    public string Actions { get; set; } = "";
+
+    [JsonPropertyName("trigger")]
+    public string Trigger { get; set; } = "";
+
+    [JsonPropertyName("requirements")]
+    public string Requirements { get; set; } = "";
+
+    [JsonPropertyName("description")]
+    public string Description { get; set; } = "";
 }
