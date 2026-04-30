@@ -19,7 +19,7 @@
         </span>
     </LumexNavbarBrand>
 
-    @* Visible at lg (1024px) and above *@
+    @* Visible at medium (768px) and above *@
     <LumexNavbarContent Class="hidden md:flex gap-4">
         <LumexNavbarItem>
             <LumexLink Href="/" Class="text-white hover:text-amber-400 transition-colors">
@@ -51,7 +51,7 @@
     @* Right-side content: Account/Auth button or hamburger, depending on screen size *@
     <LumexNavbarContent Align="@Align.End">
 
-        @* Account/Auth: visible at lg and above *@
+        @* Account/Auth: visible at medium and above *@
         <LumexNavbarItem Class="hidden md:flex">
             @if (isAuthenticated)
             {
@@ -75,7 +75,7 @@
             }
         </LumexNavbarItem>
 
-        @* Hamburger button: visible below lg *@
+        @* Hamburger button: visible below medium *@
         <LumexNavbarItem Class="flex md:hidden">
             <button @onclick="ToggleMenu"
                     class="text-white hover:text-amber-400 transition-colors p-2 focus:outline-none"
