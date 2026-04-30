@@ -13,4 +13,9 @@
       <PackageReference Include="TailwindMerge.NET" Version="1.3.0" />
     </ItemGroup>
 
+    <Target Name="BuildTailwind" BeforeTargets="Build">
+        <Exec Command="npm run css:build"/>
+        <Exec Command="npm run css:watch"/>
+    </Target>
+
 </Project>
