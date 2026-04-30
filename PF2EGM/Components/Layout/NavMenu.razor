@@ -10,17 +10,28 @@
 <LumexNavbar Height="4.5rem"
              Bordered="@true"
              Sticky="@true">
-    <LumexNavbarBrand>
-        <span class="flex items-center gap-2">
-            <a href="/">
-                <span class="nav-brand-mark text-2xl">⬡</span>
-                <span class="text-2xl font-bold text-amber-400">Roll Call</span>
-            </a>
+
+    @* Mobile: toggle on the left, brand beside it *@
+    <LumexNavbarContent Class="lg:hidden">
+        <LumexNavbarMenuToggle />
+        <LumexNavbarBrand>
+            <span class="nav-brand">
+                <span class="nav-brand-mark">⬡</span>
+                <span class="nav-brand-title">Roll Call</span>
+            </span>
+        </LumexNavbarBrand>
+    </LumexNavbarContent>
+
+    @* Desktop: brand on its own *@
+    <LumexNavbarBrand Class="hidden lg:flex">
+        <span class="nav-brand">
+            <span class="nav-brand-mark">⬡</span>
+            <span class="nav-brand-title">Roll Call</span>
         </span>
     </LumexNavbarBrand>
 
-    @* Visible at medium (768px) and above *@
-    <LumexNavbarContent Class="hidden md:flex gap-4">
+    @* Desktop nav links *@
+    <LumexNavbarContent Class="hidden lg:flex gap-4">
         <LumexNavbarItem>
             <LumexLink Href="/" Class="text-white hover:text-amber-400 transition-colors">
                 Home
@@ -48,103 +59,79 @@
         </LumexNavbarItem>
     </LumexNavbarContent>
 
-    @* Right-side content: Account/Auth button or hamburger, depending on screen size *@
-    <LumexNavbarContent Align="@Align.End">
+    <LumexNavbarContent Align="@Align.End" Class="hidden lg:flex">
+        <LumexNavbarItem>
+                @if (isAuthenticated)
+                {
+                    <LumexButton Size="@Size.Small"
+                                Color="@ThemeColor.Primary"
+                                Variant="@Variant.Flat">
+                        <LumexLink Href="/account" Class="text-white">
+                            My Account
+                        </LumexLink>
+                    </LumexButton>
+                }
+                else
+                {
+                    <LumexButton Size="@Size.Small"
+                                Color="@ThemeColor.Primary"
+                                Variant="@Variant.Flat">
+                        <LumexLink Href="/login" Class="text-white">
+                            Log In
+                        </LumexLink>
+                    </LumexButton>
+                }
+            </LumexNavbarItem>
+    </LumexNavbarContent>
 
-        @* Account/Auth: visible at medium and above *@
-        <LumexNavbarItem Class="hidden md:flex">
+    @* Mobile slide-down menu *@
+    <LumexNavbarMenu Class="lg:hidden">
+        <LumexNavbarMenuItem>
+            <LumexLink Href="/" Color="@ThemeColor.None" Class="w-full">Home</LumexLink>
+        </LumexNavbarMenuItem>
+        <LumexNavbarMenuItem>
+            <LumexLink Href="/create-character" Color="@ThemeColor.None" Class="w-full">Create Character</LumexLink>
+        </LumexNavbarMenuItem>
+        <LumexNavbarMenuItem>
+            <LumexLink Href="/saved-characters" Color="@ThemeColor.None" Class="w-full">Saved Characters</LumexLink>
+        </LumexNavbarMenuItem>
+        <LumexNavbarMenuItem>
+            <LumexLink Href="/campaigns" Color="@ThemeColor.None" Class="w-full">Campaigns</LumexLink>
+        </LumexNavbarMenuItem>
+        <LumexNavbarMenuItem>
+            <LumexLink Href="/tutorials" Color="@ThemeColor.None" Class="w-full">Tutorials</LumexLink>
+        </LumexNavbarMenuItem>
+        <LumexNavbarItem>
             @if (isAuthenticated)
             {
                 <LumexButton Size="@Size.Small"
-                             Color="@ThemeColor.Primary"
-                             Variant="@Variant.Flat">
+                            Color="@ThemeColor.Primary"
+                            Variant="@Variant.Flat">
                     <LumexLink Href="/account" Class="text-white">
-                        Account
+                        My Account
                     </LumexLink>
                 </LumexButton>
             }
             else
             {
                 <LumexButton Size="@Size.Small"
-                             Color="@ThemeColor.Primary"
-                             Variant="@Variant.Flat">
+                            Color="@ThemeColor.Primary"
+                            Variant="@Variant.Flat">
                     <LumexLink Href="/login" Class="text-white">
                         Log In
                     </LumexLink>
                 </LumexButton>
             }
         </LumexNavbarItem>
+    </LumexNavbarMenu>
 
-        @* Hamburger button: visible below medium *@
-        <LumexNavbarItem Class="flex md:hidden">
-            <button @onclick="ToggleMenu"
-                    class="text-white hover:text-amber-400 transition-colors p-2 focus:outline-none"
-                    aria-label="Toggle navigation menu"
-                    aria-expanded="@menuOpen">
-                @if (menuOpen)
-                {
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                }
-                else
-                {
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-                    </svg>
-                }
-            </button>
-        </LumexNavbarItem>
-
-    </LumexNavbarContent>
 </LumexNavbar>
-
-@* Dropdown menu rendered below the navbar when open *@
-@if (menuOpen)
-{
-    <div class="md:hidden fixed top-[4.5rem] left-0 right-0 z-50 bg-background border-b border-divider shadow-md flex flex-col px-4 py-3 gap-1">
-        <a href="/" class="text-white hover:text-amber-400 transition-colors py-2 px-3 rounded hover:bg-white/5" @onclick="CloseMenu">
-            Home
-        </a>
-        <a href="/create-character" class="text-white hover:text-amber-400 transition-colors py-2 px-3 rounded hover:bg-white/5" @onclick="CloseMenu">
-            Create Character
-        </a>
-        <a href="/saved-characters" class="text-white hover:text-amber-400 transition-colors py-2 px-3 rounded hover:bg-white/5" @onclick="CloseMenu">
-            Saved Characters
-        </a>
-        <a href="/campaigns" class="text-white hover:text-amber-400 transition-colors py-2 px-3 rounded hover:bg-white/5" @onclick="CloseMenu">
-            Campaigns
-        </a>
-        <a href="/tutorials" class="text-white hover:text-amber-400 transition-colors py-2 px-3 rounded hover:bg-white/5" @onclick="CloseMenu">
-            Tutorials
-        </a>
-
-        <div class="pt-2 border-t border-divider mt-1">
-            @if (isAuthenticated)
-            {
-                <a href="/account" class="block w-full text-center bg-primary/20 text-white hover:bg-primary/30 transition-colors py-2 px-3 rounded" @onclick="CloseMenu">
-                    Account
-                </a>
-            }
-            else
-            {
-                <a href="/login" class="block w-full text-center bg-primary/20 text-white hover:bg-primary/30 transition-colors py-2 px-3 rounded" @onclick="CloseMenu">
-                    Log In
-                </a>
-            }
-        </div>
-    </div>
-}
 
 @code {
     private bool isAuthenticated;
-    private bool menuOpen = false;
 
     protected override async Task OnInitializedAsync()
     {
         isAuthenticated = await AuthService.IsAuthenticatedAsync();
     }
-
-    private void ToggleMenu() => menuOpen = !menuOpen;
-    private void CloseMenu() => menuOpen = false;
 }
