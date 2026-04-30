@@ -10,25 +10,25 @@
 <LumexNavbar Height="4.5rem"
              Bordered="@true"
              Sticky="@true">
+    
+    @* Desktop: brand on its own *@
+    <LumexNavbarBrand Class="hidden md:flex">
+        <a href="/" class="flex items-center gap-2">
+                <span class="text-2xl">⬡</span>
+                <span class="text-2xl font-bold text-amber-400">Roll Call</span>
+        </a>
+    </LumexNavbarBrand>
 
     @* Mobile: toggle absolutely positioned left, brand centered *@
     <LumexNavbarContent Class="md:hidden w-full">
         <div class="relative flex items-center justify-center w-full">
             <LumexNavbarMenuToggle Class="absolute left-0" />
-            <span class="flex items-center gap-2">
+            <a href="/" class="flex items-center gap-2">
                 <span class="text-2xl">⬡</span>
                 <span class="text-2xl font-bold text-amber-400">Roll Call</span>
-            </span>
+            </a>
         </div>
     </LumexNavbarContent>
-
-    @* Desktop: brand on its own *@
-    <LumexNavbarBrand Class="hidden md:flex">
-        <span class="flex items-center gap-2">
-            <span class="text-2xl">⬡</span>
-            <span class="text-2xl font-bold text-amber-400">Roll Call</span>
-        </span>
-    </LumexNavbarBrand>
 
     @* Desktop nav links *@
     <LumexNavbarContent Class="hidden md:flex gap-4">
@@ -59,32 +59,26 @@
         </LumexNavbarItem>
     </LumexNavbarContent>
 
-    @* Auth button — right-aligned on all screen sizes *@
+    @* Auth button, right-aligned on desktop *@
     <LumexNavbarContent Align="@Align.End" Class="hidden md:flex">
         <LumexNavbarItem>
             @if (isAuthenticated)
             {
-                <LumexButton Size="@Size.Small"
-                             Color="@ThemeColor.Primary"
-                             Variant="@Variant.Shadow">
+                <a href="/account" class="nav-button">
                     Account
-                </LumexButton>
+                </a>
             }
             else
             {
-                <LumexButton Size="@Size.Small"
-                             Color="@ThemeColor.Primary"
-                             Variant="@Variant.Shadow">
-                    <a href="/login" class="text-black">
-                        Log In
-                    </a>
-                </LumexButton>
+                <a href="/login" class="nav-button">
+                    Log In
+                </a>
             }
         </LumexNavbarItem>
     </LumexNavbarContent>
 
     @* Mobile slide-down menu *@
-    <LumexNavbarMenu Class="md:hidden">
+    <LumexNavbarMenu Class="md:hidden items-center">
         <LumexNavbarMenuItem>
             <LumexLink Href="/" Class="w-full hover:text-amber-400">Home</LumexLink>
         </LumexNavbarMenuItem>
@@ -103,21 +97,15 @@
         <LumexNavbarMenuItem>
             @if (isAuthenticated)
             {
-                <LumexButton Href="/account"
-                            Size="@Size.Small"
-                            Color="@ThemeColor.Primary"
-                            Variant="@Variant.Shadow">
+                <a href="/account" class="nav-button">
                     Account
-                </LumexButton>
+                </a>
             }
             else
             {
-                <LumexButton Href="/login"
-                            Size="@Size.Small"
-                            Color="@ThemeColor.Primary"
-                            Variant="@Variant.Shadow">
+                <a href="/login" class="nav-button">
                     Log In
-                </LumexButton>
+                </a>
             }
         </LumexNavbarMenuItem>
     </LumexNavbarMenu>
