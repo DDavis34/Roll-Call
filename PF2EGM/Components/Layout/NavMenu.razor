@@ -20,7 +20,7 @@
     </LumexNavbarBrand>
 
     @* Visible at lg (1024px) and above *@
-    <LumexNavbarContent Class="hidden lg:flex gap-4">
+    <LumexNavbarContent Class="hidden md:flex gap-4">
         <LumexNavbarItem>
             <LumexLink Href="/" Class="text-white hover:text-amber-400 transition-colors">
                 Home
@@ -46,18 +46,13 @@
                 Tutorials
             </LumexLink>
         </LumexNavbarItem>
-        <LumexNavbarItem>
-            <LumexLink Href="/account" Class="text-white hover:text-amber-400 transition-colors">
-                Account
-            </LumexLink>
-        </LumexNavbarItem>
     </LumexNavbarContent>
 
     @* Right-side content: Account/Auth button or hamburger, depending on screen size *@
     <LumexNavbarContent Align="@Align.End">
 
         @* Account/Auth: visible at lg and above *@
-        <LumexNavbarItem Class="hidden lg:flex">
+        <LumexNavbarItem Class="hidden md:flex">
             @if (isAuthenticated)
             {
                 <LumexButton Size="@Size.Small"
@@ -81,7 +76,7 @@
         </LumexNavbarItem>
 
         @* Hamburger button: visible below lg *@
-        <LumexNavbarItem Class="flex lg:hidden">
+        <LumexNavbarItem Class="flex md:hidden">
             <button @onclick="ToggleMenu"
                     class="text-white hover:text-amber-400 transition-colors p-2 focus:outline-none"
                     aria-label="Toggle navigation menu"
@@ -107,7 +102,7 @@
 @* Dropdown menu rendered below the navbar when open *@
 @if (menuOpen)
 {
-    <div class="lg:hidden fixed top-[4.5rem] left-0 right-0 z-50 bg-background border-b border-divider shadow-md flex flex-col px-4 py-3 gap-1">
+    <div class="md:hidden fixed top-[4.5rem] left-0 right-0 z-50 bg-background border-b border-divider shadow-md flex flex-col px-4 py-3 gap-1">
         <a href="/" class="text-white hover:text-amber-400 transition-colors py-2 px-3 rounded hover:bg-white/5" @onclick="CloseMenu">
             Home
         </a>
@@ -123,9 +118,7 @@
         <a href="/tutorials" class="text-white hover:text-amber-400 transition-colors py-2 px-3 rounded hover:bg-white/5" @onclick="CloseMenu">
             Tutorials
         </a>
-        <a href="/account" class="text-white hover:text-amber-400 transition-colors py-2 px-3 rounded hover:bg-white/5" @onclick="CloseMenu">
-            Account
-        </a>
+
         <div class="pt-2 border-t border-divider mt-1">
             @if (isAuthenticated)
             {
