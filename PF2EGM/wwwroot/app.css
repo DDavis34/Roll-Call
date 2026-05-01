@@ -58,13 +58,7 @@ html, body {
 /*-------------------------*/
 /* Custom scrollbar styles */
 
-/* Modern browsers (Firefox, Edge 121+, Chrome 121+) */
-html {
-    scrollbar-width: thin;
-    scrollbar-color: #ffb900 #9e7604;
-}
-
-/* WebKit browsers (Safari, older Chrome/Edge) */
+/* WebKit browsers (Chrome, Edge, Safari) */
 ::-webkit-scrollbar {
     width: 6px;
 }
@@ -76,6 +70,14 @@ html {
 ::-webkit-scrollbar-thumb {
     background: #ffb900;
     border-radius: 3px;
+}
+
+/* Firefox only */
+@supports (-moz-appearance: none) {
+    html {
+        scrollbar-width: thin;
+        scrollbar-color: #ffb900 #9e7604;
+    }
 }
 
 /*-------------------------*/
