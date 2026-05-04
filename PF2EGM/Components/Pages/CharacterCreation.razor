@@ -80,7 +80,7 @@
             </div>
 
             <!-- Actions -->
-            <div class="flex gap-2">
+            <div class="flex flex-wrap gap-2">
                 <LumexButton Size="@Size.Small" Variant="@Variant.Flat">Rest</LumexButton>
                 <LumexButton Size="@Size.Small" Variant="@Variant.Flat">Add Condition</LumexButton>
                 <LumexButton Size="@Size.Small" Variant="@Variant.Flat">Add Custom Buff</LumexButton>
@@ -223,19 +223,24 @@
                 </LumexAccordionItem>
 
                 @* ── Main panel (tabs) ── *@
-                <LumexAccordionItem Id="main" Title="@activeTab">
+                <LumexAccordionItem Id="main" Title="Inventory & Actions">
                     <ChildContent>
                         <!-- Tab Buttons -->
-                        <div class="flex flex-wrap mb-3 border-b border-gray-700">
-                            @foreach (var tab in tabs)
-                            {
-                                <button @onclick="() => SetActiveTab(tab)" class="@TabClass(tab)">@tab</button>
-                            }
-                        </div>
-                        <!-- Tab Content (identical to desktop) -->
-                        @* paste your existing tab content block here *@
-                        <div class="p-1">
-                            @TabContent()
+                        <div class="flex-1 flex flex-col min-w-0 w-full">
+                            <LumexTabs @bind-SelectedId="activeTab"
+                                    Variant="@TabVariant.Underlined"
+                                    Color="@ThemeColor.Warning"
+                                    Class="flex-1 w-full"
+                                    Classes="@_tabClasses">
+                                <LumexTab Id="Weapons" Title="Weapons">@TabContent("Weapons")</LumexTab>
+                                <LumexTab Id="Defense" Title="Defense">@TabContent("Defense")</LumexTab>
+                                <LumexTab Id="Gear" Title="Gear">@TabContent("Gear")</LumexTab>
+                                <LumexTab Id="Spells" Title="Spells">@TabContent("Spells")</LumexTab>
+                                <LumexTab Id="Pets" Title="Pets">@TabContent("Pets")</LumexTab>
+                                <LumexTab Id="Details" Title="Details">@TabContent("Details")</LumexTab>
+                                <LumexTab Id="Feats" Title="Feats">@TabContent("Feats")</LumexTab>
+                                <LumexTab Id="Actions" Title="Actions">@TabContent("Actions")</LumexTab>
+                            </LumexTabs>
                         </div>
                     </ChildContent>
                 </LumexAccordionItem>
@@ -391,16 +396,21 @@
             </div>
 
             <!-- RIGHT: Main Character Panel -->
-            <div class="flex-1 flex flex-col min-w-0">
-                <div class="bg-gray-800 border-b border-gray-700 flex flex-wrap">
-                    @foreach (var tab in tabs)
-                    {
-                        <button @onclick="() => SetActiveTab(tab)" class="@TabClass(tab)">@tab</button>
-                    }
-                </div>
-                <div class="flex-1 p-4 bg-gray-900 overflow-y-auto" style="max-height: calc(100vh - 190px);">
-                    @TabContent()
-                </div>
+            <div class="flex-1 flex flex-col min-w-0 w-full">
+                <LumexTabs @bind-SelectedId="activeTab"
+                        Variant="@TabVariant.Underlined"
+                        Color="@ThemeColor.Warning"
+                        Class="flex-1 w-full"
+                        Classes="@_tabClasses">
+                    <LumexTab Id="Weapons" Title="Weapons">@TabContent("Weapons")</LumexTab>
+                    <LumexTab Id="Defense" Title="Defense">@TabContent("Defense")</LumexTab>
+                    <LumexTab Id="Gear" Title="Gear">@TabContent("Gear")</LumexTab>
+                    <LumexTab Id="Spells" Title="Spells">@TabContent("Spells")</LumexTab>
+                    <LumexTab Id="Pets" Title="Pets">@TabContent("Pets")</LumexTab>
+                    <LumexTab Id="Details" Title="Details">@TabContent("Details")</LumexTab>
+                    <LumexTab Id="Feats" Title="Feats">@TabContent("Feats")</LumexTab>
+                    <LumexTab Id="Actions" Title="Actions">@TabContent("Actions")</LumexTab>
+                </LumexTabs>
             </div>
 
         </div>
@@ -593,13 +603,15 @@
 @code {
 
     // ── Tab state ──────────────────────────────────────────────────────────
-    private string activeTab = "Weapons";
-    private string[] tabs = { "Weapons", "Defense", "Gear", "Spells", "Pets", "Details", "Feats", "Actions" };
-    private void SetActiveTab(string tab) => activeTab = tab;
+    private string? activeTab = "Weapons";
 
-    private string TabClass(string tab) => activeTab == tab
-        ? "border-amber-500 text-amber-400 bg-gray-900 px-4 py-2 text-sm font-semibold border-b-2 transition-colors"
-        : "border-transparent text-gray-400 hover:text-amber-400 hover:bg-gray-800 px-4 py-2 text-sm font-semibold border-b-2 transition-colors";
+    private TabsSlots _tabClasses = new()
+    {
+        TabList = "bg-gray-800 rounded-none px-2 border-b border-gray-700 overflow-x-auto w-full",
+        Tab = "text-gray-400 data-[selected=true]:text-amber-400",
+        TabPanel = "p-4 bg-gray-900 overflow-y-auto m-0",
+        Cursor = "bg-amber-500"
+    };
 
     // ── Character data ─────────────────────────────────────────────────────
     private CharacterData character = new()
@@ -803,7 +815,7 @@
         public string Backstory { get; set; } = "";
     }
 
-    private RenderFragment TabContent() => __builder =>
+    private RenderFragment TabContent(string activeTab) => __builder =>
     {
         <!-- Tab Content -->
         <div class="flex-1 p-4 bg-gray-900 overflow-y-auto" style="max-height: calc(100vh - 190px);">
