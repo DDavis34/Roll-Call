@@ -1,0 +1,19 @@
+@code {
+    [Parameter] public string Src { get; set; } = "";
+    [Parameter] public string Title { get; set; } = "YouTube video player";
+}
+
+<div class="sm:bg-gray-700 sm:rounded-xl sm:p-6 flex justify-center">
+    <div class="mx-auto w-full" style="min-width: 248px; max-width: 560px;">
+        <div class="relative w-full" style="aspect-ratio: 16/9;">
+            <iframe class="absolute inset-0 w-full h-full"
+                src="@Src"
+                title="@Title"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerpolicy="strict-origin-when-cross-origin"
+                allowfullscreen>
+            </iframe>
+        </div>
+    </div>
+</div>
