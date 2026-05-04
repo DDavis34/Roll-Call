@@ -91,505 +91,320 @@
     <!-- Main Content -->
     <div class="flex flex-col lg:flex-row">
 
-        <!-- LEFT SIDEBAR -->
-        <div class="w-full lg:w-48 xl:w-52 bg-gray-800 border-b lg:border-b-0 lg:border-r border-gray-700 p-3 flex-shrink-0 overflow-y-auto" style="max-height: calc(100vh - 150px);">
-            <!-- Ancestry -->
-            <div class="mb-2">
-                <button class="w-full text-left bg-gray-700 border border-gray-600 rounded px-2 py-1.5 text-sm hover:bg-gray-600 transition-colors">
-                    <div class="text-amber-400 text-xs font-bold uppercase tracking-wide">Ancestry</div>
-                    <div class="font-semibold text-gray-100">@character.Ancestry</div>
-                </button>
-            </div>
+        @* ── Mobile accordion (below lg breakpoint) ── *@
+        <div class="block lg:hidden">
+            <LumexAccordion Variant="@AccordionVariant.Splitted"
+                            SelectionMode="@SelectionMode.Multiple"
+                            Class="p-2 flex flex-col gap-1">
 
-            <!-- Background -->
-            <div class="mb-2">
-                <button class="w-full text-left bg-gray-700 border border-gray-600 rounded px-2 py-1.5 text-sm hover:bg-gray-600 transition-colors">
-                    <div class="text-amber-400 text-xs font-bold uppercase tracking-wide">Background</div>
-                    <div class="font-semibold text-gray-100">@character.Background</div>
-                </button>
-            </div>
-
-            <!-- Class -->
-            <div class="mb-3">
-                <button class="w-full text-left bg-gray-700 border border-gray-600 rounded px-2 py-1.5 text-sm hover:bg-gray-600 transition-colors">
-                    <div class="text-amber-400 text-xs font-bold uppercase tracking-wide flex items-center gap-1">
-                        <span>⚔</span> Class
-                    </div>
-                    <div class="font-semibold text-gray-100">@character.Class</div>
-                </button>
-            </div>
-
-            <!-- Level 1 -->
-            <div class="text-amber-400 text-xs font-bold uppercase tracking-wide mb-1">Level 1</div>
-
-            <button class="w-full text-left bg-gray-700 border border-gray-600 rounded px-2 py-1.5 text-sm mb-1 hover:bg-gray-600 transition-colors flex items-center gap-2">
-                <span class="text-green-400">⚙</span>
-                <span class="text-gray-100">Set Abilities</span>
-            </button>
-
-            <button class="w-full text-left bg-gray-700 border border-gray-600 rounded px-2 py-1.5 text-sm mb-1 hover:bg-gray-600 transition-colors flex items-center gap-2">
-                <span class="text-green-400">⚙</span>
-                <span class="text-gray-100">Skill Training</span>
-            </button>
-
-            <button class="w-full text-left bg-gray-700 border border-gray-600 rounded px-2 py-1.5 text-sm mb-2 hover:bg-gray-600 transition-colors flex items-center gap-2">
-                <span class="text-green-400">⚙</span>
-                <span class="text-gray-100">Class Skill</span>
-            </button>
-
-            <button class="w-full text-left bg-gray-700 border border-gray-600 rounded px-2 py-1.5 text-sm mb-1 hover:bg-gray-600 transition-colors">
-                <div class="text-amber-400 text-xs flex items-center gap-1"><span>👤</span> Heritage</div>
-                <div class="text-gray-400 text-xs">Not Selected</div>
-            </button>
-
-            <button class="w-full text-left bg-gray-700 border border-gray-600 rounded px-2 py-1.5 text-sm mb-1 hover:bg-gray-600 transition-colors">
-                <div class="text-amber-400 text-xs flex items-center gap-1"><span>👤</span> Ancestry Feat</div>
-                <div class="text-gray-400 text-xs">Not Selected</div>
-            </button>
-
-            <button class="w-full text-left bg-gray-700 border border-gray-600 rounded px-2 py-1.5 text-sm mb-2 hover:bg-gray-600 transition-colors">
-                <div class="text-amber-400 text-xs flex items-center gap-1"><span>⚔</span> Class Feat</div>
-                <div class="text-gray-400 text-xs">Not Selected</div>
-            </button>
-
-            <div class="text-xs text-gray-300 mb-1">Reactive Strike →</div>
-            <div class="text-xs text-gray-300 mb-1">Free Feat: Shield Block →</div>
-            <div class="text-xs text-gray-300 mb-3">Free Feat: Hobnobber</div>
-
-            <!-- Level 2 -->
-            <div class="text-amber-400 text-xs font-bold uppercase tracking-wide mb-1">Level 2</div>
-
-            <button class="w-full text-left bg-gray-700 border border-gray-600 rounded px-2 py-1.5 text-sm mb-1 hover:bg-gray-600 transition-colors">
-                <div class="text-amber-400 text-xs flex items-center gap-1"><span>⚔</span> Class Feat</div>
-                <div class="text-gray-400 text-xs">Not Selected</div>
-            </button>
-
-            <button class="w-full text-left bg-gray-700 border border-gray-600 rounded px-2 py-1.5 text-sm mb-3 hover:bg-gray-600 transition-colors">
-                <div class="text-amber-400 text-xs flex items-center gap-1"><span>⚙</span> Skill Feat</div>
-                <div class="text-gray-400 text-xs">Not Selected</div>
-            </button>
-
-            <!-- Level 3 -->
-            <div class="text-amber-400 text-xs font-bold uppercase tracking-wide mb-1">Level 3</div>
-
-            <button class="w-full text-left bg-gray-700 border border-gray-600 rounded px-2 py-1.5 text-sm hover:bg-gray-600 transition-colors flex items-center justify-center gap-2">
-                <span class="text-green-400">⚙</span>
-                <span class="text-gray-100">Skill Increase</span>
-            </button>
-        </div>
-
-        <!-- MIDDLE: Stats Panel -->
-        <div class="w-full lg:w-52 xl:w-56 bg-gray-800 border-b lg:border-b-0 lg:border-r border-gray-700 p-3 flex-shrink-0 overflow-y-auto" style="max-height: calc(100vh - 150px);">
-
-            <!-- Hero Points -->
-            <div class="flex items-center gap-2 mb-3">
-                <div class="w-7 h-7 rounded-full bg-amber-600 flex items-center justify-center text-white text-sm font-bold">@character.HeroPoints</div>
-                <span class="text-sm font-semibold text-gray-100">Hero Points</span>
-                <div class="flex gap-1 ml-1">
-                    <div class="w-4 h-4 rounded-full border-2 border-amber-500"></div>
-                    <div class="w-4 h-4 rounded-full border-2 border-amber-500"></div>
-                    <div class="w-4 h-4 rounded-full border-2 border-amber-500"></div>
-                </div>
-            </div>
-
-            <!-- Fighter DC -->
-            <div class="flex items-center gap-2 mb-4">
-                <div class="w-7 h-7 rounded-full bg-gray-600 flex items-center justify-center text-white text-xs font-bold">⚔</div>
-                <span class="text-sm font-semibold text-gray-100">+@character.FighterDC Fighter DC</span>
-            </div>
-
-            <!-- Perception -->
-            <div class="flex items-center gap-2 mb-2">
-                <div class="w-6 h-6 rounded-full bg-amber-600 border-2 border-amber-700 flex items-center justify-center text-[10px] font-bold text-white">👁</div>
-                <span class="text-sm text-gray-100">+@character.Perception Perception</span>
-            </div>
-
-            <!-- Initiative -->
-            <div class="flex items-center gap-2 mb-4">
-                <div class="w-6 h-6 rounded-full bg-green-700 border-2 border-green-600 flex items-center justify-center text-[10px] font-bold text-white">⚡</div>
-                <span class="text-sm text-gray-100">+@character.Initiative Initiative</span>
-            </div>
-
-            <!-- Skills -->
-            @foreach (var skill in character.Skills)
-            {
-                <div class="flex items-center gap-2 mb-1">
-                    <div class="w-5 h-5 rounded-full @(skill.Trained ? "bg-amber-600" : "border-2 border-gray-600 bg-gray-800") flex-shrink-0">
-                        @if (skill.Trained)
-                        {
-                            <div class="w-full h-full rounded-full flex items-center justify-center">
-                                <span class="text-white text-[9px] font-bold">@skill.ProficiencyLetter</span>
-                            </div>
-                        }
-                        else
-                        {
-                            <div class="w-full h-full rounded-full flex items-center justify-center">
-                                <span class="text-gray-400 text-[9px] font-bold">@skill.ProficiencyLetter</span>
-                            </div>
-                        }
-                    </div>
-                    <span class="text-xs w-7 text-right font-semibold @(skill.Modifier >= 0 ? "text-gray-100" : "text-red-400")">
-                        @(skill.Modifier >= 0 ? "+" : "")@skill.Modifier
-                    </span>
-                    <span class="text-xs text-gray-300">@skill.Name</span>
-                </div>
-            }
-        </div>
-
-        <!-- RIGHT: Main Character Panel -->
-        <div class="flex-1 flex flex-col min-w-0">
-
-            <!-- Tab Buttons -->
-            <div class="bg-gray-800 border-b border-gray-700 flex flex-wrap">
-                @foreach (var tab in tabs)
-                {
-                    <button @onclick="() => SetActiveTab(tab)" class="@TabClass(tab)">
-                        @tab
-                    </button>
-                }
-            </div>
-
-            <!-- Tab Content -->
-            <div class="flex-1 p-4 bg-gray-900 overflow-y-auto" style="max-height: calc(100vh - 190px);">
-
-                <!-- ─── WEAPONS ─────────────────────────────────────────── -->
-                @if (activeTab == "Weapons")
-                {
-                    <div class="flex flex-wrap gap-2 mb-4">
-                        @foreach (var cat in weaponCategories)
-                        {
-                            <button @onclick="() => ToggleWeaponCategory(cat.Key)"
-                                    class="px-3 py-1.5 text-sm font-semibold rounded transition-colors flex items-center gap-1
-                                           @(cat.Value ? "bg-amber-600 border-2 border-amber-600 text-white" : "bg-gray-800 border-2 border-gray-600 text-gray-300 hover:border-amber-500")">
-                                <span>@(cat.Value ? "●" : "○")</span> @cat.Key
+                @* ── Feats / Progression ── *@
+                <LumexAccordionItem Id="progression" Title="Progression">
+                    <ChildContent>
+                        <!-- Ancestry -->
+                        <div class="mb-2">
+                            <button class="w-full text-left bg-gray-700 border border-gray-600 rounded px-2 py-1.5 text-sm hover:bg-gray-600 transition-colors">
+                                <div class="text-amber-400 text-xs font-bold uppercase tracking-wide">Ancestry</div>
+                                <div class="font-semibold text-gray-100">@character.Ancestry</div>
                             </button>
-                        }
-                    </div>
-
-                    <button @onclick="() => showWeaponModal = true"
-                            class="w-full border-2 border-dashed border-gray-600 hover:border-amber-500 text-amber-400 font-semibold py-2 px-4 rounded text-left mb-4 transition-colors hover:bg-gray-800">
-                        + Add Weapon
-                    </button>
-
-                    @if (!weapons.Any())
-                    {
-                        <div class="text-center text-gray-400 text-sm py-8">No weapons equipped. Click "Add Weapon" to equip weapons.</div>
-                    }
-                    else
-                    {
-                        <div class="space-y-2">
-                            @foreach (var (weapon, index) in weapons.Select((w, i) => (w, i)))
-                            {
-                                <div class="bg-gray-800 border border-gray-700 rounded p-3 flex flex-wrap items-center gap-3">
-                                    <div class="flex-1 min-w-0">
-                                        <div class="font-bold text-sm text-gray-100">@weapon.Name</div>
-                                        <div class="text-xs text-gray-300">@weapon.Traits</div>
-                                    </div>
-                                    <div class="text-center">
-                                        <div class="text-lg font-bold text-gray-100">@(weapon.AttackBonus >= 0 ? "+" : "")@weapon.AttackBonus</div>
-                                        <div class="text-xs text-gray-300">Attack</div>
-                                    </div>
-                                    <div class="text-center">
-                                        <div class="text-lg font-bold text-gray-100">@weapon.Damage</div>
-                                        <div class="text-xs text-gray-300">Damage</div>
-                                    </div>
-                                    <button @onclick="() => weapons.RemoveAt(index)" class="text-red-400 hover:text-red-300 text-sm px-2">✕</button>
-                                </div>
-                            }
                         </div>
-                    }
-                    <div class="mt-4 text-right">
-                        <button class="text-sm text-gray-300 hover:text-amber-400 underline">Print</button>
-                    </div>
-                }
-
-                else if (activeTab == "Defense")
-                {
-                    <!-- ─── DEFENSE ─────────────────────────────────────────── -->
-                    <h3 class="text-base font-bold text-amber-400 mb-3">Defense</h3>
-
-                    <div class="flex flex-wrap gap-2 mb-4">
-                        @foreach (var cat in armorCategories)
-                        {
-                            <button @onclick="() => ToggleArmorCategory(cat.Key)"
-                                    class="px-3 py-1.5 text-sm font-semibold rounded transition-colors
-                                           @(cat.Value ? "bg-amber-600 border-2 border-amber-600 text-white" : "bg-gray-800 border-2 border-gray-600 text-gray-300 hover:border-amber-500")">
-                                @cat.Key
+                        <!-- Background -->
+                        <div class="mb-2">
+                            <button class="w-full text-left bg-gray-700 border border-gray-600 rounded px-2 py-1.5 text-sm hover:bg-gray-600 transition-colors">
+                                <div class="text-amber-400 text-xs font-bold uppercase tracking-wide">Background</div>
+                                <div class="font-semibold text-gray-100">@character.Background</div>
                             </button>
-                        }
-                    </div>
-
-                    <button @onclick="() => showArmorModal = true"
-                            class="w-full border-2 border-dashed border-gray-600 hover:border-amber-500 text-amber-400 font-semibold py-2 px-4 rounded text-left mb-4 transition-colors hover:bg-gray-800">
-                        + Add Armor / Shield
-                    </button>
-
-                    @if (!armors.Any())
-                    {
-                        <div class="text-center text-gray-400 text-sm py-8">No armor equipped. Click "Add Armor / Shield" to equip.</div>
-                    }
-                    else
-                    {
-                        <div class="space-y-2">
-                            @foreach (var (armor, index) in armors.Select((a, i) => (a, i)))
-                            {
-                                <div class="bg-gray-800 border border-gray-700 rounded p-3 flex items-center gap-3">
-                                    <div class="flex-1">
-                                        <div class="font-bold text-sm text-gray-100">@armor.Name</div>
-                                        <div class="text-xs text-gray-300">@armor.Category</div>
-                                    </div>
-                                    <div class="text-center">
-                                        <div class="text-lg font-bold text-gray-100">+@armor.ACBonus</div>
-                                        <div class="text-xs text-gray-300">AC Bonus</div>
-                                    </div>
-                                    <button @onclick="() => armors.RemoveAt(index)" class="text-red-400 hover:text-red-300 text-sm px-2">✕</button>
+                        </div>
+                        <!-- Class -->
+                        <div class="mb-3">
+                            <button class="w-full text-left bg-gray-700 border border-gray-600 rounded px-2 py-1.5 text-sm hover:bg-gray-600 transition-colors">
+                                <div class="text-amber-400 text-xs font-bold uppercase tracking-wide flex items-center gap-1">
+                                    <span>⚔</span> Class
                                 </div>
-                            }
+                                <div class="font-semibold text-gray-100">@character.Class</div>
+                            </button>
                         </div>
-                    }
-                }
+                        <!-- Level 1 -->
+                        <div class="text-amber-400 text-xs font-bold uppercase tracking-wide mb-1">Level 1</div>
+                        <button class="w-full text-left bg-gray-700 border border-gray-600 rounded px-2 py-1.5 text-sm mb-1 hover:bg-gray-600 transition-colors flex items-center gap-2">
+                            <span class="text-green-400">⚙</span><span class="text-gray-100">Set Abilities</span>
+                        </button>
+                        <button class="w-full text-left bg-gray-700 border border-gray-600 rounded px-2 py-1.5 text-sm mb-1 hover:bg-gray-600 transition-colors flex items-center gap-2">
+                            <span class="text-green-400">⚙</span><span class="text-gray-100">Skill Training</span>
+                        </button>
+                        <button class="w-full text-left bg-gray-700 border border-gray-600 rounded px-2 py-1.5 text-sm mb-2 hover:bg-gray-600 transition-colors flex items-center gap-2">
+                            <span class="text-green-400">⚙</span><span class="text-gray-100">Class Skill</span>
+                        </button>
+                        <button class="w-full text-left bg-gray-700 border border-gray-600 rounded px-2 py-1.5 text-sm mb-1 hover:bg-gray-600 transition-colors">
+                            <div class="text-amber-400 text-xs flex items-center gap-1"><span>👤</span> Heritage</div>
+                            <div class="text-gray-400 text-xs">Not Selected</div>
+                        </button>
+                        <button class="w-full text-left bg-gray-700 border border-gray-600 rounded px-2 py-1.5 text-sm mb-1 hover:bg-gray-600 transition-colors">
+                            <div class="text-amber-400 text-xs flex items-center gap-1"><span>👤</span> Ancestry Feat</div>
+                            <div class="text-gray-400 text-xs">Not Selected</div>
+                        </button>
+                        <button class="w-full text-left bg-gray-700 border border-gray-600 rounded px-2 py-1.5 text-sm mb-2 hover:bg-gray-600 transition-colors">
+                            <div class="text-amber-400 text-xs flex items-center gap-1"><span>⚔</span> Class Feat</div>
+                            <div class="text-gray-400 text-xs">Not Selected</div>
+                        </button>
+                        <div class="text-xs text-gray-300 mb-1">Reactive Strike →</div>
+                        <div class="text-xs text-gray-300 mb-1">Free Feat: Shield Block →</div>
+                        <div class="text-xs text-gray-300 mb-3">Free Feat: Hobnobber</div>
+                        <!-- Level 2 -->
+                        <div class="text-amber-400 text-xs font-bold uppercase tracking-wide mb-1">Level 2</div>
+                        <button class="w-full text-left bg-gray-700 border border-gray-600 rounded px-2 py-1.5 text-sm mb-1 hover:bg-gray-600 transition-colors">
+                            <div class="text-amber-400 text-xs flex items-center gap-1"><span>⚔</span> Class Feat</div>
+                            <div class="text-gray-400 text-xs">Not Selected</div>
+                        </button>
+                        <button class="w-full text-left bg-gray-700 border border-gray-600 rounded px-2 py-1.5 text-sm mb-3 hover:bg-gray-600 transition-colors">
+                            <div class="text-amber-400 text-xs flex items-center gap-1"><span>⚙</span> Skill Feat</div>
+                            <div class="text-gray-400 text-xs">Not Selected</div>
+                        </button>
+                        <!-- Level 3 -->
+                        <div class="text-amber-400 text-xs font-bold uppercase tracking-wide mb-1">Level 3</div>
+                        <button class="w-full text-left bg-gray-700 border border-gray-600 rounded px-2 py-1.5 text-sm hover:bg-gray-600 transition-colors flex items-center justify-center gap-2">
+                            <span class="text-green-400">⚙</span><span class="text-gray-100">Skill Increase</span>
+                        </button>
+                    </ChildContent>
+                </LumexAccordionItem>
 
-                else if (activeTab == "Gear")
-                {
-                    <!-- ─── GEAR ────────────────────────────────────────────── -->
-                    <h3 class="text-base font-bold text-amber-400 mb-3">Gear & Equipment</h3>
-
-                    <button @onclick="() => showGearModal = true"
-                            class="w-full border-2 border-dashed border-gray-600 hover:border-amber-500 text-amber-400 font-semibold py-2 px-4 rounded text-left mb-4 transition-colors hover:bg-gray-800">
-                        + Add Item
-                    </button>
-
-                    @if (!gearItems.Any())
-                    {
-                        <div class="text-center text-gray-400 text-sm py-8">No items in inventory.</div>
-                    }
-                    else
-                    {
-                        <table class="w-full text-sm">
-                            <thead>
-                                <tr class="border-b border-gray-700 text-amber-400 text-left">
-                                    <th class="pb-2 font-semibold">Item</th>
-                                    <th class="pb-2 font-semibold text-center">Qty</th>
-                                    <th class="pb-2 font-semibold text-center">Bulk</th>
-                                    <th class="pb-2"></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var (item, index) in gearItems.Select((g, i) => (g, i)))
-                                {
-                                    <tr class="border-b border-gray-800 hover:bg-gray-800">
-                                        <td class="py-2 font-medium text-gray-100">@item.Name</td>
-                                        <td class="py-2 text-center text-gray-300">@item.Quantity</td>
-                                        <td class="py-2 text-center text-gray-300">@item.Weight</td>
-                                        <td class="py-2 text-right">
-                                            <button @onclick="() => gearItems.RemoveAt(index)" class="text-red-400 hover:text-red-300">✕</button>
-                                        </td>
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
-                        <div class="mt-3 text-sm text-right text-gray-300">
-                            Total Bulk: <strong class="text-gray-100">@gearItems.Sum(i => i.Weight * i.Quantity)</strong>
+                @* ── Stats ── *@
+                <LumexAccordionItem Id="stats" Title="Stats & Skills">
+                    <ChildContent>
+                        <!-- Hero Points -->
+                        <div class="flex items-center gap-2 mb-3">
+                            <div class="w-7 h-7 rounded-full bg-amber-600 flex items-center justify-center text-white text-sm font-bold">@character.HeroPoints</div>
+                            <span class="text-sm font-semibold text-gray-100">Hero Points</span>
+                            <div class="flex gap-1 ml-1">
+                                <div class="w-4 h-4 rounded-full border-2 border-amber-500"></div>
+                                <div class="w-4 h-4 rounded-full border-2 border-amber-500"></div>
+                                <div class="w-4 h-4 rounded-full border-2 border-amber-500"></div>
+                            </div>
                         </div>
-                    }
-                }
-
-                else if (activeTab == "Spells")
-                {
-                    <!-- ─── SPELLS ───────────────────────────────────────────── -->
-                    <h3 class="text-base font-bold text-amber-400 mb-3">Spells</h3>
-
-                    @if (!spells.Any())
-                    {
-                        <div class="text-center text-gray-400 text-sm py-8">
-                            <div class="text-4xl mb-3">✦</div>
-                            <div>No spells prepared. This character has no spellcasting ability, or no spells have been added yet.</div>
+                        <!-- Fighter DC -->
+                        <div class="flex items-center gap-2 mb-4">
+                            <div class="w-7 h-7 rounded-full bg-gray-600 flex items-center justify-center text-white text-xs font-bold">⚔</div>
+                            <span class="text-sm font-semibold text-gray-100">+@character.FighterDC Fighter DC</span>
                         </div>
-                    }
-                    else
-                    {
-                        @foreach (var levelGroup in spells.GroupBy(s => s.Level).OrderBy(g => g.Key))
+                        <!-- Perception -->
+                        <div class="flex items-center gap-2 mb-2">
+                            <div class="w-6 h-6 rounded-full bg-amber-600 border-2 border-amber-700 flex items-center justify-center text-[10px] font-bold text-white">👁</div>
+                            <span class="text-sm text-gray-100">+@character.Perception Perception</span>
+                        </div>
+                        <!-- Initiative -->
+                        <div class="flex items-center gap-2 mb-4">
+                            <div class="w-6 h-6 rounded-full bg-green-700 border-2 border-green-600 flex items-center justify-center text-[10px] font-bold text-white">⚡</div>
+                            <span class="text-sm text-gray-100">+@character.Initiative Initiative</span>
+                        </div>
+                        <!-- Skills -->
+                        @foreach (var skill in character.Skills)
                         {
-                            <div class="mb-4">
-                                <div class="text-sm font-bold text-amber-400 mb-2 border-b border-gray-700 pb-1">
-                                    @(levelGroup.Key == 0 ? "Cantrips" : $"Level {levelGroup.Key} Spells")
-                                </div>
-                                @foreach (var spell in levelGroup)
-                                {
-                                    <div class="bg-gray-800 border border-gray-700 rounded p-3 mb-2">
-                                        <div class="flex justify-between items-start">
-                                            <div>
-                                                <div class="font-bold text-sm text-gray-100">@spell.Name</div>
-                                                <div class="text-xs text-gray-300">@spell.School • @spell.CastTime</div>
-                                            </div>
-                                            <button @onclick="() => spells.Remove(spell)" class="text-red-400 hover:text-red-300 text-sm">✕</button>
+                            <div class="flex items-center gap-2 mb-1">
+                                <div class="w-5 h-5 rounded-full @(skill.Trained ? "bg-amber-600" : "border-2 border-gray-600 bg-gray-800") flex-shrink-0">
+                                    @if (skill.Trained)
+                                    {
+                                        <div class="w-full h-full rounded-full flex items-center justify-center">
+                                            <span class="text-white text-[9px] font-bold">@skill.ProficiencyLetter</span>
                                         </div>
-                                        <div class="text-xs text-gray-300 mt-1">@spell.Description</div>
-                                    </div>
-                                }
+                                    }
+                                    else
+                                    {
+                                        <div class="w-full h-full rounded-full flex items-center justify-center">
+                                            <span class="text-gray-400 text-[9px] font-bold">@skill.ProficiencyLetter</span>
+                                        </div>
+                                    }
+                                </div>
+                                <span class="text-xs w-7 text-right font-semibold @(skill.Modifier >= 0 ? "text-gray-100" : "text-red-400")">
+                                    @(skill.Modifier >= 0 ? "+" : "")@skill.Modifier
+                                </span>
+                                <span class="text-xs text-gray-300">@skill.Name</span>
                             </div>
                         }
-                    }
+                    </ChildContent>
+                </LumexAccordionItem>
 
-                    <button @onclick="() => showSpellModal = true"
-                            class="w-full border-2 border-dashed border-gray-600 hover:border-amber-500 text-amber-400 font-semibold py-2 px-4 rounded text-left mt-2 transition-colors hover:bg-gray-800">
-                        + Add Spell
-                    </button>
-                }
-
-                else if (activeTab == "Pets")
-                {
-                    <!-- ─── PETS ─────────────────────────────────────────────── -->
-                    <h3 class="text-base font-bold text-amber-400 mb-3">Animal Companions & Familiars</h3>
-                    <div class="text-center text-gray-400 text-sm py-8">
-                        <div class="text-4xl mb-3">🐾</div>
-                        <div>No animal companions or familiars. Add a class feature that grants a pet to track it here.</div>
-                    </div>
-                }
-
-                else if (activeTab == "Details")
-                {
-                    <!-- ─── DETAILS ──────────────────────────────────────────── -->
-                    <h3 class="text-base font-bold text-amber-400 mb-3">Character Details</h3>
-
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
-                        <div>
-                            <label class="text-sm font-semibold text-gray-300">Age</label>
-                            <input @bind="details.Age" placeholder="e.g., 25"
-                                   class="w-full mt-1 border border-gray-600 rounded px-3 py-1.5 text-sm focus:outline-none focus:border-amber-500 bg-gray-700 text-gray-100 placeholder-gray-400" />
-                        </div>
-                        <div>
-                            <label class="text-sm font-semibold text-gray-300">Gender & Pronouns</label>
-                            <input @bind="details.Gender" placeholder="e.g., Male, he/him"
-                                   class="w-full mt-1 border border-gray-600 rounded px-3 py-1.5 text-sm focus:outline-none focus:border-amber-500 bg-gray-700 text-gray-100 placeholder-gray-400" />
-                        </div>
-                        <div>
-                            <label class="text-sm font-semibold text-gray-300">Height</label>
-                            <input @bind="details.Height" placeholder="e.g., 6'1&quot;"
-                                   class="w-full mt-1 border border-gray-600 rounded px-3 py-1.5 text-sm focus:outline-none focus:border-amber-500 bg-gray-700 text-gray-100 placeholder-gray-400" />
-                        </div>
-                        <div>
-                            <label class="text-sm font-semibold text-gray-300">Weight</label>
-                            <input @bind="details.Weight" placeholder="e.g., 180 lbs"
-                                   class="w-full mt-1 border border-gray-600 rounded px-3 py-1.5 text-sm focus:outline-none focus:border-amber-500 bg-gray-700 text-gray-100 placeholder-gray-400" />
-                        </div>
-                        <div>
-                            <label class="text-sm font-semibold text-gray-300">Alignment</label>
-                            <select @bind="details.Alignment"
-                                    class="w-full mt-1 border border-gray-600 rounded px-3 py-1.5 text-sm focus:outline-none focus:border-amber-500 bg-gray-700 text-gray-100">
-                                <option value="">— Select —</option>
-                                <option>Lawful Good</option><option>Neutral Good</option><option>Chaotic Good</option>
-                                <option>Lawful Neutral</option><option>True Neutral</option><option>Chaotic Neutral</option>
-                                <option>Lawful Evil</option><option>Neutral Evil</option><option>Chaotic Evil</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="text-sm font-semibold text-gray-300">Deity</label>
-                            <input @bind="details.Deity" placeholder="e.g., Cayden Cailean"
-                                   class="w-full mt-1 border border-gray-600 rounded px-3 py-1.5 text-sm focus:outline-none focus:border-amber-500 bg-gray-700 text-gray-100 placeholder-gray-400" />
-                        </div>
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="text-sm font-semibold text-gray-300">Appearance</label>
-                        <textarea @bind="details.Appearance" rows="3" placeholder="Describe your character's physical appearance..."
-                                  class="w-full mt-1 border border-gray-600 rounded px-3 py-1.5 text-sm focus:outline-none focus:border-amber-500 bg-gray-700 text-gray-100 placeholder-gray-400 resize-none"></textarea>
-                    </div>
-                    <div class="mb-3">
-                        <label class="text-sm font-semibold text-gray-300">Personality</label>
-                        <textarea @bind="details.Personality" rows="3" placeholder="Describe your character's personality..."
-                                  class="w-full mt-1 border border-gray-600 rounded px-3 py-1.5 text-sm focus:outline-none focus:border-amber-500 bg-gray-700 text-gray-100 placeholder-gray-400 resize-none"></textarea>
-                    </div>
-                    <div class="mb-4">
-                        <label class="text-sm font-semibold text-gray-300">Backstory</label>
-                        <textarea @bind="details.Backstory" rows="5" placeholder="Write your character's backstory..."
-                                  class="w-full mt-1 border border-gray-600 rounded px-3 py-1.5 text-sm focus:outline-none focus:border-amber-500 bg-gray-700 text-gray-100 placeholder-gray-400 resize-none"></textarea>
-                    </div>
-
-                    <h4 class="text-sm font-bold text-amber-400 mb-2">Currency</h4>
-                    <div class="flex flex-wrap gap-4">
-                        @foreach (var coin in currencies)
-                        {
-                            <div class="flex flex-col items-center">
-                                <div class="w-8 h-8 rounded-full @coin.Color flex items-center justify-center text-white text-xs font-bold shadow">@coin.Abbr</div>
-                                <input @bind="coin.Amount" type="number" min="0"
-                                       class="w-16 mt-1 border border-gray-600 rounded px-1 py-0.5 text-sm text-center focus:outline-none focus:border-amber-500 bg-gray-700 text-gray-100" />
-                                <span class="text-xs text-gray-300 mt-0.5">@coin.Name</span>
-                            </div>
-                        }
-                    </div>
-                }
-
-                else if (activeTab == "Feats")
-                {
-                    <!-- ─── FEATS ─────────────────────────────────────────────── -->
-                    <h3 class="text-base font-bold text-amber-400 mb-3">Feats & Abilities</h3>
-
-                    @foreach (var category in featsByCategory.Keys)
-                    {
-                        <div class="mb-4">
-                            <div class="flex items-center justify-between border-b border-gray-700 pb-1 mb-2">
-                                <h4 class="text-sm font-bold text-gray-300">@category</h4>
-                                <button @onclick="() => OpenFeatModal(category)"
-                                        class="text-xs text-amber-400 hover:text-amber-300 font-semibold">+ Add</button>
-                            </div>
-                            @if (!featsByCategory[category].Any())
+                @* ── Main panel (tabs) ── *@
+                <LumexAccordionItem Id="main" Title="@activeTab">
+                    <ChildContent>
+                        <!-- Tab Buttons -->
+                        <div class="flex flex-wrap mb-3 border-b border-gray-700">
+                            @foreach (var tab in tabs)
                             {
-                                <div class="text-xs text-gray-400 italic px-2">No @category.ToLower() added.</div>
+                                <button @onclick="() => SetActiveTab(tab)" class="@TabClass(tab)">@tab</button>
+                            }
+                        </div>
+                        <!-- Tab Content (identical to desktop) -->
+                        @* paste your existing tab content block here *@
+                        <div class="p-1">
+                            @TabContent()
+                        </div>
+                    </ChildContent>
+                </LumexAccordionItem>
+
+            </LumexAccordion>
+        </div>
+
+        @* ── Desktop layout (lg and above) — unchanged ── *@
+        <div class="hidden lg:contents">
+
+            <!-- LEFT SIDEBAR -->
+            <div class="w-full lg:w-48 xl:w-52 bg-gray-800 border-b lg:border-b-0 lg:border-r border-gray-700 p-3 flex-shrink-0 overflow-y-auto" style="max-height: calc(100vh - 150px);">
+                <!-- Ancestry -->
+                <div class="mb-2">
+                    <button class="w-full text-left bg-gray-700 border border-gray-600 rounded px-2 py-1.5 text-sm hover:bg-gray-600 transition-colors">
+                        <div class="text-amber-400 text-xs font-bold uppercase tracking-wide">Ancestry</div>
+                        <div class="font-semibold text-gray-100">@character.Ancestry</div>
+                    </button>
+                </div>
+
+                <!-- Background -->
+                <div class="mb-2">
+                    <button class="w-full text-left bg-gray-700 border border-gray-600 rounded px-2 py-1.5 text-sm hover:bg-gray-600 transition-colors">
+                        <div class="text-amber-400 text-xs font-bold uppercase tracking-wide">Background</div>
+                        <div class="font-semibold text-gray-100">@character.Background</div>
+                    </button>
+                </div>
+
+                <!-- Class -->
+                <div class="mb-3">
+                    <button class="w-full text-left bg-gray-700 border border-gray-600 rounded px-2 py-1.5 text-sm hover:bg-gray-600 transition-colors">
+                        <div class="text-amber-400 text-xs font-bold uppercase tracking-wide flex items-center gap-1">
+                            <span>⚔</span> Class
+                        </div>
+                        <div class="font-semibold text-gray-100">@character.Class</div>
+                    </button>
+                </div>
+
+                <!-- Level 1 -->
+                <div class="text-amber-400 text-xs font-bold uppercase tracking-wide mb-1">Level 1</div>
+
+                <button class="w-full text-left bg-gray-700 border border-gray-600 rounded px-2 py-1.5 text-sm mb-1 hover:bg-gray-600 transition-colors flex items-center gap-2">
+                    <span class="text-green-400">⚙</span>
+                    <span class="text-gray-100">Set Abilities</span>
+                </button>
+
+                <button class="w-full text-left bg-gray-700 border border-gray-600 rounded px-2 py-1.5 text-sm mb-1 hover:bg-gray-600 transition-colors flex items-center gap-2">
+                    <span class="text-green-400">⚙</span>
+                    <span class="text-gray-100">Skill Training</span>
+                </button>
+
+                <button class="w-full text-left bg-gray-700 border border-gray-600 rounded px-2 py-1.5 text-sm mb-2 hover:bg-gray-600 transition-colors flex items-center gap-2">
+                    <span class="text-green-400">⚙</span>
+                    <span class="text-gray-100">Class Skill</span>
+                </button>
+
+                <button class="w-full text-left bg-gray-700 border border-gray-600 rounded px-2 py-1.5 text-sm mb-1 hover:bg-gray-600 transition-colors">
+                    <div class="text-amber-400 text-xs flex items-center gap-1"><span>👤</span> Heritage</div>
+                    <div class="text-gray-400 text-xs">Not Selected</div>
+                </button>
+
+                <button class="w-full text-left bg-gray-700 border border-gray-600 rounded px-2 py-1.5 text-sm mb-1 hover:bg-gray-600 transition-colors">
+                    <div class="text-amber-400 text-xs flex items-center gap-1"><span>👤</span> Ancestry Feat</div>
+                    <div class="text-gray-400 text-xs">Not Selected</div>
+                </button>
+
+                <button class="w-full text-left bg-gray-700 border border-gray-600 rounded px-2 py-1.5 text-sm mb-2 hover:bg-gray-600 transition-colors">
+                    <div class="text-amber-400 text-xs flex items-center gap-1"><span>⚔</span> Class Feat</div>
+                    <div class="text-gray-400 text-xs">Not Selected</div>
+                </button>
+
+                <div class="text-xs text-gray-300 mb-1">Reactive Strike →</div>
+                <div class="text-xs text-gray-300 mb-1">Free Feat: Shield Block →</div>
+                <div class="text-xs text-gray-300 mb-3">Free Feat: Hobnobber</div>
+
+                <!-- Level 2 -->
+                <div class="text-amber-400 text-xs font-bold uppercase tracking-wide mb-1">Level 2</div>
+
+                <button class="w-full text-left bg-gray-700 border border-gray-600 rounded px-2 py-1.5 text-sm mb-1 hover:bg-gray-600 transition-colors">
+                    <div class="text-amber-400 text-xs flex items-center gap-1"><span>⚔</span> Class Feat</div>
+                    <div class="text-gray-400 text-xs">Not Selected</div>
+                </button>
+
+                <button class="w-full text-left bg-gray-700 border border-gray-600 rounded px-2 py-1.5 text-sm mb-3 hover:bg-gray-600 transition-colors">
+                    <div class="text-amber-400 text-xs flex items-center gap-1"><span>⚙</span> Skill Feat</div>
+                    <div class="text-gray-400 text-xs">Not Selected</div>
+                </button>
+
+                <!-- Level 3 -->
+                <div class="text-amber-400 text-xs font-bold uppercase tracking-wide mb-1">Level 3</div>
+
+                <button class="w-full text-left bg-gray-700 border border-gray-600 rounded px-2 py-1.5 text-sm hover:bg-gray-600 transition-colors flex items-center justify-center gap-2">
+                    <span class="text-green-400">⚙</span>
+                    <span class="text-gray-100">Skill Increase</span>
+                </button>
+            </div>
+
+            <!-- MIDDLE: Stats Panel -->
+            <div class="w-full lg:w-52 xl:w-56 bg-gray-800 border-b lg:border-b-0 lg:border-r border-gray-700 p-3 flex-shrink-0 overflow-y-auto" style="max-height: calc(100vh - 150px);">
+                <!-- Hero Points -->
+                <div class="flex items-center gap-2 mb-3">
+                    <div class="w-7 h-7 rounded-full bg-amber-600 flex items-center justify-center text-white text-sm font-bold">@character.HeroPoints</div>
+                    <span class="text-sm font-semibold text-gray-100">Hero Points</span>
+                    <div class="flex gap-1 ml-1">
+                        <div class="w-4 h-4 rounded-full border-2 border-amber-500"></div>
+                        <div class="w-4 h-4 rounded-full border-2 border-amber-500"></div>
+                        <div class="w-4 h-4 rounded-full border-2 border-amber-500"></div>
+                    </div>
+                </div>
+
+                <!-- Fighter DC -->
+                <div class="flex items-center gap-2 mb-4">
+                    <div class="w-7 h-7 rounded-full bg-gray-600 flex items-center justify-center text-white text-xs font-bold">⚔</div>
+                    <span class="text-sm font-semibold text-gray-100">+@character.FighterDC Fighter DC</span>
+                </div>
+
+                <!-- Perception -->
+                <div class="flex items-center gap-2 mb-2">
+                    <div class="w-6 h-6 rounded-full bg-amber-600 border-2 border-amber-700 flex items-center justify-center text-[10px] font-bold text-white">👁</div>
+                    <span class="text-sm text-gray-100">+@character.Perception Perception</span>
+                </div>
+
+                <!-- Initiative -->
+                <div class="flex items-center gap-2 mb-4">
+                    <div class="w-6 h-6 rounded-full bg-green-700 border-2 border-green-600 flex items-center justify-center text-[10px] font-bold text-white">⚡</div>
+                    <span class="text-sm text-gray-100">+@character.Initiative Initiative</span>
+                </div>
+
+                <!-- Skills -->
+                @foreach (var skill in character.Skills)
+                {
+                    <div class="flex items-center gap-2 mb-1">
+                        <div class="w-5 h-5 rounded-full @(skill.Trained ? "bg-amber-600" : "border-2 border-gray-600 bg-gray-800") flex-shrink-0">
+                            @if (skill.Trained)
+                            {
+                                <div class="w-full h-full rounded-full flex items-center justify-center">
+                                    <span class="text-white text-[9px] font-bold">@skill.ProficiencyLetter</span>
+                                </div>
                             }
                             else
                             {
-                                @foreach (var feat in featsByCategory[category])
-                                {
-                                    <div class="bg-gray-800 border border-gray-700 rounded p-2 mb-1 flex items-start justify-between gap-2">
-                                        <div>
-                                            <div class="text-sm font-semibold text-gray-100">@feat.Name</div>
-                                            @if (!string.IsNullOrEmpty(feat.Description))
-                                            {
-                                                <div class="text-xs text-gray-300 mt-0.5">@feat.Description</div>
-                                            }
-                                        </div>
-                                        <button @onclick="() => featsByCategory[category].Remove(feat)"
-                                                class="text-red-400 hover:text-red-300 text-xs flex-shrink-0">✕</button>
-                                    </div>
-                                }
+                                <div class="w-full h-full rounded-full flex items-center justify-center">
+                                    <span class="text-gray-400 text-[9px] font-bold">@skill.ProficiencyLetter</span>
+                                </div>
                             }
                         </div>
-                    }
+                        <span class="text-xs w-7 text-right font-semibold @(skill.Modifier >= 0 ? "text-gray-100" : "text-red-400")">
+                            @(skill.Modifier >= 0 ? "+" : "")@skill.Modifier
+                        </span>
+                        <span class="text-xs text-gray-300">@skill.Name</span>
+                    </div>
                 }
+            </div>
 
-                else if (activeTab == "Actions")
-                {
-                    <!-- ─── ACTIONS ───────────────────────────────────────────── -->
-                    <h3 class="text-base font-bold text-amber-400 mb-3">Actions & Activities</h3>
-
-                    @foreach (var section in actionSections)
+            <!-- RIGHT: Main Character Panel -->
+            <div class="flex-1 flex flex-col min-w-0">
+                <div class="bg-gray-800 border-b border-gray-700 flex flex-wrap">
+                    @foreach (var tab in tabs)
                     {
-                        <div class="mb-5">
-                            <div class="text-sm font-bold text-gray-300 border-b border-gray-700 pb-1 mb-2"></div>
-                            <div class="space-y-2">
-                                @foreach (var action in section.Actions)
-                                {
-                                    <div class="bg-gray-800 border border-gray-700 rounded p-3">
-                                        <div class="flex items-center gap-2 mb-1">
-                                            <span class="text-sm font-bold text-gray-100">@action.Name</span>
-                                            <span class="text-xs bg-amber-600 text-white rounded-full px-2 py-0.5">@action.ActionCost</span>
-                                            @if (!string.IsNullOrEmpty(action.Traits))
-                                            {
-                                                <span class="text-xs text-gray-400 italic">@action.Traits</span>
-                                            }
-                                        </div>
-                                        <p class="text-xs text-gray-300">@action.Description</p>
-                                    </div>
-                                }
-                            </div>
-                        </div>
+                        <button @onclick="() => SetActiveTab(tab)" class="@TabClass(tab)">@tab</button>
                     }
-                }
+                </div>
+                <div class="flex-1 p-4 bg-gray-900 overflow-y-auto" style="max-height: calc(100vh - 190px);">
+                    @TabContent()
+                </div>
+            </div>
 
-            </div><!-- end tab content -->
-        </div><!-- end right panel -->
-    </div><!-- end flex row -->
+        </div>
+    </div>
 
     <!-- ═══════════════════════════════════════════════════════════════════ -->
     <!-- MODALS                                                             -->
@@ -987,4 +802,347 @@
         public string Personality { get; set; } = "";
         public string Backstory { get; set; } = "";
     }
+
+    private RenderFragment TabContent() => __builder =>
+    {
+        <!-- Tab Content -->
+        <div class="flex-1 p-4 bg-gray-900 overflow-y-auto" style="max-height: calc(100vh - 190px);">
+
+            <!-- ─── WEAPONS ─────────────────────────────────────────── -->
+            @if (activeTab == "Weapons")
+            {
+                <div class="flex flex-wrap gap-2 mb-4">
+                    @foreach (var cat in weaponCategories)
+                    {
+                        <button @onclick="() => ToggleWeaponCategory(cat.Key)"
+                                class="px-3 py-1.5 text-sm font-semibold rounded transition-colors flex items-center gap-1
+                                        @(cat.Value ? "bg-amber-600 border-2 border-amber-600 text-white" : "bg-gray-800 border-2 border-gray-600 text-gray-300 hover:border-amber-500")">
+                            <span>@(cat.Value ? "●" : "○")</span> @cat.Key
+                        </button>
+                    }
+                </div>
+
+                <button @onclick="() => showWeaponModal = true"
+                        class="w-full border-2 border-dashed border-gray-600 hover:border-amber-500 text-amber-400 font-semibold py-2 px-4 rounded text-left mb-4 transition-colors hover:bg-gray-800">
+                    + Add Weapon
+                </button>
+
+                @if (!weapons.Any())
+                {
+                    <div class="text-center text-gray-400 text-sm py-8">No weapons equipped. Click "Add Weapon" to equip weapons.</div>
+                }
+                else
+                {
+                    <div class="space-y-2">
+                        @foreach (var (weapon, index) in weapons.Select((w, i) => (w, i)))
+                        {
+                            <div class="bg-gray-800 border border-gray-700 rounded p-3 flex flex-wrap items-center gap-3">
+                                <div class="flex-1 min-w-0">
+                                    <div class="font-bold text-sm text-gray-100">@weapon.Name</div>
+                                    <div class="text-xs text-gray-300">@weapon.Traits</div>
+                                </div>
+                                <div class="text-center">
+                                    <div class="text-lg font-bold text-gray-100">@(weapon.AttackBonus >= 0 ? "+" : "")@weapon.AttackBonus</div>
+                                    <div class="text-xs text-gray-300">Attack</div>
+                                </div>
+                                <div class="text-center">
+                                    <div class="text-lg font-bold text-gray-100">@weapon.Damage</div>
+                                    <div class="text-xs text-gray-300">Damage</div>
+                                </div>
+                                <button @onclick="() => weapons.RemoveAt(index)" class="text-red-400 hover:text-red-300 text-sm px-2">✕</button>
+                            </div>
+                        }
+                    </div>
+                }
+                <div class="mt-4 text-right">
+                    <button class="text-sm text-gray-300 hover:text-amber-400 underline">Print</button>
+                </div>
+            }
+
+            else if (activeTab == "Defense")
+            {
+                <!-- ─── DEFENSE ─────────────────────────────────────────── -->
+                <h3 class="text-base font-bold text-amber-400 mb-3">Defense</h3>
+
+                <div class="flex flex-wrap gap-2 mb-4">
+                    @foreach (var cat in armorCategories)
+                    {
+                        <button @onclick="() => ToggleArmorCategory(cat.Key)"
+                                class="px-3 py-1.5 text-sm font-semibold rounded transition-colors
+                                        @(cat.Value ? "bg-amber-600 border-2 border-amber-600 text-white" : "bg-gray-800 border-2 border-gray-600 text-gray-300 hover:border-amber-500")">
+                            @cat.Key
+                        </button>
+                    }
+                </div>
+
+                <button @onclick="() => showArmorModal = true"
+                        class="w-full border-2 border-dashed border-gray-600 hover:border-amber-500 text-amber-400 font-semibold py-2 px-4 rounded text-left mb-4 transition-colors hover:bg-gray-800">
+                    + Add Armor / Shield
+                </button>
+
+                @if (!armors.Any())
+                {
+                    <div class="text-center text-gray-400 text-sm py-8">No armor equipped. Click "Add Armor / Shield" to equip.</div>
+                }
+                else
+                {
+                    <div class="space-y-2">
+                        @foreach (var (armor, index) in armors.Select((a, i) => (a, i)))
+                        {
+                            <div class="bg-gray-800 border border-gray-700 rounded p-3 flex items-center gap-3">
+                                <div class="flex-1">
+                                    <div class="font-bold text-sm text-gray-100">@armor.Name</div>
+                                    <div class="text-xs text-gray-300">@armor.Category</div>
+                                </div>
+                                <div class="text-center">
+                                    <div class="text-lg font-bold text-gray-100">+@armor.ACBonus</div>
+                                    <div class="text-xs text-gray-300">AC Bonus</div>
+                                </div>
+                                <button @onclick="() => armors.RemoveAt(index)" class="text-red-400 hover:text-red-300 text-sm px-2">✕</button>
+                            </div>
+                        }
+                    </div>
+                }
+            }
+
+            else if (activeTab == "Gear")
+            {
+                <!-- ─── GEAR ────────────────────────────────────────────── -->
+                <h3 class="text-base font-bold text-amber-400 mb-3">Gear & Equipment</h3>
+
+                <button @onclick="() => showGearModal = true"
+                        class="w-full border-2 border-dashed border-gray-600 hover:border-amber-500 text-amber-400 font-semibold py-2 px-4 rounded text-left mb-4 transition-colors hover:bg-gray-800">
+                    + Add Item
+                </button>
+
+                @if (!gearItems.Any())
+                {
+                    <div class="text-center text-gray-400 text-sm py-8">No items in inventory.</div>
+                }
+                else
+                {
+                    <table class="w-full text-sm">
+                        <thead>
+                            <tr class="border-b border-gray-700 text-amber-400 text-left">
+                                <th class="pb-2 font-semibold">Item</th>
+                                <th class="pb-2 font-semibold text-center">Qty</th>
+                                <th class="pb-2 font-semibold text-center">Bulk</th>
+                                <th class="pb-2"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var (item, index) in gearItems.Select((g, i) => (g, i)))
+                            {
+                                <tr class="border-b border-gray-800 hover:bg-gray-800">
+                                    <td class="py-2 font-medium text-gray-100">@item.Name</td>
+                                    <td class="py-2 text-center text-gray-300">@item.Quantity</td>
+                                    <td class="py-2 text-center text-gray-300">@item.Weight</td>
+                                    <td class="py-2 text-right">
+                                        <button @onclick="() => gearItems.RemoveAt(index)" class="text-red-400 hover:text-red-300">✕</button>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    <div class="mt-3 text-sm text-right text-gray-300">
+                        Total Bulk: <strong class="text-gray-100">@gearItems.Sum(i => i.Weight * i.Quantity)</strong>
+                    </div>
+                }
+            }
+
+            else if (activeTab == "Spells")
+            {
+                <!-- ─── SPELLS ───────────────────────────────────────────── -->
+                <h3 class="text-base font-bold text-amber-400 mb-3">Spells</h3>
+
+                @if (!spells.Any())
+                {
+                    <div class="text-center text-gray-400 text-sm py-8">
+                        <div class="text-4xl mb-3">✦</div>
+                        <div>No spells prepared. This character has no spellcasting ability, or no spells have been added yet.</div>
+                    </div>
+                }
+                else
+                {
+                    @foreach (var levelGroup in spells.GroupBy(s => s.Level).OrderBy(g => g.Key))
+                    {
+                        <div class="mb-4">
+                            <div class="text-sm font-bold text-amber-400 mb-2 border-b border-gray-700 pb-1">
+                                @(levelGroup.Key == 0 ? "Cantrips" : $"Level {levelGroup.Key} Spells")
+                            </div>
+                            @foreach (var spell in levelGroup)
+                            {
+                                <div class="bg-gray-800 border border-gray-700 rounded p-3 mb-2">
+                                    <div class="flex justify-between items-start">
+                                        <div>
+                                            <div class="font-bold text-sm text-gray-100">@spell.Name</div>
+                                            <div class="text-xs text-gray-300">@spell.School • @spell.CastTime</div>
+                                        </div>
+                                        <button @onclick="() => spells.Remove(spell)" class="text-red-400 hover:text-red-300 text-sm">✕</button>
+                                    </div>
+                                    <div class="text-xs text-gray-300 mt-1">@spell.Description</div>
+                                </div>
+                            }
+                        </div>
+                    }
+                }
+
+                <button @onclick="() => showSpellModal = true"
+                        class="w-full border-2 border-dashed border-gray-600 hover:border-amber-500 text-amber-400 font-semibold py-2 px-4 rounded text-left mt-2 transition-colors hover:bg-gray-800">
+                    + Add Spell
+                </button>
+            }
+
+            else if (activeTab == "Pets")
+            {
+                <!-- ─── PETS ─────────────────────────────────────────────── -->
+                <h3 class="text-base font-bold text-amber-400 mb-3">Animal Companions & Familiars</h3>
+                <div class="text-center text-gray-400 text-sm py-8">
+                    <div class="text-4xl mb-3">🐾</div>
+                    <div>No animal companions or familiars. Add a class feature that grants a pet to track it here.</div>
+                </div>
+            }
+
+            else if (activeTab == "Details")
+            {
+                <!-- ─── DETAILS ──────────────────────────────────────────── -->
+                <h3 class="text-base font-bold text-amber-400 mb-3">Character Details</h3>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+                    <div>
+                        <label class="text-sm font-semibold text-gray-300">Age</label>
+                        <input @bind="details.Age" placeholder="e.g., 25"
+                                class="w-full mt-1 border border-gray-600 rounded px-3 py-1.5 text-sm focus:outline-none focus:border-amber-500 bg-gray-700 text-gray-100 placeholder-gray-400" />
+                    </div>
+                    <div>
+                        <label class="text-sm font-semibold text-gray-300">Gender & Pronouns</label>
+                        <input @bind="details.Gender" placeholder="e.g., Male, he/him"
+                                class="w-full mt-1 border border-gray-600 rounded px-3 py-1.5 text-sm focus:outline-none focus:border-amber-500 bg-gray-700 text-gray-100 placeholder-gray-400" />
+                    </div>
+                    <div>
+                        <label class="text-sm font-semibold text-gray-300">Height</label>
+                        <input @bind="details.Height" placeholder="e.g., 6'1&quot;"
+                                class="w-full mt-1 border border-gray-600 rounded px-3 py-1.5 text-sm focus:outline-none focus:border-amber-500 bg-gray-700 text-gray-100 placeholder-gray-400" />
+                    </div>
+                    <div>
+                        <label class="text-sm font-semibold text-gray-300">Weight</label>
+                        <input @bind="details.Weight" placeholder="e.g., 180 lbs"
+                                class="w-full mt-1 border border-gray-600 rounded px-3 py-1.5 text-sm focus:outline-none focus:border-amber-500 bg-gray-700 text-gray-100 placeholder-gray-400" />
+                    </div>
+                    <div>
+                        <label class="text-sm font-semibold text-gray-300">Alignment</label>
+                        <select @bind="details.Alignment"
+                                class="w-full mt-1 border border-gray-600 rounded px-3 py-1.5 text-sm focus:outline-none focus:border-amber-500 bg-gray-700 text-gray-100">
+                            <option value="">— Select —</option>
+                            <option>Lawful Good</option><option>Neutral Good</option><option>Chaotic Good</option>
+                            <option>Lawful Neutral</option><option>True Neutral</option><option>Chaotic Neutral</option>
+                            <option>Lawful Evil</option><option>Neutral Evil</option><option>Chaotic Evil</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="text-sm font-semibold text-gray-300">Deity</label>
+                        <input @bind="details.Deity" placeholder="e.g., Cayden Cailean"
+                                class="w-full mt-1 border border-gray-600 rounded px-3 py-1.5 text-sm focus:outline-none focus:border-amber-500 bg-gray-700 text-gray-100 placeholder-gray-400" />
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="text-sm font-semibold text-gray-300">Appearance</label>
+                    <textarea @bind="details.Appearance" rows="3" placeholder="Describe your character's physical appearance..."
+                                class="w-full mt-1 border border-gray-600 rounded px-3 py-1.5 text-sm focus:outline-none focus:border-amber-500 bg-gray-700 text-gray-100 placeholder-gray-400 resize-none"></textarea>
+                </div>
+                <div class="mb-3">
+                    <label class="text-sm font-semibold text-gray-300">Personality</label>
+                    <textarea @bind="details.Personality" rows="3" placeholder="Describe your character's personality..."
+                                class="w-full mt-1 border border-gray-600 rounded px-3 py-1.5 text-sm focus:outline-none focus:border-amber-500 bg-gray-700 text-gray-100 placeholder-gray-400 resize-none"></textarea>
+                </div>
+                <div class="mb-4">
+                    <label class="text-sm font-semibold text-gray-300">Backstory</label>
+                    <textarea @bind="details.Backstory" rows="5" placeholder="Write your character's backstory..."
+                                class="w-full mt-1 border border-gray-600 rounded px-3 py-1.5 text-sm focus:outline-none focus:border-amber-500 bg-gray-700 text-gray-100 placeholder-gray-400 resize-none"></textarea>
+                </div>
+
+                <h4 class="text-sm font-bold text-amber-400 mb-2">Currency</h4>
+                <div class="flex flex-wrap gap-4">
+                    @foreach (var coin in currencies)
+                    {
+                        <div class="flex flex-col items-center">
+                            <div class="w-8 h-8 rounded-full @coin.Color flex items-center justify-center text-white text-xs font-bold shadow">@coin.Abbr</div>
+                            <input @bind="coin.Amount" type="number" min="0"
+                                    class="w-16 mt-1 border border-gray-600 rounded px-1 py-0.5 text-sm text-center focus:outline-none focus:border-amber-500 bg-gray-700 text-gray-100" />
+                            <span class="text-xs text-gray-300 mt-0.5">@coin.Name</span>
+                        </div>
+                    }
+                </div>
+            }
+
+            else if (activeTab == "Feats")
+            {
+                <!-- ─── FEATS ─────────────────────────────────────────────── -->
+                <h3 class="text-base font-bold text-amber-400 mb-3">Feats & Abilities</h3>
+
+                @foreach (var category in featsByCategory.Keys)
+                {
+                    <div class="mb-4">
+                        <div class="flex items-center justify-between border-b border-gray-700 pb-1 mb-2">
+                            <h4 class="text-sm font-bold text-gray-300">@category</h4>
+                            <button @onclick="() => OpenFeatModal(category)"
+                                    class="text-xs text-amber-400 hover:text-amber-300 font-semibold">+ Add</button>
+                        </div>
+                        @if (!featsByCategory[category].Any())
+                        {
+                            <div class="text-xs text-gray-400 italic px-2">No @category.ToLower() added.</div>
+                        }
+                        else
+                        {
+                            @foreach (var feat in featsByCategory[category])
+                            {
+                                <div class="bg-gray-800 border border-gray-700 rounded p-2 mb-1 flex items-start justify-between gap-2">
+                                    <div>
+                                        <div class="text-sm font-semibold text-gray-100">@feat.Name</div>
+                                        @if (!string.IsNullOrEmpty(feat.Description))
+                                        {
+                                            <div class="text-xs text-gray-300 mt-0.5">@feat.Description</div>
+                                        }
+                                    </div>
+                                    <button @onclick="() => featsByCategory[category].Remove(feat)"
+                                            class="text-red-400 hover:text-red-300 text-xs flex-shrink-0">✕</button>
+                                </div>
+                            }
+                        }
+                    </div>
+                }
+            }
+
+            else if (activeTab == "Actions")
+            {
+                <!-- ─── ACTIONS ───────────────────────────────────────────── -->
+                <h3 class="text-base font-bold text-amber-400 mb-3">Actions & Activities</h3>
+
+                @foreach (var section in actionSections)
+                {
+                    <div class="mb-5">
+                        <div class="text-sm font-bold text-gray-300 border-b border-gray-700 pb-1 mb-2"></div>
+                        <div class="space-y-2">
+                            @foreach (var action in section.Actions)
+                            {
+                                <div class="bg-gray-800 border border-gray-700 rounded p-3">
+                                    <div class="flex items-center gap-2 mb-1">
+                                        <span class="text-sm font-bold text-gray-100">@action.Name</span>
+                                        <span class="text-xs bg-amber-600 text-white rounded-full px-2 py-0.5">@action.ActionCost</span>
+                                        @if (!string.IsNullOrEmpty(action.Traits))
+                                        {
+                                            <span class="text-xs text-gray-400 italic">@action.Traits</span>
+                                        }
+                                    </div>
+                                    <p class="text-xs text-gray-300">@action.Description</p>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                }
+            }
+
+        </div><!-- end tab content -->
+    };
 }
