@@ -49,13 +49,13 @@ This is the semester-long project of Team 6 for CSC 4330, __Roll Call__. It is a
 
 ### Downloading Dependencies
 
-1. Download VS Code (link in Dependencies section). After installing VS Code, extensions can be found by searching their names within the search bar in the "Extensions" tab on VS Code (link for each extension in Dependencies section).
-2. You will likely get an error within VS Code stating that a .NET SDK could not be found. You will have to download and install the .NET SDK (link in Dependencies section) if you have not already done so. You will have to restart your device once the SDK is installed.
+1. Download VS Code (link in Dependencies section). After installing VS Code, extensions can be found by searching their names within the search bar in the "Extensions" tab `Ctrl+Shift+X` on VS Code (link for each extension in Dependencies section).
+2. You will likely get an error within VS Code stating that a .NET SDK could not be found. You will have to download and install the .NET SDK (link in Dependencies section) if you have not already done so. You will have to restart your device once the SDK is installed. Once restarted, open Command Prompt (type cmd into your taskbar's searchbar), then enter the command `dotnet --version` to verify your installation was successful.
 3. Additionally, download the GitHub desktop app and Git Bash (links in Dependencies section) to make commits easier and to create clone/pull requests straight from the app.
 
 ### Getting Started with the Project
 
-1. Make sure the Main branch is selected on GitHub.com and clone the repository onto your device to access all files. You can do this by copying the HTTPS link that shows up when clicking the "Code" button on GitHub.com when within this repository.
+1. Make sure the Main branch is selected on GitHub.com and clone the repository onto your device to access all files. You can do that by first copying [this link](https://github.com/MichaelRdot/Roll-Call.git).
 2. After copying the link, go to the GitHub Desktop app and click "File" on the top left, then select "Clone Repository" and paste the repo link under the URL tab.
 
 ### Setting up Project to Make Changes and Run Afterwards
@@ -63,5 +63,5 @@ This is the semester-long project of Team 6 for CSC 4330, __Roll Call__. It is a
 1. In VS Code, hit "File" in the top left, then select "Open Folder" in the dropdown.
 2. Navigate to the folder where you cloned the repository to. Select the folder named Roll-Call, and hit "Select Folder."
 3. Once you have made any changes or just want to run the project, open a terminal by selecting Terminal > New Terminal from the top menu. Use the command `cd PF2EGM` to navigate to the correct folder, then use `dotnet run`.
-4. Once the project builds, it should automatically open a webpage in your default browser with URL localhost.
-5. Whenever you save changes to project files after building the project, you will have to rebuild it by pressing CTRL + C in your terminal, then re-entering the command `dotnet run`.
+4. Once the project builds, it should automatically open a webpage in your default browser with URL localhost. If it does not, check your terminal for a local URL (ex. https://localhost:7040).
+5. Whenever you save changes to project files after building the project, you will have to rebuild it by pressing `CTRL+C` in your terminal, then re-entering the command `dotnet run`.
