@@ -1,0 +1,28 @@
+@page "/auth/callback"
+@using PF2EGM.Services
+@inject ISupabaseAuthService AuthService
+@inject NavigationManager Nav
+
+<p>Signing you in...</p>
+
+@code {
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender) return;
+
+        var uri  = new Uri(Nav.Uri);
+        var frag = Microsoft.AspNetCore.WebUtilities.QueryHelpers
+                     .ParseQuery(uri.Fragment.TrimStart('#'));
+
+        if (frag.TryGetValue("access_token",  out var at) &&
+            frag.TryGetValue("refresh_token", out var rt))
+        {
+            var result = await AuthService.SetSessionAsync(at!, rt!);
+            Nav.NavigateTo(result.IsSuccess ? "/" : "/login?error=oauth_failed");
+        }
+        else
+        {
+            Nav.NavigateTo("/login?error=oauth_failed");
+        }
+    }
+}

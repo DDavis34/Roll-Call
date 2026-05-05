@@ -1,0 +1,91 @@
+@page "/account"
+@using LumexUI
+@using LumexUI.Common
+@using PF2EGM.Services
+@inject IApiAuthService AuthService
+@inject AuthStateService AuthState
+@inject NavigationManager Nav
+
+@rendermode InteractiveServer
+
+<PageTitle>Account</PageTitle>
+
+<div class="bg-gray-900 text-gray-100 min-h-screen flex flex-col">
+
+    <!-- Top bar -->
+    <div class="bg-gray-800 border-b border-gray-700 px-4 py-3 flex items-center justify-between">
+        <span class="text-lg font-bold text-amber-400">Account</span>
+        <LumexButton Size="@Size.Small"
+                     Color="@ThemeColor.Danger"
+                     Variant="@Variant.Flat"
+                     OnClick="HandleSignOut">
+            Sign Out
+        </LumexButton>
+    </div>
+
+    <!-- Body -->
+    <div class="flex flex-1">
+
+        <!-- Sidebar -->
+        <div class="w-56 bg-gray-800 border-r border-gray-700 p-4 flex flex-col gap-1 flex-shrink-0">
+
+            @if (!string.IsNullOrEmpty(userEmail))
+            {
+                <div class="mb-3 px-2">
+                    <p class="text-xs text-gray-400 uppercase tracking-wide mb-0.5">Signed in as</p>
+                    <p class="text-sm text-gray-200 truncate">@userEmail</p>
+                </div>
+                <div class="border-t border-gray-700 mb-3"></div>
+            }
+
+            <a href="/" class="sidebar-link">
+                <span>🏠</span> Home
+            </a>
+            <a href="/create-character" class="sidebar-link">
+                <span>⚔</span> Create Character
+            </a>
+            <a href="/saved-characters" class="sidebar-link">
+                <span>📜</span> Saved Characters
+            </a>
+            <a href="/campaigns" class="sidebar-link">
+                <span>🗺</span> Campaigns
+            </a>
+            <a href="/tutorials" class="sidebar-link">
+                <span>📖</span> Tutorials
+            </a>
+        </div>
+
+        <!-- Main content -->
+        <div class="flex-1 p-8 flex flex-col items-center justify-center text-center">
+            <div class="brand-mark">⬡</div>
+            <h2 class="text-2xl font-bold text-amber-400 mt-2">Welcome back</h2>
+            @if (!string.IsNullOrEmpty(userEmail))
+            {
+                <p class="text-gray-300 mt-1">@userEmail</p>
+            }
+        </div>
+
+    </div>
+</div>
+
+@code {
+    private string? userEmail;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var isAuth = await AuthService.IsAuthenticatedAsync();
+        if (!isAuth)
+        {
+            Nav.NavigateTo("/login");
+            return;
+        }
+        userEmail = AuthState.UserEmail;
+    }
+
+    private async Task HandleSignOut()
+    {
+        await AuthService.SignOutAsync();
+        AuthState.NotifyStateChanged();
+        Nav.NavigateTo("/login");
+    }
+}

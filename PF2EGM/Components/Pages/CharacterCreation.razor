@@ -1,0 +1,990 @@
+@page "/create-character"
+@using LumexUI
+@using LumexUI.Common
+@using LumexUI.Shared.Icons
+
+<PageTitle>Character Sheet</PageTitle>
+
+<div class="bg-gray-900 text-gray-100 min-h-screen" style="font-family: Georgia, serif;">
+    <style>
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #111827; }
+        ::-webkit-scrollbar-thumb { background: #4b5563; border-radius: 3px; }
+    </style>
+
+    <!-- Top Bar -->
+    <div class="bg-gray-800 border-b border-gray-700 px-3 py-2 flex items-center justify-between flex-wrap gap-2">
+        <div class="flex items-center gap-2">
+            <span class="text-sm font-semibold text-gray-300">Level</span>
+            <span class="text-sm font-bold bg-gray-700 border border-gray-600 rounded px-2 py-0.5 text-amber-400">@character.Level</span>
+            <span class="text-sm font-semibold text-gray-300">XP</span>
+            <span class="text-sm font-bold bg-gray-700 border border-gray-600 rounded px-2 py-0.5 text-gray-100">@character.XP</span>
+        </div>
+        <div class="flex items-center gap-2">
+            <span class="text-sm text-gray-300">Name</span>
+            <input type="text" @bind="character.Name" placeholder="Name"
+                class="text-sm bg-gray-700 border border-gray-600 rounded px-2 py-0.5 w-36 focus:outline-none focus:border-amber-500 text-gray-100 placeholder-gray-400" />
+        </div>
+        <div class="flex items-center gap-4 text-sm text-gray-300">
+            <span>SIZE <strong class="text-gray-100">@character.Size</strong></span>
+            <span>SPEED <strong class="text-gray-100">@character.Speed</strong></span>
+            <span>HP <strong class="text-amber-400">@character.HP/@character.MaxHP</strong></span>
+            <span>HP Shield</span>
+        </div>
+    </div>
+
+    <!-- Stats Header -->
+    <div class="bg-gray-800 border-b border-gray-700 p-3">
+        <div class="flex flex-wrap items-start gap-4">
+
+            <!-- AC Shield -->
+            <div class="flex flex-col items-center">
+                <div class="relative w-16 h-20">
+                    <svg viewBox="0 0 64 80" class="w-full h-full">
+                        <path d="M32 4 L60 16 L60 44 Q60 64 32 76 Q4 64 4 44 L4 16 Z"
+                            fill="#d97706" stroke="#b45309" stroke-width="2" />
+                        <path d="M32 10 L54 20 L54 44 Q54 60 32 70 Q10 60 10 44 L10 20 Z"
+                            fill="#f59e0b" />
+                    </svg>
+                    <div class="absolute inset-0 flex flex-col items-center justify-center text-gray-900">
+                        <span class="text-[10px] font-bold">AC</span>
+                        <span class="text-2xl font-bold leading-none">@character.AC</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ability Scores -->
+            <div class="flex gap-3 flex-wrap">
+                @foreach (var ability in character.Abilities)
+                {
+                    <div class="flex flex-col items-center">
+                        <span class="text-xs font-bold text-amber-400 uppercase">@ability.Abbreviation</span>
+                        <span class="text-xl font-bold text-gray-100">@ability.Score</span>
+                        <span class="text-sm text-gray-300">@(ability.Modifier >= 0 ? "+" : "")@ability.Modifier</span>
+                    </div>
+                }
+            </div>
+
+            <!-- Saves -->
+            <div class="flex flex-col gap-2">
+                <div class="flex gap-4">
+                    @foreach (var save in character.Saves)
+                    {
+                        <div class="flex flex-col items-center">
+                            <div class="w-5 h-5 rounded-full bg-amber-600 mb-1"></div>
+                            <span class="text-sm font-bold text-gray-100">+@save.Modifier</span>
+                            <span class="text-xs text-gray-300">@save.Name</span>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <!-- Actions -->
+            <div class="flex gap-2">
+                <LumexButton Size="@Size.Small" Variant="@Variant.Flat">Rest</LumexButton>
+                <LumexButton Size="@Size.Small" Variant="@Variant.Flat">Add Condition</LumexButton>
+                <LumexButton Size="@Size.Small" Variant="@Variant.Flat">Add Custom Buff</LumexButton>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="flex flex-col lg:flex-row">
+
+        <!-- LEFT SIDEBAR -->
+        <div class="w-full lg:w-48 xl:w-52 bg-gray-800 border-b lg:border-b-0 lg:border-r border-gray-700 p-3 flex-shrink-0 overflow-y-auto" style="max-height: calc(100vh - 150px);">
+            <!-- Ancestry -->
+            <div class="mb-2">
+                <button class="w-full text-left bg-gray-700 border border-gray-600 rounded px-2 py-1.5 text-sm hover:bg-gray-600 transition-colors">
+                    <div class="text-amber-400 text-xs font-bold uppercase tracking-wide">Ancestry</div>
+                    <div class="font-semibold text-gray-100">@character.Ancestry</div>
+                </button>
+            </div>
+
+            <!-- Background -->
+            <div class="mb-2">
+                <button class="w-full text-left bg-gray-700 border border-gray-600 rounded px-2 py-1.5 text-sm hover:bg-gray-600 transition-colors">
+                    <div class="text-amber-400 text-xs font-bold uppercase tracking-wide">Background</div>
+                    <div class="font-semibold text-gray-100">@character.Background</div>
+                </button>
+            </div>
+
+            <!-- Class -->
+            <div class="mb-3">
+                <button class="w-full text-left bg-gray-700 border border-gray-600 rounded px-2 py-1.5 text-sm hover:bg-gray-600 transition-colors">
+                    <div class="text-amber-400 text-xs font-bold uppercase tracking-wide flex items-center gap-1">
+                        <span>⚔</span> Class
+                    </div>
+                    <div class="font-semibold text-gray-100">@character.Class</div>
+                </button>
+            </div>
+
+            <!-- Level 1 -->
+            <div class="text-amber-400 text-xs font-bold uppercase tracking-wide mb-1">Level 1</div>
+
+            <button class="w-full text-left bg-gray-700 border border-gray-600 rounded px-2 py-1.5 text-sm mb-1 hover:bg-gray-600 transition-colors flex items-center gap-2">
+                <span class="text-green-400">⚙</span>
+                <span class="text-gray-100">Set Abilities</span>
+            </button>
+
+            <button class="w-full text-left bg-gray-700 border border-gray-600 rounded px-2 py-1.5 text-sm mb-1 hover:bg-gray-600 transition-colors flex items-center gap-2">
+                <span class="text-green-400">⚙</span>
+                <span class="text-gray-100">Skill Training</span>
+            </button>
+
+            <button class="w-full text-left bg-gray-700 border border-gray-600 rounded px-2 py-1.5 text-sm mb-2 hover:bg-gray-600 transition-colors flex items-center gap-2">
+                <span class="text-green-400">⚙</span>
+                <span class="text-gray-100">Class Skill</span>
+            </button>
+
+            <button class="w-full text-left bg-gray-700 border border-gray-600 rounded px-2 py-1.5 text-sm mb-1 hover:bg-gray-600 transition-colors">
+                <div class="text-amber-400 text-xs flex items-center gap-1"><span>👤</span> Heritage</div>
+                <div class="text-gray-400 text-xs">Not Selected</div>
+            </button>
+
+            <button class="w-full text-left bg-gray-700 border border-gray-600 rounded px-2 py-1.5 text-sm mb-1 hover:bg-gray-600 transition-colors">
+                <div class="text-amber-400 text-xs flex items-center gap-1"><span>👤</span> Ancestry Feat</div>
+                <div class="text-gray-400 text-xs">Not Selected</div>
+            </button>
+
+            <button class="w-full text-left bg-gray-700 border border-gray-600 rounded px-2 py-1.5 text-sm mb-2 hover:bg-gray-600 transition-colors">
+                <div class="text-amber-400 text-xs flex items-center gap-1"><span>⚔</span> Class Feat</div>
+                <div class="text-gray-400 text-xs">Not Selected</div>
+            </button>
+
+            <div class="text-xs text-gray-300 mb-1">Reactive Strike →</div>
+            <div class="text-xs text-gray-300 mb-1">Free Feat: Shield Block →</div>
+            <div class="text-xs text-gray-300 mb-3">Free Feat: Hobnobber</div>
+
+            <!-- Level 2 -->
+            <div class="text-amber-400 text-xs font-bold uppercase tracking-wide mb-1">Level 2</div>
+
+            <button class="w-full text-left bg-gray-700 border border-gray-600 rounded px-2 py-1.5 text-sm mb-1 hover:bg-gray-600 transition-colors">
+                <div class="text-amber-400 text-xs flex items-center gap-1"><span>⚔</span> Class Feat</div>
+                <div class="text-gray-400 text-xs">Not Selected</div>
+            </button>
+
+            <button class="w-full text-left bg-gray-700 border border-gray-600 rounded px-2 py-1.5 text-sm mb-3 hover:bg-gray-600 transition-colors">
+                <div class="text-amber-400 text-xs flex items-center gap-1"><span>⚙</span> Skill Feat</div>
+                <div class="text-gray-400 text-xs">Not Selected</div>
+            </button>
+
+            <!-- Level 3 -->
+            <div class="text-amber-400 text-xs font-bold uppercase tracking-wide mb-1">Level 3</div>
+
+            <button class="w-full text-left bg-gray-700 border border-gray-600 rounded px-2 py-1.5 text-sm hover:bg-gray-600 transition-colors flex items-center justify-center gap-2">
+                <span class="text-green-400">⚙</span>
+                <span class="text-gray-100">Skill Increase</span>
+            </button>
+        </div>
+
+        <!-- MIDDLE: Stats Panel -->
+        <div class="w-full lg:w-52 xl:w-56 bg-gray-800 border-b lg:border-b-0 lg:border-r border-gray-700 p-3 flex-shrink-0 overflow-y-auto" style="max-height: calc(100vh - 150px);">
+
+            <!-- Hero Points -->
+            <div class="flex items-center gap-2 mb-3">
+                <div class="w-7 h-7 rounded-full bg-amber-600 flex items-center justify-center text-white text-sm font-bold">@character.HeroPoints</div>
+                <span class="text-sm font-semibold text-gray-100">Hero Points</span>
+                <div class="flex gap-1 ml-1">
+                    <div class="w-4 h-4 rounded-full border-2 border-amber-500"></div>
+                    <div class="w-4 h-4 rounded-full border-2 border-amber-500"></div>
+                    <div class="w-4 h-4 rounded-full border-2 border-amber-500"></div>
+                </div>
+            </div>
+
+            <!-- Fighter DC -->
+            <div class="flex items-center gap-2 mb-4">
+                <div class="w-7 h-7 rounded-full bg-gray-600 flex items-center justify-center text-white text-xs font-bold">⚔</div>
+                <span class="text-sm font-semibold text-gray-100">+@character.FighterDC Fighter DC</span>
+            </div>
+
+            <!-- Perception -->
+            <div class="flex items-center gap-2 mb-2">
+                <div class="w-6 h-6 rounded-full bg-amber-600 border-2 border-amber-700 flex items-center justify-center text-[10px] font-bold text-white">👁</div>
+                <span class="text-sm text-gray-100">+@character.Perception Perception</span>
+            </div>
+
+            <!-- Initiative -->
+            <div class="flex items-center gap-2 mb-4">
+                <div class="w-6 h-6 rounded-full bg-green-700 border-2 border-green-600 flex items-center justify-center text-[10px] font-bold text-white">⚡</div>
+                <span class="text-sm text-gray-100">+@character.Initiative Initiative</span>
+            </div>
+
+            <!-- Skills -->
+            @foreach (var skill in character.Skills)
+            {
+                <div class="flex items-center gap-2 mb-1">
+                    <div class="w-5 h-5 rounded-full @(skill.Trained ? "bg-amber-600" : "border-2 border-gray-600 bg-gray-800") flex-shrink-0">
+                        @if (skill.Trained)
+                        {
+                            <div class="w-full h-full rounded-full flex items-center justify-center">
+                                <span class="text-white text-[9px] font-bold">@skill.ProficiencyLetter</span>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="w-full h-full rounded-full flex items-center justify-center">
+                                <span class="text-gray-400 text-[9px] font-bold">@skill.ProficiencyLetter</span>
+                            </div>
+                        }
+                    </div>
+                    <span class="text-xs w-7 text-right font-semibold @(skill.Modifier >= 0 ? "text-gray-100" : "text-red-400")">
+                        @(skill.Modifier >= 0 ? "+" : "")@skill.Modifier
+                    </span>
+                    <span class="text-xs text-gray-300">@skill.Name</span>
+                </div>
+            }
+        </div>
+
+        <!-- RIGHT: Main Character Panel -->
+        <div class="flex-1 flex flex-col min-w-0">
+
+            <!-- Tab Buttons -->
+            <div class="bg-gray-800 border-b border-gray-700 flex flex-wrap">
+                @foreach (var tab in tabs)
+                {
+                    <button @onclick="() => SetActiveTab(tab)" class="@TabClass(tab)">
+                        @tab
+                    </button>
+                }
+            </div>
+
+            <!-- Tab Content -->
+            <div class="flex-1 p-4 bg-gray-900 overflow-y-auto" style="max-height: calc(100vh - 190px);">
+
+                <!-- ─── WEAPONS ─────────────────────────────────────────── -->
+                @if (activeTab == "Weapons")
+                {
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        @foreach (var cat in weaponCategories)
+                        {
+                            <button @onclick="() => ToggleWeaponCategory(cat.Key)"
+                                    class="px-3 py-1.5 text-sm font-semibold rounded transition-colors flex items-center gap-1
+                                           @(cat.Value ? "bg-amber-600 border-2 border-amber-600 text-white" : "bg-gray-800 border-2 border-gray-600 text-gray-300 hover:border-amber-500")">
+                                <span>@(cat.Value ? "●" : "○")</span> @cat.Key
+                            </button>
+                        }
+                    </div>
+
+                    <button @onclick="() => showWeaponModal = true"
+                            class="w-full border-2 border-dashed border-gray-600 hover:border-amber-500 text-amber-400 font-semibold py-2 px-4 rounded text-left mb-4 transition-colors hover:bg-gray-800">
+                        + Add Weapon
+                    </button>
+
+                    @if (!weapons.Any())
+                    {
+                        <div class="text-center text-gray-400 text-sm py-8">No weapons equipped. Click "Add Weapon" to equip weapons.</div>
+                    }
+                    else
+                    {
+                        <div class="space-y-2">
+                            @foreach (var (weapon, index) in weapons.Select((w, i) => (w, i)))
+                            {
+                                <div class="bg-gray-800 border border-gray-700 rounded p-3 flex flex-wrap items-center gap-3">
+                                    <div class="flex-1 min-w-0">
+                                        <div class="font-bold text-sm text-gray-100">@weapon.Name</div>
+                                        <div class="text-xs text-gray-300">@weapon.Traits</div>
+                                    </div>
+                                    <div class="text-center">
+                                        <div class="text-lg font-bold text-gray-100">@(weapon.AttackBonus >= 0 ? "+" : "")@weapon.AttackBonus</div>
+                                        <div class="text-xs text-gray-300">Attack</div>
+                                    </div>
+                                    <div class="text-center">
+                                        <div class="text-lg font-bold text-gray-100">@weapon.Damage</div>
+                                        <div class="text-xs text-gray-300">Damage</div>
+                                    </div>
+                                    <button @onclick="() => weapons.RemoveAt(index)" class="text-red-400 hover:text-red-300 text-sm px-2">✕</button>
+                                </div>
+                            }
+                        </div>
+                    }
+                    <div class="mt-4 text-right">
+                        <button class="text-sm text-gray-300 hover:text-amber-400 underline">Print</button>
+                    </div>
+                }
+
+                else if (activeTab == "Defense")
+                {
+                    <!-- ─── DEFENSE ─────────────────────────────────────────── -->
+                    <h3 class="text-base font-bold text-amber-400 mb-3">Defense</h3>
+
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        @foreach (var cat in armorCategories)
+                        {
+                            <button @onclick="() => ToggleArmorCategory(cat.Key)"
+                                    class="px-3 py-1.5 text-sm font-semibold rounded transition-colors
+                                           @(cat.Value ? "bg-amber-600 border-2 border-amber-600 text-white" : "bg-gray-800 border-2 border-gray-600 text-gray-300 hover:border-amber-500")">
+                                @cat.Key
+                            </button>
+                        }
+                    </div>
+
+                    <button @onclick="() => showArmorModal = true"
+                            class="w-full border-2 border-dashed border-gray-600 hover:border-amber-500 text-amber-400 font-semibold py-2 px-4 rounded text-left mb-4 transition-colors hover:bg-gray-800">
+                        + Add Armor / Shield
+                    </button>
+
+                    @if (!armors.Any())
+                    {
+                        <div class="text-center text-gray-400 text-sm py-8">No armor equipped. Click "Add Armor / Shield" to equip.</div>
+                    }
+                    else
+                    {
+                        <div class="space-y-2">
+                            @foreach (var (armor, index) in armors.Select((a, i) => (a, i)))
+                            {
+                                <div class="bg-gray-800 border border-gray-700 rounded p-3 flex items-center gap-3">
+                                    <div class="flex-1">
+                                        <div class="font-bold text-sm text-gray-100">@armor.Name</div>
+                                        <div class="text-xs text-gray-300">@armor.Category</div>
+                                    </div>
+                                    <div class="text-center">
+                                        <div class="text-lg font-bold text-gray-100">+@armor.ACBonus</div>
+                                        <div class="text-xs text-gray-300">AC Bonus</div>
+                                    </div>
+                                    <button @onclick="() => armors.RemoveAt(index)" class="text-red-400 hover:text-red-300 text-sm px-2">✕</button>
+                                </div>
+                            }
+                        </div>
+                    }
+                }
+
+                else if (activeTab == "Gear")
+                {
+                    <!-- ─── GEAR ────────────────────────────────────────────── -->
+                    <h3 class="text-base font-bold text-amber-400 mb-3">Gear & Equipment</h3>
+
+                    <button @onclick="() => showGearModal = true"
+                            class="w-full border-2 border-dashed border-gray-600 hover:border-amber-500 text-amber-400 font-semibold py-2 px-4 rounded text-left mb-4 transition-colors hover:bg-gray-800">
+                        + Add Item
+                    </button>
+
+                    @if (!gearItems.Any())
+                    {
+                        <div class="text-center text-gray-400 text-sm py-8">No items in inventory.</div>
+                    }
+                    else
+                    {
+                        <table class="w-full text-sm">
+                            <thead>
+                                <tr class="border-b border-gray-700 text-amber-400 text-left">
+                                    <th class="pb-2 font-semibold">Item</th>
+                                    <th class="pb-2 font-semibold text-center">Qty</th>
+                                    <th class="pb-2 font-semibold text-center">Bulk</th>
+                                    <th class="pb-2"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var (item, index) in gearItems.Select((g, i) => (g, i)))
+                                {
+                                    <tr class="border-b border-gray-800 hover:bg-gray-800">
+                                        <td class="py-2 font-medium text-gray-100">@item.Name</td>
+                                        <td class="py-2 text-center text-gray-300">@item.Quantity</td>
+                                        <td class="py-2 text-center text-gray-300">@item.Weight</td>
+                                        <td class="py-2 text-right">
+                                            <button @onclick="() => gearItems.RemoveAt(index)" class="text-red-400 hover:text-red-300">✕</button>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                        <div class="mt-3 text-sm text-right text-gray-300">
+                            Total Bulk: <strong class="text-gray-100">@gearItems.Sum(i => i.Weight * i.Quantity)</strong>
+                        </div>
+                    }
+                }
+
+                else if (activeTab == "Spells")
+                {
+                    <!-- ─── SPELLS ───────────────────────────────────────────── -->
+                    <h3 class="text-base font-bold text-amber-400 mb-3">Spells</h3>
+
+                    @if (!spells.Any())
+                    {
+                        <div class="text-center text-gray-400 text-sm py-8">
+                            <div class="text-4xl mb-3">✦</div>
+                            <div>No spells prepared. This character has no spellcasting ability, or no spells have been added yet.</div>
+                        </div>
+                    }
+                    else
+                    {
+                        @foreach (var levelGroup in spells.GroupBy(s => s.Level).OrderBy(g => g.Key))
+                        {
+                            <div class="mb-4">
+                                <div class="text-sm font-bold text-amber-400 mb-2 border-b border-gray-700 pb-1">
+                                    @(levelGroup.Key == 0 ? "Cantrips" : $"Level {levelGroup.Key} Spells")
+                                </div>
+                                @foreach (var spell in levelGroup)
+                                {
+                                    <div class="bg-gray-800 border border-gray-700 rounded p-3 mb-2">
+                                        <div class="flex justify-between items-start">
+                                            <div>
+                                                <div class="font-bold text-sm text-gray-100">@spell.Name</div>
+                                                <div class="text-xs text-gray-300">@spell.School • @spell.CastTime</div>
+                                            </div>
+                                            <button @onclick="() => spells.Remove(spell)" class="text-red-400 hover:text-red-300 text-sm">✕</button>
+                                        </div>
+                                        <div class="text-xs text-gray-300 mt-1">@spell.Description</div>
+                                    </div>
+                                }
+                            </div>
+                        }
+                    }
+
+                    <button @onclick="() => showSpellModal = true"
+                            class="w-full border-2 border-dashed border-gray-600 hover:border-amber-500 text-amber-400 font-semibold py-2 px-4 rounded text-left mt-2 transition-colors hover:bg-gray-800">
+                        + Add Spell
+                    </button>
+                }
+
+                else if (activeTab == "Pets")
+                {
+                    <!-- ─── PETS ─────────────────────────────────────────────── -->
+                    <h3 class="text-base font-bold text-amber-400 mb-3">Animal Companions & Familiars</h3>
+                    <div class="text-center text-gray-400 text-sm py-8">
+                        <div class="text-4xl mb-3">🐾</div>
+                        <div>No animal companions or familiars. Add a class feature that grants a pet to track it here.</div>
+                    </div>
+                }
+
+                else if (activeTab == "Details")
+                {
+                    <!-- ─── DETAILS ──────────────────────────────────────────── -->
+                    <h3 class="text-base font-bold text-amber-400 mb-3">Character Details</h3>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+                        <div>
+                            <label class="text-sm font-semibold text-gray-300">Age</label>
+                            <input @bind="details.Age" placeholder="e.g., 25"
+                                   class="w-full mt-1 border border-gray-600 rounded px-3 py-1.5 text-sm focus:outline-none focus:border-amber-500 bg-gray-700 text-gray-100 placeholder-gray-400" />
+                        </div>
+                        <div>
+                            <label class="text-sm font-semibold text-gray-300">Gender & Pronouns</label>
+                            <input @bind="details.Gender" placeholder="e.g., Male, he/him"
+                                   class="w-full mt-1 border border-gray-600 rounded px-3 py-1.5 text-sm focus:outline-none focus:border-amber-500 bg-gray-700 text-gray-100 placeholder-gray-400" />
+                        </div>
+                        <div>
+                            <label class="text-sm font-semibold text-gray-300">Height</label>
+                            <input @bind="details.Height" placeholder="e.g., 6'1&quot;"
+                                   class="w-full mt-1 border border-gray-600 rounded px-3 py-1.5 text-sm focus:outline-none focus:border-amber-500 bg-gray-700 text-gray-100 placeholder-gray-400" />
+                        </div>
+                        <div>
+                            <label class="text-sm font-semibold text-gray-300">Weight</label>
+                            <input @bind="details.Weight" placeholder="e.g., 180 lbs"
+                                   class="w-full mt-1 border border-gray-600 rounded px-3 py-1.5 text-sm focus:outline-none focus:border-amber-500 bg-gray-700 text-gray-100 placeholder-gray-400" />
+                        </div>
+                        <div>
+                            <label class="text-sm font-semibold text-gray-300">Alignment</label>
+                            <select @bind="details.Alignment"
+                                    class="w-full mt-1 border border-gray-600 rounded px-3 py-1.5 text-sm focus:outline-none focus:border-amber-500 bg-gray-700 text-gray-100">
+                                <option value="">— Select —</option>
+                                <option>Lawful Good</option><option>Neutral Good</option><option>Chaotic Good</option>
+                                <option>Lawful Neutral</option><option>True Neutral</option><option>Chaotic Neutral</option>
+                                <option>Lawful Evil</option><option>Neutral Evil</option><option>Chaotic Evil</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="text-sm font-semibold text-gray-300">Deity</label>
+                            <input @bind="details.Deity" placeholder="e.g., Cayden Cailean"
+                                   class="w-full mt-1 border border-gray-600 rounded px-3 py-1.5 text-sm focus:outline-none focus:border-amber-500 bg-gray-700 text-gray-100 placeholder-gray-400" />
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="text-sm font-semibold text-gray-300">Appearance</label>
+                        <textarea @bind="details.Appearance" rows="3" placeholder="Describe your character's physical appearance..."
+                                  class="w-full mt-1 border border-gray-600 rounded px-3 py-1.5 text-sm focus:outline-none focus:border-amber-500 bg-gray-700 text-gray-100 placeholder-gray-400 resize-none"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label class="text-sm font-semibold text-gray-300">Personality</label>
+                        <textarea @bind="details.Personality" rows="3" placeholder="Describe your character's personality..."
+                                  class="w-full mt-1 border border-gray-600 rounded px-3 py-1.5 text-sm focus:outline-none focus:border-amber-500 bg-gray-700 text-gray-100 placeholder-gray-400 resize-none"></textarea>
+                    </div>
+                    <div class="mb-4">
+                        <label class="text-sm font-semibold text-gray-300">Backstory</label>
+                        <textarea @bind="details.Backstory" rows="5" placeholder="Write your character's backstory..."
+                                  class="w-full mt-1 border border-gray-600 rounded px-3 py-1.5 text-sm focus:outline-none focus:border-amber-500 bg-gray-700 text-gray-100 placeholder-gray-400 resize-none"></textarea>
+                    </div>
+
+                    <h4 class="text-sm font-bold text-amber-400 mb-2">Currency</h4>
+                    <div class="flex flex-wrap gap-4">
+                        @foreach (var coin in currencies)
+                        {
+                            <div class="flex flex-col items-center">
+                                <div class="w-8 h-8 rounded-full @coin.Color flex items-center justify-center text-white text-xs font-bold shadow">@coin.Abbr</div>
+                                <input @bind="coin.Amount" type="number" min="0"
+                                       class="w-16 mt-1 border border-gray-600 rounded px-1 py-0.5 text-sm text-center focus:outline-none focus:border-amber-500 bg-gray-700 text-gray-100" />
+                                <span class="text-xs text-gray-300 mt-0.5">@coin.Name</span>
+                            </div>
+                        }
+                    </div>
+                }
+
+                else if (activeTab == "Feats")
+                {
+                    <!-- ─── FEATS ─────────────────────────────────────────────── -->
+                    <h3 class="text-base font-bold text-amber-400 mb-3">Feats & Abilities</h3>
+
+                    @foreach (var category in featsByCategory.Keys)
+                    {
+                        <div class="mb-4">
+                            <div class="flex items-center justify-between border-b border-gray-700 pb-1 mb-2">
+                                <h4 class="text-sm font-bold text-gray-300">@category</h4>
+                                <button @onclick="() => OpenFeatModal(category)"
+                                        class="text-xs text-amber-400 hover:text-amber-300 font-semibold">+ Add</button>
+                            </div>
+                            @if (!featsByCategory[category].Any())
+                            {
+                                <div class="text-xs text-gray-400 italic px-2">No @category.ToLower() added.</div>
+                            }
+                            else
+                            {
+                                @foreach (var feat in featsByCategory[category])
+                                {
+                                    <div class="bg-gray-800 border border-gray-700 rounded p-2 mb-1 flex items-start justify-between gap-2">
+                                        <div>
+                                            <div class="text-sm font-semibold text-gray-100">@feat.Name</div>
+                                            @if (!string.IsNullOrEmpty(feat.Description))
+                                            {
+                                                <div class="text-xs text-gray-300 mt-0.5">@feat.Description</div>
+                                            }
+                                        </div>
+                                        <button @onclick="() => featsByCategory[category].Remove(feat)"
+                                                class="text-red-400 hover:text-red-300 text-xs flex-shrink-0">✕</button>
+                                    </div>
+                                }
+                            }
+                        </div>
+                    }
+                }
+
+                else if (activeTab == "Actions")
+                {
+                    <!-- ─── ACTIONS ───────────────────────────────────────────── -->
+                    <h3 class="text-base font-bold text-amber-400 mb-3">Actions & Activities</h3>
+
+                    @foreach (var section in actionSections)
+                    {
+                        <div class="mb-5">
+                            <div class="text-sm font-bold text-gray-300 border-b border-gray-700 pb-1 mb-2"></div>
+                            <div class="space-y-2">
+                                @foreach (var action in section.Actions)
+                                {
+                                    <div class="bg-gray-800 border border-gray-700 rounded p-3">
+                                        <div class="flex items-center gap-2 mb-1">
+                                            <span class="text-sm font-bold text-gray-100">@action.Name</span>
+                                            <span class="text-xs bg-amber-600 text-white rounded-full px-2 py-0.5">@action.ActionCost</span>
+                                            @if (!string.IsNullOrEmpty(action.Traits))
+                                            {
+                                                <span class="text-xs text-gray-400 italic">@action.Traits</span>
+                                            }
+                                        </div>
+                                        <p class="text-xs text-gray-300">@action.Description</p>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    }
+                }
+
+            </div><!-- end tab content -->
+        </div><!-- end right panel -->
+    </div><!-- end flex row -->
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!-- MODALS                                                             -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+
+    @if (showWeaponModal)
+    {
+        <div class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 p-4" @onclick="() => showWeaponModal = false">
+            <LumexCard Class="w-full max-w-md shadow-xl" @onclick:stopPropagation>
+                <LumexCardHeader Class="pb-2">
+                    <h3 class="text-lg font-bold text-amber-400">Add Weapon</h3>
+                </LumexCardHeader>
+                <LumexCardBody Class="gap-3">
+                    <div>
+                        <label class="text-sm font-semibold text-gray-300">Weapon Name</label>
+                        <LumexTextbox @bind-Value="newWeapon.Name" Placeholder="e.g., Longsword"
+                                      Variant="@InputVariant.Flat" Class="mt-1" />
+                    </div>
+                    <div>
+                        <label class="text-sm font-semibold text-gray-300">Damage</label>
+                        <LumexTextbox @bind-Value="newWeapon.Damage" Placeholder="e.g., 1d8+3 S"
+                                      Variant="@InputVariant.Flat" Class="mt-1" />
+                    </div>
+                    <div>
+                        <label class="text-sm font-semibold text-gray-300">Attack Bonus</label>
+                        <input @bind="newWeapon.AttackBonus" type="number"
+                               class="w-full mt-1 border border-gray-600 rounded px-3 py-1.5 text-sm focus:outline-none focus:border-amber-500 bg-gray-700 text-gray-100" />
+                    </div>
+                    <div>
+                        <label class="text-sm font-semibold text-gray-300">Traits</label>
+                        <LumexTextbox @bind-Value="newWeapon.Traits" Placeholder="e.g., versatile P, sweep"
+                                      Variant="@InputVariant.Flat" Class="mt-1" />
+                    </div>
+                </LumexCardBody>
+                <LumexCardFooter Class="gap-2">
+                    <LumexButton OnClick="ConfirmAddWeapon" Color="@ThemeColor.Primary" Class="flex-1">Add</LumexButton>
+                    <LumexButton OnClick="@(() => showWeaponModal = false)" Variant="@Variant.Flat" Class="flex-1">Cancel</LumexButton>
+                </LumexCardFooter>
+            </LumexCard>
+        </div>
+    }
+
+    @if (showArmorModal)
+    {
+        <div class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 p-4" @onclick="() => showArmorModal = false">
+            <LumexCard Class="w-full max-w-md shadow-xl" @onclick:stopPropagation>
+                <LumexCardHeader Class="pb-2">
+                    <h3 class="text-lg font-bold text-amber-400">Add Armor / Shield</h3>
+                </LumexCardHeader>
+                <LumexCardBody Class="gap-3">
+                    <div>
+                        <label class="text-sm font-semibold text-gray-300">Name</label>
+                        <LumexTextbox @bind-Value="newArmor.Name" Placeholder="e.g., Chain Mail"
+                                      Variant="@InputVariant.Flat" Class="mt-1" />
+                    </div>
+                    <div>
+                        <label class="text-sm font-semibold text-gray-300">Category</label>
+                        <select @bind="newArmor.Category"
+                                class="w-full mt-1 border border-gray-600 rounded px-3 py-1.5 text-sm focus:outline-none focus:border-amber-500 bg-gray-700 text-gray-100">
+                            <option>Light Armor</option>
+                            <option>Medium Armor</option>
+                            <option>Heavy Armor</option>
+                            <option>Shield</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="text-sm font-semibold text-gray-300">AC Bonus</label>
+                        <input @bind="newArmor.ACBonus" type="number"
+                               class="w-full mt-1 border border-gray-600 rounded px-3 py-1.5 text-sm focus:outline-none focus:border-amber-500 bg-gray-700 text-gray-100" />
+                    </div>
+                </LumexCardBody>
+                <LumexCardFooter Class="gap-2">
+                    <LumexButton OnClick="ConfirmAddArmor" Color="@ThemeColor.Primary" Class="flex-1">Add</LumexButton>
+                    <LumexButton OnClick="@(() => showArmorModal = false)" Variant="@Variant.Flat" Class="flex-1">Cancel</LumexButton>
+                </LumexCardFooter>
+            </LumexCard>
+        </div>
+    }
+
+    @if (showGearModal)
+    {
+        <div class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 p-4" @onclick="() => showGearModal = false">
+            <LumexCard Class="w-full max-w-md shadow-xl" @onclick:stopPropagation>
+                <LumexCardHeader Class="pb-2">
+                    <h3 class="text-lg font-bold text-amber-400">Add Item</h3>
+                </LumexCardHeader>
+                <LumexCardBody Class="gap-3">
+                    <div>
+                        <label class="text-sm font-semibold text-gray-300">Item Name</label>
+                        <LumexTextbox @bind-Value="newGear.Name" Placeholder="e.g., Healing Potion"
+                                      Variant="@InputVariant.Flat" Class="mt-1" />
+                    </div>
+                    <div class="flex gap-3">
+                        <div class="flex-1">
+                            <label class="text-sm font-semibold text-gray-300">Quantity</label>
+                            <input @bind="newGear.Quantity" type="number" min="1"
+                                   class="w-full mt-1 border border-gray-600 rounded px-3 py-1.5 text-sm focus:outline-none focus:border-amber-500 bg-gray-700 text-gray-100" />
+                        </div>
+                        <div class="flex-1">
+                            <label class="text-sm font-semibold text-gray-300">Bulk</label>
+                            <input @bind="newGear.Weight" type="number" step="0.1" min="0"
+                                   class="w-full mt-1 border border-gray-600 rounded px-3 py-1.5 text-sm focus:outline-none focus:border-amber-500 bg-gray-700 text-gray-100" />
+                        </div>
+                    </div>
+                </LumexCardBody>
+                <LumexCardFooter Class="gap-2">
+                    <LumexButton OnClick="ConfirmAddGear" Color="@ThemeColor.Primary" Class="flex-1">Add</LumexButton>
+                    <LumexButton OnClick="@(() => showGearModal = false)" Variant="@Variant.Flat" Class="flex-1">Cancel</LumexButton>
+                </LumexCardFooter>
+            </LumexCard>
+        </div>
+    }
+
+    @if (showSpellModal)
+    {
+        <div class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 p-4" @onclick="() => showSpellModal = false">
+            <LumexCard Class="w-full max-w-md shadow-xl" @onclick:stopPropagation>
+                <LumexCardHeader Class="pb-2">
+                    <h3 class="text-lg font-bold text-amber-400">Add Spell</h3>
+                </LumexCardHeader>
+                <LumexCardBody Class="gap-3">
+                    <div>
+                        <label class="text-sm font-semibold text-gray-300">Spell Name</label>
+                        <LumexTextbox @bind-Value="newSpell.Name" Placeholder="e.g., Fireball"
+                                      Variant="@InputVariant.Flat" Class="mt-1" />
+                    </div>
+                    <div class="flex gap-3">
+                        <div class="flex-1">
+                            <label class="text-sm font-semibold text-gray-300">Level</label>
+                            <input @bind="newSpell.Level" type="number" min="0" max="10"
+                                   class="w-full mt-1 border border-gray-600 rounded px-3 py-1.5 text-sm focus:outline-none focus:border-amber-500 bg-gray-700 text-gray-100" />
+                        </div>
+                        <div class="flex-1">
+                            <label class="text-sm font-semibold text-gray-300">School</label>
+                            <LumexTextbox @bind-Value="newSpell.School" Placeholder="e.g., Evocation"
+                                          Variant="@InputVariant.Flat" Class="mt-1" />
+                        </div>
+                    </div>
+                    <div>
+                        <label class="text-sm font-semibold text-gray-300">Cast Time</label>
+                        <LumexTextbox @bind-Value="newSpell.CastTime" Placeholder="e.g., 2 Actions"
+                                      Variant="@InputVariant.Flat" Class="mt-1" />
+                    </div>
+                    <div>
+                        <label class="text-sm font-semibold text-gray-300">Description</label>
+                        <textarea @bind="newSpell.Description" rows="3" placeholder="Spell description..."
+                                  class="w-full mt-1 border border-gray-600 rounded px-3 py-1.5 text-sm focus:outline-none focus:border-amber-500 bg-gray-700 text-gray-100 placeholder-gray-400 resize-none"></textarea>
+                    </div>
+                </LumexCardBody>
+                <LumexCardFooter Class="gap-2">
+                    <LumexButton OnClick="ConfirmAddSpell" Color="@ThemeColor.Primary" Class="flex-1">Add</LumexButton>
+                    <LumexButton OnClick="@(() => showSpellModal = false)" Variant="@Variant.Flat" Class="flex-1">Cancel</LumexButton>
+                </LumexCardFooter>
+            </LumexCard>
+        </div>
+    }
+
+    @if (showFeatModal)
+    {
+        <div class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 p-4" @onclick="() => showFeatModal = false">
+            <LumexCard Class="w-full max-w-md shadow-xl" @onclick:stopPropagation>
+                <LumexCardHeader Class="pb-2">
+                    <h3 class="text-lg font-bold text-amber-400">Add @currentFeatCategory Feat</h3>
+                </LumexCardHeader>
+                <LumexCardBody Class="gap-3">
+                    <div>
+                        <label class="text-sm font-semibold text-gray-300">Feat Name</label>
+                        <LumexTextbox @bind-Value="newFeat.Name" Placeholder="e.g., Power Attack"
+                                      Variant="@InputVariant.Flat" Class="mt-1" />
+                    </div>
+                    <div>
+                        <label class="text-sm font-semibold text-gray-300">Description (optional)</label>
+                        <textarea @bind="newFeat.Description" rows="3" placeholder="Feat description..."
+                                  class="w-full mt-1 border border-gray-600 rounded px-3 py-1.5 text-sm focus:outline-none focus:border-amber-500 bg-gray-700 text-gray-100 placeholder-gray-400 resize-none"></textarea>
+                    </div>
+                </LumexCardBody>
+                <LumexCardFooter Class="gap-2">
+                    <LumexButton OnClick="ConfirmAddFeat" Color="@ThemeColor.Primary" Class="flex-1">Add</LumexButton>
+                    <LumexButton OnClick="@(() => showFeatModal = false)" Variant="@Variant.Flat" Class="flex-1">Cancel</LumexButton>
+                </LumexCardFooter>
+            </LumexCard>
+        </div>
+    }
+</div>
+
+@code {
+
+    // ── Tab state ──────────────────────────────────────────────────────────
+    private string activeTab = "Weapons";
+    private string[] tabs = { "Weapons", "Defense", "Gear", "Spells", "Pets", "Details", "Feats", "Actions" };
+    private void SetActiveTab(string tab) => activeTab = tab;
+
+    private string TabClass(string tab) => activeTab == tab
+        ? "border-amber-500 text-amber-400 bg-gray-900 px-4 py-2 text-sm font-semibold border-b-2 transition-colors"
+        : "border-transparent text-gray-400 hover:text-amber-400 hover:bg-gray-800 px-4 py-2 text-sm font-semibold border-b-2 transition-colors";
+
+    // ── Character data ─────────────────────────────────────────────────────
+    private CharacterData character = new()
+    {
+        Level = 1, XP = 0, Name = "", Size = "Medium", Speed = "25ft",
+        Ancestry = "Human", Background = "Barkeep", Class = "Fighter",
+        HeroPoints = 16, FighterDC = 5, Perception = 5, Initiative = 0,
+        AC = 14, HP = 19, MaxHP = 19,
+        Abilities = new()
+        {
+            new() { Abbreviation = "STR", Score = 16, Modifier = 3 },
+            new() { Abbreviation = "DEX", Score = 12, Modifier = 1 },
+            new() { Abbreviation = "CON", Score = 14, Modifier = 2 },
+            new() { Abbreviation = "INT", Score = 10, Modifier = 0 },
+            new() { Abbreviation = "WIS", Score = 10, Modifier = 0 },
+            new() { Abbreviation = "CHA", Score = 10, Modifier = 0 },
+        },
+        Saves = new()
+        {
+            new() { Name = "Fortitude", Modifier = 6 },
+            new() { Name = "Reflex",    Modifier = 4 },
+            new() { Name = "Will",      Modifier = 3 },
+        },
+        Skills = new()
+        {
+            new() { Name = "Acrobatics",   Modifier = 1, Trained = true,  ProficiencyLetter = "D" },
+            new() { Name = "Arcana",       Modifier = 0, Trained = false, ProficiencyLetter = "I" },
+            new() { Name = "Athletics",    Modifier = 3, Trained = true,  ProficiencyLetter = "S" },
+            new() { Name = "Crafting",     Modifier = 0, Trained = false, ProficiencyLetter = "I" },
+            new() { Name = "Deception",    Modifier = 0, Trained = false, ProficiencyLetter = "C" },
+            new() { Name = "Diplomacy",    Modifier = 3, Trained = true,  ProficiencyLetter = "C" },
+            new() { Name = "Intimidation", Modifier = 0, Trained = false, ProficiencyLetter = "C" },
+            new() { Name = "Lore: Alcohol",Modifier = 3, Trained = true,  ProficiencyLetter = "I" },
+            new() { Name = "Medicine",     Modifier = 0, Trained = false, ProficiencyLetter = "W" },
+            new() { Name = "Nature",       Modifier = 0, Trained = false, ProficiencyLetter = "W" },
+            new() { Name = "Occultism",    Modifier = 0, Trained = false, ProficiencyLetter = "I" },
+            new() { Name = "Performance",  Modifier = 0, Trained = false, ProficiencyLetter = "C" },
+            new() { Name = "Religion",     Modifier = 0, Trained = false, ProficiencyLetter = "W" },
+            new() { Name = "Society",      Modifier = 0, Trained = false, ProficiencyLetter = "I" },
+            new() { Name = "Stealth",      Modifier = 1, Trained = true,  ProficiencyLetter = "D" },
+            new() { Name = "Survival",     Modifier = 0, Trained = false, ProficiencyLetter = "W" },
+            new() { Name = "Thievery",     Modifier = 1, Trained = true,  ProficiencyLetter = "D" },
+        }
+    };
+
+    // ── Weapons tab ────────────────────────────────────────────────────────
+    private Dictionary<string, bool> weaponCategories = new()
+    {
+        { "Simple Weapons",   true  },
+        { "Martial Weapons",  true  },
+        { "Advanced Weapons", false },
+        { "Unarmed Attacks",  false },
+    };
+    private List<WeaponData> weapons = new();
+    private bool showWeaponModal;
+    private WeaponData newWeapon = new();
+    private void ToggleWeaponCategory(string cat) => weaponCategories[cat] = !weaponCategories[cat];
+    private void ConfirmAddWeapon()
+    {
+        if (!string.IsNullOrWhiteSpace(newWeapon.Name)) weapons.Add(newWeapon);
+        newWeapon = new(); showWeaponModal = false;
+    }
+
+    // ── Defense tab ────────────────────────────────────────────────────────
+    private Dictionary<string, bool> armorCategories = new()
+    {
+        { "Unarmored",    false },
+        { "Light Armor",  true  },
+        { "Medium Armor", true  },
+        { "Heavy Armor",  false },
+    };
+    private List<ArmorData> armors = new();
+    private bool showArmorModal;
+    private ArmorData newArmor = new() { Category = "Medium Armor" };
+    private void ToggleArmorCategory(string cat) => armorCategories[cat] = !armorCategories[cat];
+    private void ConfirmAddArmor()
+    {
+        if (!string.IsNullOrWhiteSpace(newArmor.Name)) armors.Add(newArmor);
+        newArmor = new() { Category = "Medium Armor" }; showArmorModal = false;
+    }
+
+    // ── Gear tab ───────────────────────────────────────────────────────────
+    private List<GearItem> gearItems = new();
+    private bool showGearModal;
+    private GearItem newGear = new() { Quantity = 1 };
+    private void ConfirmAddGear()
+    {
+        if (!string.IsNullOrWhiteSpace(newGear.Name)) gearItems.Add(newGear);
+        newGear = new() { Quantity = 1 }; showGearModal = false;
+    }
+
+    // ── Spells tab ─────────────────────────────────────────────────────────
+    private List<SpellEntry> spells = new();
+    private bool showSpellModal;
+    private SpellEntry newSpell = new();
+    private void ConfirmAddSpell()
+    {
+        if (!string.IsNullOrWhiteSpace(newSpell.Name)) spells.Add(newSpell);
+        newSpell = new(); showSpellModal = false;
+    }
+
+    // ── Details tab ────────────────────────────────────────────────────────
+    private CharacterDetails details = new();
+    private List<CurrencyEntry> currencies = new()
+    {
+        new() { Name = "Platinum", Abbr = "PP", Color = "bg-[#9aabb8]", Amount = 0 },
+        new() { Name = "Gold",     Abbr = "GP", Color = "bg-[#c8a820]", Amount = 0 },
+        new() { Name = "Silver",   Abbr = "SP", Color = "bg-[#a8a8a8]", Amount = 0 },
+        new() { Name = "Copper",   Abbr = "CP", Color = "bg-[#b8783a]", Amount = 0 },
+    };
+
+    // ── Feats tab ──────────────────────────────────────────────────────────
+    private Dictionary<string, List<FeatEntry>> featsByCategory = new()
+    {
+        { "Ancestry Feats", new() },
+        { "Class Feats",    new() { new() { Name = "Reactive Strike", Description = "When a creature within your reach uses a manipulate or move action, you may make a Strike against it as a reaction." } } },
+        { "General Feats",  new() },
+        { "Skill Feats",    new() },
+        { "Bonus Feats",    new() {
+            new() { Name = "Shield Block",  Description = "Trigger: You have a shield raised. Block an incoming blow with your shield." },
+            new() { Name = "Hobnobber",     Description = "You are skilled at learning information through conversation and carousing." },
+        }},
+    };
+    private bool showFeatModal;
+    private string currentFeatCategory = "";
+    private FeatEntry newFeat = new();
+    private void OpenFeatModal(string cat) { currentFeatCategory = cat; newFeat = new(); showFeatModal = true; }
+    private void ConfirmAddFeat()
+    {
+        if (!string.IsNullOrWhiteSpace(newFeat.Name)) featsByCategory[currentFeatCategory].Add(newFeat);
+        showFeatModal = false;
+    }
+
+    // ── Actions tab ────────────────────────────────────────────────────────
+    private List<ActionSection> actionSections = new()
+    {
+        new() { Title = "Basic Actions", Actions = new()
+        {
+            new() { Name = "Strike",         ActionCost = "◆", Traits = "Attack",           Description = "Make an attack with a weapon or unarmed attack. MAP applies." },
+            new() { Name = "Move",           ActionCost = "◆", Traits = "Move",             Description = "Move up to your Speed." },
+            new() { Name = "Step",           ActionCost = "◆", Traits = "Move",             Description = "Move 5 feet without triggering reactions." },
+            new() { Name = "Take Cover",     ActionCost = "◆", Traits = "",                 Description = "Gain cover until the start of your next turn." },
+            new() { Name = "Raise a Shield", ActionCost = "◆", Traits = "",                 Description = "+2 circumstance bonus to AC until start of your next turn." },
+        }},
+        new() { Title = "Fighter Actions", Actions = new()
+        {
+            new() { Name = "Reactive Strike", ActionCost = "⟳", Traits = "Attack, Fighter", Description = "Trigger: A creature within reach uses a manipulate or move action. Make a Strike against the triggering creature." },
+        }},
+        new() { Title = "Skill Actions", Actions = new()
+        {
+            new() { Name = "Grapple", ActionCost = "◆", Traits = "Attack, Athletics", Description = "Attempt an Athletics check against the target's Fortitude DC." },
+            new() { Name = "Shove",   ActionCost = "◆", Traits = "Attack, Athletics", Description = "Push a creature away from you using Athletics." },
+            new() { Name = "Trip",    ActionCost = "◆", Traits = "Attack, Athletics", Description = "Knock a creature prone using Athletics." },
+        }},
+    };
+
+    // ── Model classes ──────────────────────────────────────────────────────
+    public class CharacterData
+    {
+        public int Level { get; set; }
+        public int XP { get; set; }
+        public string Name { get; set; } = "";
+        public string Size { get; set; } = "Medium";
+        public string Speed { get; set; } = "25ft";
+        public string Ancestry { get; set; } = "";
+        public string Background { get; set; } = "";
+        public string Class { get; set; } = "";
+        public int HeroPoints { get; set; }
+        public int FighterDC { get; set; }
+        public int Perception { get; set; }
+        public int Initiative { get; set; }
+        public int AC { get; set; }
+        public int HP { get; set; }
+        public int MaxHP { get; set; }
+        public List<AbilityScore> Abilities { get; set; } = new();
+        public List<SaveData> Saves { get; set; } = new();
+        public List<SkillData> Skills { get; set; } = new();
+    }
+
+    public class AbilityScore   { public string Abbreviation { get; set; } = ""; public int Score { get; set; } public int Modifier { get; set; } }
+    public class SaveData       { public string Name { get; set; } = ""; public int Modifier { get; set; } }
+    public class SkillData      { public string Name { get; set; } = ""; public int Modifier { get; set; } public bool Trained { get; set; } public string ProficiencyLetter { get; set; } = ""; }
+    public class WeaponData     { public string Name { get; set; } = ""; public string Damage { get; set; } = ""; public int AttackBonus { get; set; } public string Traits { get; set; } = ""; }
+    public class ArmorData      { public string Name { get; set; } = ""; public int ACBonus { get; set; } public string Category { get; set; } = "Medium Armor"; }
+    public class GearItem       { public string Name { get; set; } = ""; public int Quantity { get; set; } = 1; public decimal Weight { get; set; } }
+    public class SpellEntry     { public string Name { get; set; } = ""; public int Level { get; set; } public string School { get; set; } = ""; public string CastTime { get; set; } = ""; public string Description { get; set; } = ""; }
+    public class FeatEntry      { public string Name { get; set; } = ""; public string Description { get; set; } = ""; }
+    public class ActionEntry    { public string Name { get; set; } = ""; public string ActionCost { get; set; } = ""; public string Traits { get; set; } = ""; public string Description { get; set; } = ""; }
+    public class ActionSection  { public string Title { get; set; } = ""; public List<ActionEntry> Actions { get; set; } = new(); }
+    public class CurrencyEntry  { public string Name { get; set; } = ""; public string Abbr { get; set; } = ""; public string Color { get; set; } = ""; public int Amount { get; set; } }
+    public class CharacterDetails
+    {
+        public string Age { get; set; } = "";
+        public string Gender { get; set; } = "";
+        public string Height { get; set; } = "";
+        public string Weight { get; set; } = "";
+        public string Alignment { get; set; } = "";
+        public string Deity { get; set; } = "";
+        public string Appearance { get; set; } = "";
+        public string Personality { get; set; } = "";
+        public string Backstory { get; set; } = "";
+    }
+}

@@ -7,4 +7,15 @@
         <BlazorDisableThrowNavigationException>true</BlazorDisableThrowNavigationException>
     </PropertyGroup>
 
+    <ItemGroup>
+      <PackageReference Include="LumexUI" Version="2.3.4" />
+      <PackageReference Include="Supabase" Version="1.1.1" />
+      <PackageReference Include="TailwindMerge.NET" Version="1.3.0" />
+    </ItemGroup>
+
+    <Target Name="BuildTailwind" BeforeTargets="Build">
+        <Exec Command="npm run css:build"/>
+        <Exec Command="npm run css:watch"/>
+    </Target>
+
 </Project>

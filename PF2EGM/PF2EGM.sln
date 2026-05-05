@@ -1,0 +1,24 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.2.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PF2EGM", "PF2EGM.csproj", "{DE3D2A8A-EFD7-BDA4-B1BE-4FC010F6B2CE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DE3D2A8A-EFD7-BDA4-B1BE-4FC010F6B2CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE3D2A8A-EFD7-BDA4-B1BE-4FC010F6B2CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE3D2A8A-EFD7-BDA4-B1BE-4FC010F6B2CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE3D2A8A-EFD7-BDA4-B1BE-4FC010F6B2CE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B59D8EDF-C60E-4823-95A7-13448AFD03EB}
+	EndGlobalSection
+EndGlobal

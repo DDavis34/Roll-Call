@@ -1,0 +1,192 @@
+@page "/Tutorials/Spellcasting-Guide"
+@using PF2EGM.Components.Pages.Tutorials.TutorialComponents
+
+<title>Spellcasting Guide</title>
+
+<div class="background-image text-gray-100 min-h-screen font-sans">
+
+    <!-- Header -->
+    <section class="text-center px-2 py-12">
+        <h2 class="text-4xl font-extrabold text-amber-400 mb-4">Spellcasting Guide</h2>
+        <p class="text-gray-300 max-w-2xl mx-auto">
+            Learn the fundamentals of adding and utilizing spellcasting capabilities on your Pathfinder character.
+        </p>
+    </section>
+
+    <div class="max-w-6xl mx-auto p-2 sm:p-6 pb-16 space-y-12">
+
+        <!-- Spells Basics -->
+        <section class="bg-gray-800 rounded-2xl p-4 sm:p-8">
+            <h3 class="text-2xl text-center font-semibold text-amber-400 mb-4">Spells Basics</h3>
+            <p class="mb-4">
+                Spells are magical abilities used by certain classes (Wizards, Sorcerers, Clerics, Druids, Bards, etc.). Not every class can cast spells; martials like Fighters and Rogues generally can't unless they take specific feats.
+            </p>
+            <ul class="list-disc list-inside text-gray-300 space-y-2">
+                <li>Spells come in ranks 1–10. Higher-rank spells are more powerful. Your character can only cast spells up to the rank their class supports. For example,a 1st-level Wizard can only cast rank 1 spells (and cantrips).</li>
+                <li>Most spellcasters use spell slots: a limited pool of "uses" per day, organized by rank. Casting a rank 2 spell uses one of your rank 2 slots. When you're out of slots, you can't cast those spells until you rest.</li>
+                <li>Cantrips are rank 0 spells you can cast unlimited times. They automatically scale to your level. Every spellcaster gets them; use them when slots run out!</li>
+            </ul>
+
+            <!-- Spells Basics Video -->
+            <YouTubeEmbed Src="https://www.youtube.com/embed/TyABpCJInCs?si=qOouL7kPH6KrWfPe" Title="Spellcasting Basics"/>
+        </section>
+
+        <!-- Traditions -->
+        <section class="bg-gray-800 rounded-2xl p-4 sm:p-8">
+            <h3 class="text-2xl text-center font-semibold text-amber-400 mb-4">Traditions</h3>
+
+            <p class="mb-4">
+                Spells belong to one of four magical traditions, which is determined by the class you choose (except for Sorcerers, who choose their tradition based on their bloodline), defining the spell list you can draw from. Each tradition represents a fundamentally different source and philosophy of magic, which shapes not just what spells you can cast, but the flavor and role of your character in the world.  Here's a breakdown of each tradition:
+            </p>
+
+            <p>
+                1. <b>Arcane (Magus, Wizard):</b> The broadest and most versatile spell list in the game. It's rooted in intellectual mastery: the idea that magic is a science to be learned and controlled.
+                <br/><br/>
+
+                <ol class="list-disc list-inside text-gray-300 space-y-2">
+                    <li>The widest variety of offensive spells (Fireball, Lightning Bolt, Disintegrate)</li>
+                    <li>Powerful utility and battlefield control (Grease, Wall of Force, Dimension Door)</li>
+                    <li>Very few healing spells, generally can't restore hit points</li>
+                    <li>Limited access to nature or spirit-based magic</li>
+                </ol>
+                <br/>
+            </p>
+
+            <p>
+                2. <b>Divine (Champion, Cleric, Oracle):</b> Divine magic flows from devotion, whether to a deity, a spiritual concept, or a cosmic force. It is the tradition most associated with healing and holy power, but it's far more than just a support tree.
+                <br/><br/>
+
+                <ol class="list-disc list-inside text-gray-300 space-y-2">
+                    <li>The best healing spells in the game</li>
+                    <li>Powerful buff and debuff magic</li>
+                    <li>A mix of offensive, protective, and restorative spells</li>
+                    <li>Note: Your deity's alignment and portfolio can restrict which spells you can access</li>
+                </ol>
+                <br/>
+            </p>
+
+            <p>
+                3. <b>Occult (Bard, Inquisitor, Psychic, Witch):</b> The most unusual tradition, as it deals in the strange, the hidden, and the metaphysical. Where arcane magic is a science and divine magic is faith, occult magic is somewhere between art, intuition, and forbidden knowledge.
+                <br/><br/>
+
+                <ol class="list-disc list-inside text-gray-300 space-y-2">
+                    <li>The best enchantment and illusion spells in the game</li>
+                    <li>Powerful mental attacks and debuffs (Fear, Confusion, Phantasmal Killer)</li>
+                    <li>Unique access to spirit and emotion-based magic</li>
+                    <li>Limited healing and elemental blasting options</li>
+                </ol>
+                <br/>
+            </p>
+
+            <p>
+                4. <b>Primal (Druid, Ranger, Barbarian):</b> Primal magic is the power of the natural world, harnessing fire, storms, animals, plants, and the cycle of life and death. It sits between arcane and divine in terms of healing ability, and has unmatched nature-flavored utility.
+                <br/><br/>
+
+                <ol class="list-disc list-inside text-gray-300 space-y-2">
+                    <li>Strong elemental damage spells (Tempest Surge, Wildfire, Lightning Bolt)</li>
+                    <li>Excellent summon spells, especially animals and nature creatures</li>
+                    <li>Unique utility around terrain, plants, and animals (Speak with Animals, Tree Stride)</li>
+                    <li>Fewer options for illusion, enchantment, and arcane-style utility</li>
+                </ol>
+            </p>
+
+            <!-- Traditions and Essences Video -->
+            <YouTubeEmbed Src="https://www.youtube.com/embed/R3tNtwcEREg?si=FLPPa-Ms5k3kiG4W&amp;start=38" Title="Traditions and Essences"/>
+        </section>
+
+        <!-- Spell Slots -->
+        <section class="bg-gray-800 rounded-2xl p-4 sm:p-8">
+            <h3 class="text-2xl text-center font-semibold text-amber-400 mb-4">Spell Slots</h3>
+            <p class="mb-4">
+                Spell slots are the primary resource that limits how often spellcasters can use their most powerful magic. Each spell you cast (except cantrips) consumes a spell slot of the appropriate rank. For example, casting a rank 3 spell uses one of your rank 3 slots. Once you run out of slots for a given rank, you can't cast spells of that rank until you take a rest to recover them.
+            </p>
+            <ul class="list-disc list-inside text-gray-300 space-y-2">
+                <li>Slot counts vary by class and level. As you gain levels, you gain more slots and access to higher-rank slots. By level 20, a full caster has slots all the way up to rank 10, plus multiple slots at most ranks.</li>
+                <li>You can also use slots to heighten low-rank spells. For example, casting a rank-1 spell in a rank-3 slot heightens it to rank 3. Many spells have explicit heightening benefits listed in their description, keeping them useful through higher levels.</li>
+                <li>Spell slots are almost entirely a daily resource, requiring rest to recover. However, some abilities and magic items can provide ways to recover slots more frequently, such as Cleric's Healing Font</li>
+            </ul>
+
+            <h5 class="text-lg text-center font-semibold text-amber-400 mt-6 mb-2">Prepared vs Spontaneous Casters</h5>
+            <p class="mb-4">
+                <b>Prepared casters</b> (like Wizards and Clerics) choose which spells they have ready each day, giving them flexibility to adapt to different situations. <b>Spontaneous casters</b> (like Sorcerers and Bards) know a fixed list of spells but can cast any of them using their available slots, providing more on-the-fly versatility. Both types of casters rely on spell slots as their main resource, but how they access their spells differs significantly.
+            </p>
+            <ul class="list-disc list-inside text-gray-300 space-y-2">
+                <li>Prepared casters must choose their spells during a long rest, which allows them to tailor their spell selection to the expected challenges of the day. However, they are limited to only the spells they prepared.</li>
+                <li>Spontaneous casters have a fixed list of known spells but can cast any of them at any time as long as they have the appropriate spell slots available.</li>
+                <li>Spontaneous casters have slightly fewer spells known than a prepared caster has spells available, but much more in-the-moment flexibility.</li>
+            </ul>
+
+            <!-- Spell Slots Video -->
+            <YouTubeEmbed Src="https://www.youtube.com/embed/lWcQ1z4PYK0?si=p384InN0csbmHI7H&amp;start=14" Title="Spell Slots"/>
+        </section>
+
+        <!-- Cantrips -->
+        <section class="bg-gray-800 rounded-2xl p-4 sm:p-8">
+            <h3 class="text-2xl text-center font-semibold text-amber-400 mb-4">Cantrips</h3>
+            <p class="mb-4">
+                Cantrips are the most fundamental spells in Pathfinder, usable at will without expending spell slots. They provide consistent utility and damage options throughout a character's career.
+            </p>
+            <ul class="list-disc list-inside text-gray-300 space-y-2">
+                <li>Cantrips have automatic heightening, meaning a cantrip always functions as if cast at half your character level.</li>
+                <li>Most full casters start with 5 cantrips at level 1, chosen from their tradition's spell list.</li>
+                <li>Most cantrips cost 2 actions to cast, which is the standard cost for a spell. However, some cantrips cost only 1 action, which makes them exceptionally efficient for finishing off turns.</li>
+            </ul>
+
+            <!-- Cantrips Video -->
+            <YouTubeEmbed Src="https://www.youtube.com/embed/oiBOBc8VNIA?si=F2cxjThbuPFzTVY6&amp;start=18" Title="Cantrips"/>
+        </section>
+
+        <!-- Other Types of Spells -->
+        <section class="bg-gray-800 rounded-2xl shadow-lg p-4 sm:p-8">
+            <h3 class="text-2xl text-center font-semibold text-amber-400 mb-4">Other Types of Spells</h3>
+
+            <h5 class="text-lg text-center font-semibold text-amber-400 mt-6 mb-2">Focus Spells</h5>
+            <p class="mb-4">
+                Focus spells are a special category of spells that are fueled by Focus Points instead of spell slots. They are typically more powerful than regular spells and often have unique mechanics. Focus spells are class-specific and can only be used by certain classes, such as Monks, Champions, and some archetypes. Focus Points are a separate resource that can be regained more quickly than spell slots, often through specific actions or resting. Every caster who has focus spells starts with a Focus Point pool of 1 point. This pool has a maximum of 3 points, which you build toward over your career by taking feats and class features that grant focus spells 
+            </p>
+            <ul class="list-disc list-inside text-gray-300 space-y-2">
+                <li>Casting any focus spell costs 1 Focus Point.</li>
+                <li>You recover Focus Points by spending 10 minutes Refocusing. Each Refocus action restores 1 Focus Point by default, but some class features increase this to 2 or even fully refill the pool.</li>
+                <li>Like cantrips, focus spells automatically heighten, meaning they always function at a rank equal to half your character level.</li>
+                <li>Focus spells are not on your spell list. Rather, they are essentially a bonus layer of magic on top of your normal spellcasting.</li>
+                <li>Focus spells don't count against your spells known for spontaneous casters and don't need to be prepared for prepared casters.</li>
+            </ul>
+
+            <h5 class="text-lg text-center font-semibold text-amber-400 mt-6 mb-2">Innate Spells</h5>
+            <p class="mb-4">
+                Innate spells are magical abilities that are inherent to certain creatures or characters, often granted by their race, ancestry, or other features. Unlike focus spells, innate spells do not require a spell slot to cast and are typically more limited in scope. They are often used to represent natural magical abilities, such as a dragon's breath weapon or a fey creature's charm. Innate spells can be cast a certain number of times per day, and they usually have specific conditions or limitations on their use.
+            </p>
+            <ul class="list-disc list-inside text-gray-300 space-y-2">
+                <li>Innate spells are cast using Charisma as the spellcasting ability, regardless of your class or what ability score you normally use for magic.</li>
+                <li>They do not automatically heighten like cantrips or focus spells. An innate spell granted at rank 2 stays at rank 2 forever, unless a specific feature says otherwise.</li>
+                <li>Non-casters also have access to innate spells, giving martial characters a taste of magic without multiclassing.</li>
+            </ul>
+
+            <!-- Other Spells Videos -->
+            <YouTubeEmbed Src="https://www.youtube.com/embed/oiBOBc8VNIA?si=FaPtcv5uDpYGUqNe&amp;start=123" Title="Innate and Focus Spells"/>
+        </section>
+
+        <!-- Quick Tips -->
+        <section class="bg-gray-800 rounded-2xl shadow-lg p-4 sm:p-8">
+            <h3 class="text-2xl text-center font-semibold text-amber-400 mb-4">Quick Tips</h3>
+            <ul class="list-disc list-inside text-gray-300 space-y-2">
+                <li>Pick your tradition early: it defines your spell list and flavor.</li>
+                <li>Prepare or know a mix of damage, control, and utility spells. Versatility wins over raw power.</li>
+                <li>Pick spells that heighten well. They stay relevant for your entire career instead of becoming obsolete at higher levels.</li>
+                <li>Load up on cantrips, as they scale well and cost nothing.</li>
+                <li>Strategize with your party members to complement each other's spell choices.</li>
+            </ul>
+
+            <h5 class="text-lg text-center font-semibold text-amber-400 mt-6 mb-2">Stats to Focus on</h5>
+            <ul class="list-disc list-inside text-gray-300 space-y-2">
+                <li>Spell Attack Roll: Used for spells that require hitting a target. Uses your spellcasting ability modifier.</li>
+                <li>Spell DC: The difficulty enemies must beat to resist your spells. The higher, the better.</li>
+                <li>Both are based on your key spellcasting ability: Intelligence (Wizard), Wisdom (Cleric/Druid), or Charisma (Bard/Sorcerer).</li>
+            </ul>
+        </section>
+
+    </div>
+
+    <TutorialButton Message2="Choosing Ancestries, Backgrounds, and Classes" Link2="/Tutorials/Choosing-ABCs"/>
+
+</div>
