@@ -64,4 +64,4 @@ This is the semester-long project of Team 6 for CSC 4330, __Roll Call__. It is a
 2. Navigate to the folder where you cloned the repository to. Select the folder named Roll-Call, and hit "Select Folder."
 3. Once you have made any changes or just want to run the project, open a terminal by selecting Terminal > New Terminal from the top menu. Use the command `cd PF2EGM` to navigate to the correct folder, then use `dotnet run`.
 4. Once the project builds, it should automatically open a webpage in your default browser with URL localhost.
-5. Whenever you save changes to project files after building the project, you will have to rebuild it by
+5. Whenever you save changes to project files after building the project, you will have to rebuild it by pressing CTRL + C in your terminal, then re-entering the command `dotnet run`.
