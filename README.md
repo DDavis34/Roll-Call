@@ -8,13 +8,13 @@ Dillon Davis (DDavis34) - SCRUM Master\
 Timothy Posley (Tposley) - UI/UX Designer\
 Michael Russelburg (MichaelRDot) - Software Architect\
 Corbin Brescher (JosiahMatriarch) - Senior Developer\
-John Holcomb (johnholcomb10) - Product Tester\
+John Holcomb (johnholcomb10) - Product Tester
 
-## About Our Software
+## About Our Website
 
 This is the semester-long project of Team 6 for CSC 4330, __Roll Call__. It is a _Pathfinder 2E_ character creator capable of connecting players to their DM. It is focused on providing the necessary information and guides needed for new players to understand _Pathfinder_'s character creator system, while also having an interesting and simple UI that can keep veteran players engaged. Characters can be shared with your DM, allowing for quicker,more thought-out, and personalized _Pathfinder_ runs.
 
-### Known Website Compatibility
+### Known Platform Compatibility
 
 - Tested on Chrome, Edge, Firefox
 - Designed with responsiveness in mind for 280px - 1920px wide
@@ -24,7 +24,7 @@ This is the semester-long project of Team 6 for CSC 4330, __Roll Call__. It is a
 [Kanban Board](https://github.com/MichaelRdot/Roll-Call/issues)\
 [Designs](https://www.figma.com/make/xWvil0qVnhfGsvBB30UfMl/Pathfinder-2E-Character-Builder?p=f)\
 [C# Styles Guide](https://www.dofactory.com/csharp-coding-standards)\
-[HTML Style Guide](https://www.w3schools.com/htmL/html5_syntax.asp)\
+[HTML Style Guide](https://www.w3schools.com/htmL/html5_syntax.asp)
 
 ## How to Run Dev and Test Environment (Windows 11)
 
@@ -32,7 +32,7 @@ This is the semester-long project of Team 6 for CSC 4330, __Roll Call__. It is a
 
 - [Git Bash (version 2.49.0)](https://git-scm.com/downloads)
 
-- [GitHub Desktop (version 3.5.8 (x64))](https://desktop.github.com/download/)
+- [GitHub Desktop (version 3.5.8)](https://desktop.github.com/download/)
 
 - [VS Code (version 1.118.1)](https://code.visualstudio.com/download) + extensions within VS Code:
   - C# :: ms-dotnettools.csharp
@@ -55,7 +55,7 @@ This is the semester-long project of Team 6 for CSC 4330, __Roll Call__. It is a
 
 ### Getting Started with the Project
 
-1. Make sure the Main branch is selected on GitHub.com and clone the repository onto your computer/laptop to access all files. You can do this by copying the HTTPS link that shows up when clicking the "Code" tab on GitHub.com when within this repository.
+1. Make sure the Main branch is selected on GitHub.com and clone the repository onto your device to access all files. You can do this by copying the HTTPS link that shows up when clicking the "Code" button on GitHub.com when within this repository.
 2. After copying the link, go to the GitHub Desktop app and click "File" on the top left, then select "Clone Repository" and paste the repo link under the URL tab.
 
 ### Setting up Project to Make Changes and Run Afterwards
