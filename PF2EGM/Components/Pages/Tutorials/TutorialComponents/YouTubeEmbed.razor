@@ -1,9 +1,9 @@
 @code {
-    [Parameter] public string Src { get; set; } = "";
+    [Parameter] public string Src { get; set; } = "https://www.youtube.com/embed/dQw4w9WgXcQ?si=xKO_tBFDoBmfLRun";
     [Parameter] public string Title { get; set; } = "YouTube video player";
 }
 
-<div class="sm:bg-gray-700 sm:rounded-xl sm:p-6 flex justify-center">
+<div class="sm:bg-gray-700 sm:rounded-xl mt-6 sm:p-6 flex justify-center">
     <div class="mx-auto w-full" style="min-width: 248px; max-width: 560px;">
         <div class="relative w-full" style="aspect-ratio: 16/9;">
             <iframe class="absolute inset-0 w-full h-full"
