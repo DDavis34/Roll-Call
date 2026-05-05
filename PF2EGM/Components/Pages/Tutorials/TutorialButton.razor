@@ -1,0 +1,17 @@
+@code {
+    [Parameter] public string Message1 { get; set; } = "Back to Tutorials";
+    [Parameter] public string Link1 { get; set; } = "/tutorials";
+    [Parameter] public string Message2 { get; set; } = "";
+    [Parameter] public string Link2 { get; set; } = "/";
+}
+<section class="max-w-6xl mx-auto pb-16 px-6">
+    <div class="flex justify-between">
+        <a href="@Link1" class="tutorial-button flex items-center text-center">
+            @Message1
+        </a>
+
+        <a href="@Link2" class="tutorial-button flex items-center text-center">
+            Suggested:<br/>@Message2
+        </a>
+    </div>
+</section>
