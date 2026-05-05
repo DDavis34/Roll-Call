@@ -4,27 +4,27 @@
 
 ## Members
 
-Dillon Davis (DDavis34) - SCRUM Master
-Timothy Posley (Tposley) - UI/UX Designer
-Michael Russelburg (MichaelRDot) - Software Architect
-Corbin Brescher (JosiahMatriarch) - Senior Developer
-John Holcomb (johnholcomb10) - Product Tester
+Dillon Davis (DDavis34) - SCRUM Master\
+Timothy Posley (Tposley) - UI/UX Designer\
+Michael Russelburg (MichaelRDot) - Software Architect\
+Corbin Brescher (JosiahMatriarch) - Senior Developer\
+John Holcomb (johnholcomb10) - Product Tester\
 
 ## About Our Software
 
-This is the semester-long project for Team 4, "Hellskate." The project was created with Unity in C#, using Unity 6 as the game engine and Visual Studio (VS) Code for scripting. This game is a 2D platformer, where the player moves around on a skateboard and can fight several types of enemies throughout three different levels. The game can be run out of the editor, or you can export it yourself into an executable. Information for how to run the game and test it in the editor can be found below:
+This is the semester-long project of Team 6 for CSC 4330, __Roll Call__. It is a _Pathfinder 2E_ character creator capable of connecting players to their DM. It is focused on providing the necessary information and guides needed for new players to understand _Pathfinder_'s character creator system, while also having an interesting and simple UI that can keep veteran players engaged. Characters can be shared with your DM, allowing for quicker,more thought-out, and personalized _Pathfinder_ runs.
 
-## Known Compatibility
+### Known Website Compatibility
 
 - Tested on Chrome, Edge, Firefox
 - Designed with responsiveness in mind for 280px - 1920px wide
 
-## Important Links
+### Important Links
 
-[Kanban Board](https://github.com/MichaelRdot/Roll-Call/issues)
-[Designs](https://www.figma.com/make/xWvil0qVnhfGsvBB30UfMl/Pathfinder-2E-Character-Builder?p=f)
-[C# Styles Guide](https://www.dofactory.com/csharp-coding-standards)
-[HTML Style Guide](https://www.w3schools.com/htmL/html5_syntax.asp)
+[Kanban Board](https://github.com/MichaelRdot/Roll-Call/issues)\
+[Designs](https://www.figma.com/make/xWvil0qVnhfGsvBB30UfMl/Pathfinder-2E-Character-Builder?p=f)\
+[C# Styles Guide](https://www.dofactory.com/csharp-coding-standards)\
+[HTML Style Guide](https://www.w3schools.com/htmL/html5_syntax.asp)\
 
 ## How to Run Dev and Test Environment (Windows 11)
 
