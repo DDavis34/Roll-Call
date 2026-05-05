@@ -1,4 +1,5 @@
 bin/
+!bin/lumexui
 obj/
 /packages/
 riderModule.iml
