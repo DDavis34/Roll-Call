@@ -24,6 +24,9 @@ jobs:
         with:
           node-version: '20'
 
+      - name: Restore dependencies
+        run: dotnet restore PF2EGM/PF2EGM.csproj
+
       - name: Install npm dependencies
         run: npm install
         working-directory: PF2EGM
@@ -33,9 +36,6 @@ jobs:
           chmod +x ./node_modules/.bin/tailwindcss
           ./node_modules/.bin/tailwindcss -i ./wwwroot/app.css -o ./wwwroot/app.built.css --minify
         working-directory: PF2EGM
-
-      - name: Restore dependencies
-        run: dotnet restore PF2EGM/PF2EGM.csproj
 
       - name: Build
         run: dotnet build PF2EGM/PF2EGM.csproj --configuration Release --no-restore
