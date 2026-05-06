@@ -18,7 +18,6 @@ This is the semester-long project of Team 6 for CSC 4330, __Roll Call__. It is a
 
 - Tested on Chrome, Edge, Firefox
 - Designed with responsiveness in mind for 280px - 1920px wide
-
 - _All instructions for running the project are meant for Windows 11_
 
 ### Important Links
@@ -57,7 +56,7 @@ This is the semester-long project of Team 6 for CSC 4330, __Roll Call__. It is a
 1. Download [VS Code](https://code.visualstudio.com/download). After installing VS Code, extensions can be found by searching their names within the search bar in the "Extensions" tab (`Ctrl+Shift+X`) on VS Code (extension IDs are listed above).
 2. You will have to download and install the [.NET SDK](https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/sdk-10.0.203-windows-x64-installer) if you have not already done so. You may have to restart your device once the SDK is installed. Once installed, open Command Prompt (type cmd into your taskbar's searchbar), then enter the command `dotnet --version` to verify your installation was successful.
 3. Additionally, download and install the [GitHub Desktop app](https://desktop.github.com/download/) to make commits easier and to create clone/pull requests straight from the app. You should  log in using your GitHub.com account to tie commits and requests to you easier. [Git Bash](https://git-scm.com/downloads) should be automatically downloaded with GitHub Desktop. However, you can also download separately, if needed.
-4. Download and install [npm](https://nodejs.org/en/download) (automatically installed alongisde Node.js). Scroll down on the page to where it says "get a prebuilt Node.js," and select "Windows Installer." Once installed, run PowerShell as an administrator (type Powershell into your taskbar's searchbar, then right-click on Powershell and select Run as Administrator). In PowerShell, use the command `Set-ExecutionPolicy RemoteSigned` to enable scripts (enter `Y` or `A` when prompted), then `npm -v` to verify your npm installation.
+4. Download and install [npm](https://nodejs.org/en/download) (automatically installed alongside Node.js). Scroll down on the page to where it says "get a prebuilt Node.js," and select "Windows Installer." Once installed, run PowerShell as an administrator (type Powershell into your taskbar's searchbar, then right-click on Powershell and select Run as Administrator). In PowerShell, use the command `Set-ExecutionPolicy RemoteSigned` to enable scripts (enter `Y` or `A` when prompted), then `npm -v` to verify your npm installation.
 
 ### Getting Started with the Project
 
