@@ -41,7 +41,7 @@ This is the semester-long project of Team 6 for CSC 4330, __Roll Call__. It is a
 
 - [.NET SDK (version 10.0.203)](https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/sdk-10.0.203-windows-x64-installer)
 
-- [NPM (version 11.9.0)](https://nodejs.org/en/download)
+- [npm (version 11.9.0)](https://nodejs.org/en/download) (_will automatically download alongside Node.js_)
 
 #### Not required but recommended
 
@@ -55,7 +55,7 @@ This is the semester-long project of Team 6 for CSC 4330, __Roll Call__. It is a
 1. Download VS Code (link in Dependencies section). After installing VS Code, extensions can be found by searching their names within the search bar in the "Extensions" tab `Ctrl+Shift+X` on VS Code (extension IDs are listed in the Dependencies section).
 2. You will likely get an error within VS Code stating that a .NET SDK could not be found. You will have to download and install the .NET SDK (link in Dependencies section) if you have not already done so. You will have to restart your device once the SDK is installed. Once restarted, open Command Prompt (type cmd into your taskbar's searchbar), then enter the command `dotnet --version` to verify your installation was successful.
 3. Additionally, download and install the GitHub Desktop app to make commits easier and to create clone/pull requests straight from the app. You should  log in using your GitHub.com account to tie commits and requests to you easier. Git Bash should be automatically downloaded with GitHub Desktop. However, you can also download separately, if needed.
-4. Download and install npm (automatically installed alongisde Node.js). Scroll down on the page to where it says "get a prebuilt Node.js, and select "Windows Installer." Once installed, run PowerShell as an administrator (type Powershell into your taskbar's searchbar, then rightclick on Powershell and select Run as Administrator). In PowerShell, use the command `Set-ExecutionPolicy RemoteSigned` to enable scripts, then `npm -v` to verify your npm installation.
+4. Download and install npm (automatically installed alongisde Node.js). Scroll down on the page to where it says "get a prebuilt Node.js, and select "Windows Installer." Once installed, run PowerShell as an administrator (type Powershell into your taskbar's searchbar, then rightclick on Powershell and select Run as Administrator). In PowerShell, use the command `Set-ExecutionPolicy RemoteSigned` to enable scripts (enter `Y` or `A` when prompted), then `npm -v` to verify your npm installation.
 
 ### Getting Started with the Project
 
@@ -68,5 +68,5 @@ This is the semester-long project of Team 6 for CSC 4330, __Roll Call__. It is a
 1. In VS Code, hit "File" in the top left, then select "Open Folder" in the dropdown.
 2. Navigate to the folder where you cloned the repository to. Select the folder named Roll-Call, and hit "Select Folder." If it prompts you whether to trust the owner of the folder, select Yes.
 3. Once you have made any changes or just want to run the project, open a terminal by selecting Terminal > New Terminal from the top menu. First, use `dotnet dev-certs https --trust` to trust the local development certificate. If you are prompted to trust the certificate, select Yes. Next, enter the command `cd PF2EGM` to navigate to the project directory. Then, enter the command `dotnet run` to build the project.
-4. Once the project builds, it should automatically open a webpage in your default browser with URL localhost. If it does not, check your terminal or Roll-Call/PF2EGM/Properties/launchSetting.json for a local URL (ex. https://localhost:7040).
+4. Once the project builds, it should automatically open a webpage in your default browser with URL localhost. If it does not, check your terminal or Roll-Call/PF2EGM/Properties/launchSetting.json for a local URL (ex. http://localhost:5144).
 5. Whenever you save changes to project files after building the project, you will have to rebuild it by pressing `CTRL+C` in your terminal, then re-entering the command `dotnet run`.
