@@ -14,7 +14,7 @@
     </ItemGroup>
 
     <Target Name="BuildTailwind" BeforeTargets="Build">
-        <Exec Command="npm run css:build"/>
+        <Exec Command="npm run css:build" Condition="'$(CI)' != 'true'"/>
         <Exec Command="npm run css:watch"/>
     </Target>
 
