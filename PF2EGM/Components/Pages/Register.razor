@@ -1,13 +1,13 @@
 @page "/register"
 
-Microsoft.AspNetCore.Components.Forms
+@using Microsoft.AspNetCore.Components.Forms
 @using System.ComponentModel.DataAnnotations
 @using PF2EGM.Services
 @using LumexUI
 @using LumexUI.Common
 @using LumexUI.Shared 
 
-@inject ISupabaseAuthService AuthService
+@inject IApiAuthService AuthService
 @inject NavigationManager Nav
 
 @rendermode InteractiveServer
@@ -44,7 +44,7 @@ Microsoft.AspNetCore.Components.Forms
                     <DataAnnotationsValidator />
 
                     <div class="flex flex-col gap-4">
-                        <LumexTextbox @bind-Value="registerModel.Email"
+                        <LumexTextbox @bind-Value="registerModel!.Email"
                                       Type="@InputType.Email"
                                       Label="Email"
                                       Placeholder="you@example.com"
@@ -54,7 +54,7 @@ Microsoft.AspNetCore.Components.Forms
                                       ErrorMessage="@emailError"
                                       Invalid="@(!string.IsNullOrEmpty(emailError))" />
 
-                        <LumexTextbox @bind-Value="registerModel.Password"
+                        <LumexTextbox @bind-Value="registerModel!.Password"
                                       Type="@InputType.Password"
                                       Label="Password"
                                       Placeholder="••••••••"
@@ -64,7 +64,7 @@ Microsoft.AspNetCore.Components.Forms
                                       ErrorMessage="@passwordError"
                                       Invalid="@(!string.IsNullOrEmpty(passwordError))" />
 
-                        <LumexTextbox @bind-Value="registerModel.ConfirmPassword"
+                        <LumexTextbox @bind-Value="registerModel!.ConfirmPassword"
                                       Type="@InputType.Password"
                                       Label="Confirm Password"
                                       Placeholder="••••••••"
@@ -122,7 +122,7 @@ Microsoft.AspNetCore.Components.Forms
 
 @code {
     [SupplyParameterFromForm]
-    private RegisterModel registerModel { get; set; } = new();
+    private RegisterModel? registerModel { get; set; }
 
     private string? errorMessage;
     private string? emailError;
@@ -138,25 +138,27 @@ Microsoft.AspNetCore.Components.Forms
 
     private async Task HandleRegister()
     {
+        var model = registerModel ??= new();
+
         isLoading = true;
         errorMessage = null;
         emailError = null;
         passwordError = null;
         confirmError = null;
 
-        if (string.IsNullOrEmpty(registerModel.Email))
+        if (string.IsNullOrEmpty(model.Email))
             emailError = "Email is required";
-        else if (!registerModel.Email.Contains('@'))
+        else if (!model.Email.Contains('@'))
             emailError = "Enter a valid email";
 
-        if (string.IsNullOrEmpty(registerModel.Password))
+        if (string.IsNullOrEmpty(model.Password))
             passwordError = "Password is required";
-        else if (registerModel.Password.Length < 8)
+        else if (model.Password.Length < 8)
             passwordError = "Password must be at least 8 characters";
 
-        if (string.IsNullOrEmpty(registerModel.ConfirmPassword))
+        if (string.IsNullOrEmpty(model.ConfirmPassword))
             confirmError = "Please confirm your password";
-        else if (registerModel.Password != registerModel.ConfirmPassword)
+        else if (model.Password != model.ConfirmPassword)
             confirmError = "Passwords do not match";
 
         if (emailError != null || passwordError != null || confirmError != null)
@@ -167,7 +169,7 @@ Microsoft.AspNetCore.Components.Forms
 
         try
         {
-            var result = await AuthService.SignUpAsync(registerModel.Email, registerModel.Password);
+            var result = await AuthService.SignUpAsync(model.Email, model.Password);
 
             if (result.IsSuccess)
                 registrationSuccess = true;

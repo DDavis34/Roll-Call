@@ -15,6 +15,12 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
         {
             entity.HasKey(character => character.Id);
 
+            entity.HasIndex(character => new { character.UserId, character.UpdatedUtc });
+
+            entity.Property(character => character.UserId)
+                .HasMaxLength(100)
+                .IsRequired();
+
             entity.Property(character => character.Name)
                 .HasMaxLength(200)
                 .IsRequired();

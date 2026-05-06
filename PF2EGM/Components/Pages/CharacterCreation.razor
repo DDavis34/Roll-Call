@@ -1,7 +1,14 @@
 @page "/create-character"
+@page "/create-character/{CharacterId:guid}"
+@using Microsoft.AspNetCore.Components
+@using PF2EGM.Services
+@using System.Text.Json
 @using LumexUI
 @using LumexUI.Common
 @using LumexUI.Shared.Icons
+@inject IApiCharacterService CharacterService
+@inject SupabaseSessionStore SessionStore
+@inject NavigationManager Nav
 
 <PageTitle>Character Sheet</PageTitle>
 
@@ -31,7 +38,38 @@
             <span>HP <strong class="text-amber-400">@character.HP/@character.MaxHP</strong></span>
             <span>HP Shield</span>
         </div>
+        <div class="flex items-center gap-2">
+            <LumexButton OnClick="HandleSaveCharacter"
+                         Color="@ThemeColor.Primary"
+                         Disabled="@(isSavingCharacter || isLoadingCharacter)">
+                @if (isSavingCharacter)
+                {
+                    <span>Saving…</span>
+                }
+                else if (SessionStore.IsAuthenticated)
+                {
+                    <span>@(savedCharacterId.HasValue ? "Update Save" : "Save Character")</span>
+                }
+                else
+                {
+                    <span>Log In to Save</span>
+                }
+            </LumexButton>
+            @if (SessionStore.IsAuthenticated)
+            {
+                <LumexButton OnClick="@(() => Nav.NavigateTo("/saved-characters"))" Variant="@Variant.Flat">
+                    Saved List
+                </LumexButton>
+            }
+        </div>
     </div>
+
+    @if (!string.IsNullOrWhiteSpace(saveStatusMessage))
+    {
+        <div class="px-3 py-2 text-sm @(saveStatusIsError ? "bg-red-900/40 text-red-200 border-b border-red-800" : "bg-emerald-900/30 text-emerald-200 border-b border-emerald-800")">
+            @saveStatusMessage
+        </div>
+    }
 
     <!-- Stats Header -->
     <div class="bg-gray-800 border-b border-gray-700 p-3">
@@ -776,6 +814,39 @@
 </div>
 
 @code {
+    private static readonly JsonSerializerOptions JsonOptions = new(JsonSerializerDefaults.Web)
+    {
+        WriteIndented = false
+    };
+
+    [Parameter]
+    public Guid? CharacterId { get; set; }
+
+    private Guid? savedCharacterId;
+    private Guid? loadedCharacterId;
+    private bool isSavingCharacter;
+    private bool isLoadingCharacter;
+    private bool saveStatusIsError;
+    private string? saveStatusMessage;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (CharacterId == loadedCharacterId)
+        {
+            return;
+        }
+
+        loadedCharacterId = CharacterId;
+
+        if (!CharacterId.HasValue)
+        {
+            savedCharacterId = null;
+            isLoadingCharacter = false;
+            return;
+        }
+
+        await LoadSavedCharacterAsync(CharacterId.Value);
+    }
 
     // ── Tab state ──────────────────────────────────────────────────────────
     private string activeTab = "Weapons";
@@ -942,6 +1013,146 @@
     };
 
     // ── Model classes ──────────────────────────────────────────────────────
+    private async Task HandleSaveCharacter()
+    {
+        if (!SessionStore.IsAuthenticated)
+        {
+            saveStatusIsError = true;
+            saveStatusMessage = "Log in before saving so this character can be linked to your account.";
+            return;
+        }
+
+        if (string.IsNullOrWhiteSpace(character.Name))
+        {
+            saveStatusIsError = true;
+            saveStatusMessage = "Give your character a name before saving.";
+            return;
+        }
+
+        isSavingCharacter = true;
+        saveStatusMessage = null;
+
+        var request = new SaveCharacterRequest(
+            character.Name.Trim(),
+            character.Ancestry,
+            character.Class,
+            character.Level,
+            JsonSerializer.Serialize(BuildSnapshot(), JsonOptions));
+
+        var result = await CharacterService.SaveCharacterAsync(request, savedCharacterId);
+
+        isSavingCharacter = false;
+        saveStatusIsError = !result.IsSuccess;
+        saveStatusMessage = result.IsSuccess
+            ? $"Saved {(string.IsNullOrWhiteSpace(character.Name) ? "character" : character.Name)} to your account."
+            : result.ErrorMessage;
+
+        if (!result.IsSuccess || result.Character is null)
+        {
+            return;
+        }
+
+        savedCharacterId = result.Character.Id;
+
+        if (CharacterId != savedCharacterId)
+        {
+            Nav.NavigateTo($"/create-character/{savedCharacterId}", replace: true);
+        }
+    }
+
+    private async Task LoadSavedCharacterAsync(Guid id)
+    {
+        if (!SessionStore.IsAuthenticated)
+        {
+            saveStatusIsError = true;
+            saveStatusMessage = "Log in to load saved characters.";
+            return;
+        }
+
+        isLoadingCharacter = true;
+        saveStatusMessage = "Loading saved character…";
+        saveStatusIsError = false;
+
+        var savedCharacter = await CharacterService.GetSavedCharacterAsync(id);
+
+        if (savedCharacter is null)
+        {
+            isLoadingCharacter = false;
+            saveStatusIsError = true;
+            saveStatusMessage = "Could not load that saved character.";
+            return;
+        }
+
+        try
+        {
+            var snapshot = JsonSerializer.Deserialize<CharacterEditorSnapshot>(savedCharacter.Data, JsonOptions);
+            if (snapshot is null)
+            {
+                throw new InvalidOperationException("Saved character payload was empty.");
+            }
+
+            ApplySnapshot(snapshot);
+            savedCharacterId = savedCharacter.Id;
+            saveStatusIsError = false;
+            saveStatusMessage = $"Loaded {savedCharacter.Name}.";
+        }
+        catch (Exception)
+        {
+            saveStatusIsError = true;
+            saveStatusMessage = "That saved character could not be read.";
+        }
+        finally
+        {
+            isLoadingCharacter = false;
+        }
+    }
+
+    private CharacterEditorSnapshot BuildSnapshot() =>
+        new()
+        {
+            ActiveTab = activeTab,
+            Character = character,
+            WeaponCategories = weaponCategories,
+            Weapons = weapons,
+            ArmorCategories = armorCategories,
+            Armors = armors,
+            GearItems = gearItems,
+            Spells = spells,
+            Details = details,
+            Currencies = currencies,
+            FeatsByCategory = featsByCategory
+        };
+
+    private void ApplySnapshot(CharacterEditorSnapshot snapshot)
+    {
+        activeTab = string.IsNullOrWhiteSpace(snapshot.ActiveTab) ? "Weapons" : snapshot.ActiveTab;
+        character = snapshot.Character ?? character;
+        weaponCategories = snapshot.WeaponCategories?.Count > 0 ? snapshot.WeaponCategories : weaponCategories;
+        weapons = snapshot.Weapons ?? [];
+        armorCategories = snapshot.ArmorCategories?.Count > 0 ? snapshot.ArmorCategories : armorCategories;
+        armors = snapshot.Armors ?? [];
+        gearItems = snapshot.GearItems ?? [];
+        spells = snapshot.Spells ?? [];
+        details = snapshot.Details ?? new CharacterDetails();
+        currencies = snapshot.Currencies ?? [];
+        featsByCategory = snapshot.FeatsByCategory?.Count > 0 ? snapshot.FeatsByCategory : featsByCategory;
+    }
+
+    public class CharacterEditorSnapshot
+    {
+        public string ActiveTab { get; set; } = "Weapons";
+        public CharacterData? Character { get; set; }
+        public Dictionary<string, bool>? WeaponCategories { get; set; }
+        public List<WeaponData>? Weapons { get; set; }
+        public Dictionary<string, bool>? ArmorCategories { get; set; }
+        public List<ArmorData>? Armors { get; set; }
+        public List<GearItem>? GearItems { get; set; }
+        public List<SpellEntry>? Spells { get; set; }
+        public CharacterDetails? Details { get; set; }
+        public List<CurrencyEntry>? Currencies { get; set; }
+        public Dictionary<string, List<FeatEntry>>? FeatsByCategory { get; set; }
+    }
+
     public class CharacterData
     {
         public int Level { get; set; }

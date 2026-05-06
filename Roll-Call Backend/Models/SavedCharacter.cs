@@ -3,6 +3,7 @@ namespace RollCallBackend.Models;
 public class SavedCharacter
 {
     public Guid Id { get; set; } = Guid.NewGuid();
+    public string UserId { get; set; } = "";
     public string Name { get; set; } = "";
     public string? Ancestry { get; set; }
     public string? CharacterClass { get; set; }

@@ -10,11 +10,14 @@ builder.Services.AddHttpClient<IApiAuthService, ApiAuthService>(client =>
 {
     client.BaseAddress = new Uri(backendUrl);
 });
+builder.Services.AddHttpClient<IApiCharacterService, ApiCharacterService>(client =>
+{
+    client.BaseAddress = new Uri(backendUrl);
+});
 
 
-builder.Services.AddScoped<ISupabaseAuthService, SupabaseAuthService>();
 builder.Services.AddScoped<AuthStateService>();
-builder.Services.AddSingleton<IDataTableService, DataTableService>();
+builder.Services.AddScoped<SupabaseSessionStore>();
 
 // Add services to the container.
 builder.Services.AddRazorComponents()

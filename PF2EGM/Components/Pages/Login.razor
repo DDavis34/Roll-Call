@@ -5,7 +5,7 @@
 @using LumexUI
 @using LumexUI.Common
 @using LumexUI.Shared.Icons
-@inject ISupabaseAuthService AuthService
+@inject IApiAuthService AuthService
 @inject AuthStateService AuthState
 @inject NavigationManager Nav
 
@@ -34,7 +34,7 @@
                 <DataAnnotationsValidator />
 
                 <div class="flex flex-col gap-4">
-                    <LumexTextbox @bind-Value="loginModel.Email"
+                    <LumexTextbox @bind-Value="loginModel!.Email"
                                   Type="@InputType.Email"
                                   Label="Email"
                                   Placeholder="you@example.com"
@@ -49,7 +49,7 @@
                             <span class="text-xs font-medium text-default-600">Password</span>
                             <a href="/forgot-password" class="text-xs text-primary hover:opacity-75 transition-opacity">Forgot?</a>
                         </div>
-                        <LumexTextbox @bind-Value="loginModel.Password"
+                        <LumexTextbox @bind-Value="loginModel!.Password"
                                       Type="@InputType.Password"
                                       Placeholder="••••••••"
                                       Variant="@InputVariant.Flat"
@@ -104,7 +104,7 @@
 
 @code {
     [SupplyParameterFromForm]
-    private LoginModel loginModel { get; set; } = new();
+    private LoginModel? loginModel { get; set; }
 
     private string? errorMessage;
     private string? emailError;
@@ -118,17 +118,19 @@
 
     private async Task HandleLogin()
     {
+        var model = loginModel ??= new();
+
         isLoading = true;
         errorMessage = null;
         emailError = null;
         passwordError = null;
 
-        if (string.IsNullOrEmpty(loginModel.Email))
+        if (string.IsNullOrEmpty(model.Email))
             emailError = "Email is required";
-        else if (!loginModel.Email.Contains('@'))
+        else if (!model.Email.Contains('@'))
             emailError = "Enter a valid email";
 
-        if (string.IsNullOrEmpty(loginModel.Password))
+        if (string.IsNullOrEmpty(model.Password))
             passwordError = "Password is required";
 
         if (emailError != null || passwordError != null)
@@ -139,7 +141,7 @@
 
         try
         {
-            var result = await AuthService.SignInAsync(loginModel.Email, loginModel.Password);
+            var result = await AuthService.SignInAsync(model.Email, model.Password);
 
             if (result.IsSuccess)
             {
