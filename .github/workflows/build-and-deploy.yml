@@ -29,7 +29,9 @@ jobs:
         working-directory: PF2EGM
 
       - name: Build Tailwind CSS
-        run: npx @tailwindcss/cli -i ./wwwroot/app.css -o ./wwwroot/app.built.css --minify
+        run: |
+          chmod +x ./node_modules/.bin/tailwindcss
+          ./node_modules/.bin/tailwindcss -i ./wwwroot/app.css -o ./wwwroot/app.built.css --minify
         working-directory: PF2EGM
 
       - name: Restore dependencies
