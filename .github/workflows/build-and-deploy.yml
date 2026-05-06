@@ -27,6 +27,9 @@ jobs:
       - name: Restore dependencies
         run: dotnet restore PF2EGM/PF2EGM.csproj
 
+      - name: Build (generate bin folder for LumexUI theme)
+        run: dotnet build PF2EGM/PF2EGM.csproj --configuration Release --no-restore /p:RunNpmCssBuild=false
+
       - name: Install npm dependencies
         run: npm install
         working-directory: PF2EGM
@@ -38,7 +41,7 @@ jobs:
         working-directory: PF2EGM
 
       - name: Build
-        run: dotnet build PF2EGM/PF2EGM.csproj --configuration Release --no-restore
+        run: dotnet build PF2EGM/PF2EGM.csproj --configuration Release --no-restore /p:RunNpmCssBuild=false
 
       - name: Publish
         run: dotnet publish PF2EGM/PF2EGM.csproj --configuration Release --no-build --output ./publish
