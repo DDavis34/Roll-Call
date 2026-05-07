@@ -1,5 +1,72 @@
 @page "/Tutorials/3-Action-Economy"
+@using PF2EGM.Components.Pages.Tutorials.TutorialComponents
 
 <PageTitle>3-Action Economy</PageTitle>
 
-<ComingSoon Message="Back to Tutorials" Link="/Tutorials"/>
+<div class="background-image text-gray-100 min-h-screen font-sans">
+
+    <!-- Header -->
+    <section class="text-center px-2 py-12">
+        <h2 class="text-4xl font-extrabold text-amber-400 mb-4">3-Action Economy</h2>
+        <p class="text-gray-300 max-w-2xl mx-auto">
+            Understand how to manage your actions in combat and non-combat situations.
+        </p>
+    </section>
+
+    <div class="max-w-6xl mx-auto p-2 sm:p-6 pb-16 space-y-12">
+
+        <!-- Action Basics -->
+        <section class="bg-gray-800 rounded-2xl shadow-lg p-4 sm:p-8">
+            <h3 class="text-2xl text-center font-semibold text-amber-400 mb-4">Action Basics</h3>
+            <p class="mb-4">
+                On your turn, you get 3 actions and 1 reaction per round. Actions can be spent however you like from your available options, such as attack, move, cast a spell, raise a shield, interact with an object, etc. Your reaction is a special resource spent outside your turn in response to a trigger (like blocking an attack). There are four action (and one reaction) costs to keep in mind:
+            </p>
+            <ul class="list-disc list-inside text-gray-300 space-y-2">
+                <li><strong>Action</strong> <ActionCost Cost="1"/> :  The most common action type, used for most activities.</li>
+                <li><strong>Two-Action</strong> <ActionCost Cost="2"/> : Costs 2 actions at once. It is a more significant action, often used for powerful attacks or complex maneuvers.</li>
+                <li><strong>Three-Action</strong> <ActionCost Cost="3"/> : Consumes all 3 actions in a turn. It is the most substantial action type, typically reserved for major abilities or unique actions.</li>
+                <li><strong>Free Action</strong> <ActionCost Cost="Free"/> : Costs nothing, but usually limited to once per trigger, such as drawing a weapon or speaking.</li>
+                <li><strong>Reaction</strong> <ActionCost Cost="Reaction"/> : Used outside your turn and refreshes each round.</li>
+            </ul>
+
+            <h5 class="text-lg text-center font-semibold text-amber-400 mt-6 mb-2">Available Actions</h5>
+            <p class="mb-4">
+                Your character's class, ancestry, feats, and skills all determine which actions you have access to:
+            </p>
+            <ul class="list-disc list-inside text-gray-300 space-y-2">
+                <li><strong>Class Actions & Features</strong>: Your class gives you signature actions. Fighters get Attack of Opportunity (a reaction). Rogues get Sneak Attack (a passive that modifies strikes). Clerics can Channel Divinity. These define your combat role.</li>
+                <li><strong>Feats</strong>: Both class feats and general feats frequently grant new actions or reactions. For example, Shield Block (a General feat) gives you a reaction to reduce damage.</li>
+                <li><strong>Skill Actions</strong>: Many skills unlock actions. Intimidation lets you use Demoralize (<ActionCost Cost="1"/>). Athletics lets you Shove or Trip (<ActionCost Cost="1"/> each). Investing in skills isn't just for out-of-combat, as it directly expands your action menu in a fight.</li>
+                <li><strong>Spellcasting</strong>: Most spells list their cost explicitly. A heal spell is <ActionCost Cost="1"/> to <ActionCost Cost="3"/> depending on how you cast it, with different effects at each cost. Learning to spend your actions efficiently on spells is a major part of playing a caster.</li>
+            </ul>
+
+            <h5 class="text-lg text-center font-semibold text-amber-400 mt-6 mb-2">Multiple Attack Penalty</h5>
+            <p class="mb-4">
+                Every time you an attack where you must make an attack roll in a round, your subsequent attacks that round take a cumulative penalty to your attack rolls. This means spamming three attacks is often a bad idea. Smart action use — mixing a Strike with a Shove, a Step, or raising your Shield — is usually better than attacking three times: 
+            </p>
+            <ul class="list-disc list-inside text-gray-300 space-y-2">
+                <li><strong>1st Attack</strong>: No penalty</li>
+                <li><strong>2nd Attack</strong>: -5 penalty (-4 with Agile trait weapons)</li>
+                <li><strong>3rd Attack</strong>: -10 penalty (-8 with Agile trait weapons)</li>
+            </ul>
+
+            <!-- Video Placeholder -->
+            <YouTubeEmbed Src="https://www.youtube.com/embed/qxdYly42Cmc?si=5k2CvxrBYZx7DrWh&amp;start=10" Title="Action Basics"/>
+        </section>
+
+        <!-- Quick Tips -->
+        <section class="bg-gray-800 rounded-2xl p-4 sm:p-8">
+            <h3 class="text-2xl text-center font-semibold text-amber-400 mb-4">Quick Tips</h3>
+            <ul class="list-disc list-inside text-gray-300 space-y-2">
+                <li>Don't just attack three times. Look at your full action menu each turn.</li>
+                <li>Read your feats carefully. The best ones grant reactions or <ActionCost Cost="2"/> actions with strong effects.</li>
+                <li>Think about reactions during character creation. Only some classes get them by default; others need feats like Shield Block.</li>
+                <li>Skill feats are combat feats too. Grabbing Athletics proficiency and the Trip action can be more useful than another attack.</li>
+            </ul>
+        </section>
+
+    </div>
+
+    <TutorialButton Message2="Spellcasting Guide" Link2="/Tutorials/Spellcasting-Guide"/>
+
+</div>

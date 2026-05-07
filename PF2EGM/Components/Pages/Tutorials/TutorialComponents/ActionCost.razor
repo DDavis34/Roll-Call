@@ -1,0 +1,18 @@
+@code {
+    [Parameter] public string Cost { get; set; } = "1";
+
+    private string GetCostSymbol()
+    {
+        return Cost switch
+        {
+            "1" => "◆",
+            "2" => "◆◆",
+            "3" => "◆◆◆",
+            "Free" => "◇",
+            "Reaction" => "⟳",
+            _ => Cost
+        };
+    }
+}
+
+<span class="text-xs bg-amber-600 text-white rounded-full px-2 py-0.5">@GetCostSymbol()</span>
