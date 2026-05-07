@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RollCallBackend.Data;
 using RollCallBackend.Models;
+using RollCallBackend.Services;
 
 namespace RollCallBackend.Controllers;
 
@@ -10,17 +11,28 @@ namespace RollCallBackend.Controllers;
 public class CharactersController : ControllerBase
 {
     private readonly AppDbContext _dbContext;
+    private readonly ISupabaseUserContextService _userContextService;
 
-    public CharactersController(AppDbContext dbContext)
+    public CharactersController(
+        AppDbContext dbContext,
+        ISupabaseUserContextService userContextService)
     {
         _dbContext = dbContext;
+        _userContextService = userContextService;
     }
 
     [HttpGet]
     public async Task<ActionResult<IEnumerable<SavedCharacterResponse>>> GetAll(CancellationToken ct)
     {
+        var user = await _userContextService.GetCurrentUserAsync(ct);
+        if (user is null)
+        {
+            return Unauthorized();
+        }
+
         var characters = await _dbContext.SavedCharacters
             .AsNoTracking()
+            .Where(character => character.UserId == user.UserId)
             .OrderByDescending(character => character.UpdatedUtc)
             .Select(character => new SavedCharacterResponse(
                 character.Id,
@@ -39,9 +51,15 @@ public class CharactersController : ControllerBase
     [HttpGet("{id:guid}")]
     public async Task<ActionResult<SavedCharacterResponse>> GetById(Guid id, CancellationToken ct)
     {
+        var user = await _userContextService.GetCurrentUserAsync(ct);
+        if (user is null)
+        {
+            return Unauthorized();
+        }
+
         var character = await _dbContext.SavedCharacters
             .AsNoTracking()
-            .FirstOrDefaultAsync(saved => saved.Id == id, ct);
+            .FirstOrDefaultAsync(saved => saved.Id == id && saved.UserId == user.UserId, ct);
 
         if (character is null)
         {
@@ -56,8 +74,15 @@ public class CharactersController : ControllerBase
         [FromBody] SaveCharacterRequest request,
         CancellationToken ct)
     {
+        var user = await _userContextService.GetCurrentUserAsync(ct);
+        if (user is null)
+        {
+            return Unauthorized();
+        }
+
         var character = new SavedCharacter
         {
+            UserId = user.UserId,
             Name = request.Name.Trim(),
             Ancestry = request.Ancestry?.Trim(),
             CharacterClass = request.CharacterClass?.Trim(),
@@ -79,7 +104,14 @@ public class CharactersController : ControllerBase
         [FromBody] SaveCharacterRequest request,
         CancellationToken ct)
     {
-        var character = await _dbContext.SavedCharacters.FirstOrDefaultAsync(saved => saved.Id == id, ct);
+        var user = await _userContextService.GetCurrentUserAsync(ct);
+        if (user is null)
+        {
+            return Unauthorized();
+        }
+
+        var character = await _dbContext.SavedCharacters
+            .FirstOrDefaultAsync(saved => saved.Id == id && saved.UserId == user.UserId, ct);
         if (character is null)
         {
             return NotFound();
@@ -100,7 +132,14 @@ public class CharactersController : ControllerBase
     [HttpDelete("{id:guid}")]
     public async Task<IActionResult> Delete(Guid id, CancellationToken ct)
     {
-        var character = await _dbContext.SavedCharacters.FirstOrDefaultAsync(saved => saved.Id == id, ct);
+        var user = await _userContextService.GetCurrentUserAsync(ct);
+        if (user is null)
+        {
+            return Unauthorized();
+        }
+
+        var character = await _dbContext.SavedCharacters
+            .FirstOrDefaultAsync(saved => saved.Id == id && saved.UserId == user.UserId, ct);
         if (character is null)
         {
             return NotFound();

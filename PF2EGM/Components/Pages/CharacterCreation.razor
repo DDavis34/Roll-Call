@@ -1,16 +1,17 @@
-@page "/create-character"
+@page "/create-character/{CharacterId:guid?}"
+@using System.Text.Json
 @using LumexUI
 @using LumexUI.Common
 @using LumexUI.Shared.Icons
+@using PF2EGM.Services
+
+@inject IApiCharacterService CharacterService
+@inject NavigationManager Nav
+@inject SupabaseSessionStore SessionStore
 
 <PageTitle>Character Sheet</PageTitle>
 
 <div class="bg-gray-900 text-gray-100 min-h-screen" style="font-family: Georgia, serif;">
-    <style>
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: #111827; }
-        ::-webkit-scrollbar-thumb { background: #4b5563; border-radius: 3px; }
-    </style>
 
     <!-- Top Bar -->
     <div class="bg-gray-800 border-b border-gray-700 px-3 py-2 flex items-center justify-between flex-wrap gap-2">
@@ -31,7 +32,24 @@
             <span>HP <strong class="text-amber-400">@character.HP/@character.MaxHP</strong></span>
             <span>HP Shield</span>
         </div>
+        <div class="flex items-center gap-2">
+            <LumexButton OnClick="SaveCharacterAsync" Color="@ThemeColor.Primary" Disabled="@isSaving">
+                @(isSaving ? "Saving…" : characterId.HasValue ? "Save Changes" : "Save Character")
+            </LumexButton>
+            @if (!SessionStore.IsAuthenticated)
+            {
+                <LumexButton Variant="@Variant.Outlined" OnClick="@(() => Nav.NavigateTo("/login"))">
+                    Log in to save
+                </LumexButton>
+            }
+        </div>
     </div>
+    @if (!string.IsNullOrWhiteSpace(saveStatusMessage))
+    {
+        <div class="mx-3 my-3 rounded-xl border px-4 py-3 text-sm @(saveStatusIsError ? "border-red-800 bg-red-950/40 text-red-200" : "border-emerald-800 bg-emerald-950/30 text-emerald-200")">
+            @saveStatusMessage
+        </div>
+    }
 
     <!-- Stats Header -->
     <div class="bg-gray-800 border-b border-gray-700 p-3">
@@ -92,7 +110,7 @@
     <div class="flex flex-col lg:flex-row">
 
         <!-- LEFT SIDEBAR -->
-        <div class="w-full lg:w-48 xl:w-52 bg-gray-800 border-b lg:border-b-0 lg:border-r border-gray-700 p-3 flex-shrink-0 overflow-y-auto" style="max-height: calc(100vh - 150px);">
+        <div class="w-full lg:w-48 xl:w-52 bg-gray-800 border-b lg:border-b-0 lg:border-r border-gray-700 p-3 flex-shrink-0 lg:overflow-y-auto lg:max-h-[calc(100vh-150px)]">
             <!-- Ancestry -->
             <div class="mb-2">
                 <button class="w-full text-left bg-gray-700 border border-gray-600 rounded px-2 py-1.5 text-sm hover:bg-gray-600 transition-colors">
@@ -179,7 +197,7 @@
         </div>
 
         <!-- MIDDLE: Stats Panel -->
-        <div class="w-full lg:w-52 xl:w-56 bg-gray-800 border-b lg:border-b-0 lg:border-r border-gray-700 p-3 flex-shrink-0 overflow-y-auto" style="max-height: calc(100vh - 150px);">
+        <div class="w-full lg:w-52 xl:w-56 bg-gray-800 border-b lg:border-b-0 lg:border-r border-gray-700 p-3 flex-shrink-0 lg:overflow-y-auto lg:max-h-[calc(100vh-150px)]">
 
             <!-- Hero Points -->
             <div class="flex items-center gap-2 mb-3">
@@ -250,7 +268,7 @@
             </div>
 
             <!-- Tab Content -->
-            <div class="flex-1 p-4 bg-gray-900 overflow-y-auto" style="max-height: calc(100vh - 190px);">
+            <div class="flex-1 p-4 bg-gray-900 lg:overflow-y-auto lg:max-h-[calc(100vh-190px)]">
 
                 <!-- ─── WEAPONS ─────────────────────────────────────────── -->
                 @if (activeTab == "Weapons")
@@ -776,6 +794,118 @@
 </div>
 
 @code {
+    [Parameter]
+    public Guid? CharacterId { get; set; }
+
+    private Guid? characterId;
+    private bool isSaving;
+    private bool saveStatusIsError;
+    private string? saveStatusMessage;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (CharacterId != characterId)
+        {
+            characterId = CharacterId;
+            saveStatusMessage = null;
+
+            if (characterId.HasValue)
+            {
+                await LoadSavedCharacterAsync(characterId.Value);
+            }
+        }
+    }
+
+    private async Task LoadSavedCharacterAsync(Guid id)
+    {
+        if (!SessionStore.IsAuthenticated)
+        {
+            saveStatusIsError = true;
+            saveStatusMessage = "Log in to load this saved character.";
+            return;
+        }
+
+        var savedCharacter = await CharacterService.GetSavedCharacterAsync(id);
+        if (savedCharacter is null)
+        {
+            saveStatusIsError = true;
+            saveStatusMessage = "Could not load the requested saved character.";
+            return;
+        }
+
+        if (!string.IsNullOrWhiteSpace(savedCharacter.Data))
+        {
+            try
+            {
+                var deserialized = JsonSerializer.Deserialize<CharacterData>(savedCharacter.Data, new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                });
+
+                if (deserialized is not null)
+                {
+                    character = deserialized;
+                }
+            }
+            catch
+            {
+                saveStatusIsError = true;
+                saveStatusMessage = "Saved character data could not be loaded.";
+                return;
+            }
+        }
+
+        character.Name = savedCharacter.Name;
+        character.Ancestry = savedCharacter.Ancestry ?? character.Ancestry;
+        character.Class = savedCharacter.CharacterClass ?? character.Class;
+        character.Level = savedCharacter.Level;
+
+        saveStatusIsError = false;
+        saveStatusMessage = $"Loaded saved character: {DisplayName(savedCharacter.Name)}.";
+    }
+
+    private async Task SaveCharacterAsync()
+    {
+        saveStatusMessage = null;
+        isSaving = true;
+
+        try
+        {
+            var request = new SaveCharacterRequest(
+                character.Name,
+                character.Ancestry,
+                character.Class,
+                character.Level,
+                JsonSerializer.Serialize(character, new JsonSerializerOptions
+                {
+                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+                }));
+
+            var result = await CharacterService.SaveCharacterAsync(request, characterId);
+            if (result.IsSuccess)
+            {
+                if (result.Character?.Id is { } savedId)
+                {
+                    characterId = savedId;
+                    Nav.NavigateTo($"/create-character/{savedId}", replace: true);
+                }
+
+                saveStatusIsError = false;
+                saveStatusMessage = "Character saved successfully.";
+            }
+            else
+            {
+                saveStatusIsError = true;
+                saveStatusMessage = result.ErrorMessage ?? "Could not save the character right now.";
+            }
+        }
+        finally
+        {
+            isSaving = false;
+        }
+    }
+
+    private static string DisplayName(string? name) => string.IsNullOrWhiteSpace(name) ? "Untitled Character" : name;
 
     // ── Tab state ──────────────────────────────────────────────────────────
     private string activeTab = "Weapons";

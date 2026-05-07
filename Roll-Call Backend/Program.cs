@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 using RollCallBackend.Data;
 using RollCallBackend.Services;
 using Supabase;
@@ -12,6 +13,7 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlite(connectionString));
+builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddSingleton(_ =>
 {
@@ -24,6 +26,7 @@ builder.Services.AddSingleton(_ =>
 });
 
 builder.Services.AddScoped<ISupabaseAuthService, SupabaseAuthService>();
+builder.Services.AddScoped<ISupabaseUserContextService, SupabaseUserContextService>();
 builder.Services.AddSingleton<IDataTableService, DataTableService>();
 
 builder.Services.AddControllers();

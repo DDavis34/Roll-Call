@@ -25,6 +25,9 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
             entity.Property(character => character.CharacterClass)
                 .HasMaxLength(100);
 
+            entity.Property(character => character.UserId)
+                .IsRequired();
+
             entity.Property(character => character.Data)
                 .IsRequired();
         });
