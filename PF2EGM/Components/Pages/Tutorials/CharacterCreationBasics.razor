@@ -15,54 +15,202 @@
 
     <div class="max-w-6xl mx-auto p-2 sm:p-6 pb-16 space-y-12">
 
-        <!-- Gameplay Basics -->
+        <!-- Step-by-Step Process -->
         <section class="bg-gray-800 rounded-2xl p-4 sm:p-8">
-            <h3 class="text-2xl text-center font-semibold text-amber-400 mb-4">Gameplay Basics</h3>
+            <h3 class="text-2xl text-center font-semibold text-amber-400 mb-4">Step-by-Step Process</h3>
             <p class="mb-4">
-                Pathfinder revolves around strategic combat, character progression, and teamwork. Understanding how turns, actions, and dice rolls work is essential.
+                Pathfinder 2E uses a structured character creation process that guides you through choosing your ancestry, background, class, and more:
             </p>
             <ul class="list-disc list-inside text-gray-300 space-y-2">
-                <li>Each turn consists of actions and movement</li>
-                <li>Dice rolls determine success or failure</li>
-                <li>Team composition impacts survivability</li>
+                <li>Choose your ancestry and background</li>
+                <li>Select your class</li>
+                <li>Allocate ability scores</li>
+                <li>Choose your skills and proficiencies</li>
+                <li>Equip your character with gear</li>
+                <li>Finalize your character sheet</li>
             </ul>
 
-            <!-- Video Placeholder -->
-            <YouTubeEmbed Src="link" Title="Title"/>
-        </section>
+            <div>
+                <h5 class="text-lg text-center font-semibold text-amber-400 mt-6 mb-2">Choose Your Ancestry and Background</h5>
 
-        <!-- Character Considerations -->
-        <section class="bg-gray-800 rounded-2xl p-4 sm:p-8">
-            <h3 class="text-2xl text-center font-semibold text-amber-400 mb-4">Character Creation Considerations</h3>
-            <p class="text-gray-300 mb-4">
-                When creating your character, think about how your choices will affect gameplay and synergy with your party.
-            </p>
-            <ul class="list-disc list-inside text-gray-300 space-y-2">
-                <li>Choose a class that fits your preferred playstyle</li>
-                <li>Balance attributes based on your role</li>
-                <li>Consider long-term progression and abilities</li>
-            </ul>
+                <p class="mb-4">
+                    Your <strong>ancestry</strong> determines your character's species. It provides HP, size, speed, ability boosts, and heritage feats:
+                </p>
+
+                <ul class="list-disc list-inside text-gray-300 space-y-2">
+                    <li><strong>Base Hit Points</strong>: a flat number added to your HP at level 1 (Ex. Humans get 8 HP, Dwarves get 10 HP).</li>
+                    <li><strong>Size</strong>: most are Medium; Halflings and Gnomes are Small.</li>
+                    <li><strong>Speed</strong>: your base movement in feet (typically 25-30 ft).</li>
+                    <li><strong>Ability boosts & flaws</strong>: see the Ability Scores section below.</li>
+                    <li><strong>Languages</strong>: common plus one or two ancestry languages</li>
+                    <li><strong>Special senses</strong>: Ex. Dwarves get darkvision.</li>
+                    <li><strong>Ancestry feat</strong>: one feat chosen from your ancestry's list at level 1.</li>
+                </ul>
+
+                <p class="my-4">
+                    Each ancestry has several <strong>heritages</strong>: sub-types that further customize your character. You pick one heritage at level 1. For example, a Human can choose Skilled Heritage (an extra skill) or Versatile Heritage (an extra general feat). Heritages are different from ancestry feats.
+                </p>
+
+                <p class="mb-4">
+                    Your <strong>background</strong> represents your character's life before adventuring. It grants ability boosts, skill proficiencies, and a background feat. For example, the Scholar background gives you boosts to Intelligence and Wisdom, proficiency in Arcana and Society, and the Researcher feat.
+                </p>
+
+                <TutorialButton ShowFirstButton="false" Message2="Choosing Your Ancestry and Background" Link2="/Tutorials/Choosing-ABCs"/>
+            </div>
+
+            <div>
+                <h5 class="text-lg text-center font-semibold text-amber-400 mb-2">Select Your Class</h5>
+
+                <p class="mb-4">
+                    Your <strong>class</strong> is your role in the party. It helps to determine your key ability, HP per level, proficiencies, and class feats:
+                </p>
+
+                <ul class="list-disc list-inside text-gray-300 space-y-2 mb-4">
+                    <li><strong>Key ability score</strong>: the primary stat your class is built around.</li>
+                    <li><strong>HP per level</strong>: added each time you level up, plus your CON modifier</li>
+                    <li><strong>Proficiencies</strong>: skills, equipment, and tools you are proficient in.</li>
+                    <li><strong>Class DC </strong>: a difficulty class used for many class abilities.</li>
+                    <li><strong>Class feats</strong>: chosen at specific levels to customize your abilities.</li>
+                </ul>
+
+                <TutorialButton ShowFirstButton="false" Message2="Choosing Your Class" Link2="/Tutorials/Choosing-ABCs"/>
+            </div>
+
+            <div>
+                <h5 class="text-lg text-center font-semibold text-amber-400 mb-2">Allocate Your Ability Scores</h5>
+
+                <p class="mb-4">
+                    There are six different <strong>ability scores</strong> that define your character's physical and mental capabilities.
+                </p>
+
+                <ul class="list-disc list-inside text-gray-300 space-y-2">
+                    <li><strong>Strength (STR)</strong>: Melee attacks, Athletics.</li>
+                    <li><strong>Dexterity (DEX)</strong>: Ranged attacks, Armor Class (AC), Reflex saves.</li>
+                    <li><strong>Constitution (CON)</strong>: Hit points, Fortitude.</li>
+                    <li><strong>Intelligence (INT)</strong>: Arcane spells, Skills.</li>
+                    <li><strong>Wisdom (WIS)</strong>: Perception, Will, Divine.</li>
+                    <li><strong>Charisma (CHA)</strong>: Diplomacy, Intimidation, Occult</li>
+                </ul>
+
+                <p class="my-4">
+                    When creating your character, you will allocate points to <strong>boost</strong> these attributes based on your choice of ancestry, background, and class. Each boost raises a score by +2, unless it is already 18 or higher, in which case it only increases by +1. Each class has a key attribute that is particularly important for its abilities and performance, so you will want to prioritize boosting that attribute early on. Your boosts come from your:
+                </p>
+
+                <ul class="list-disc list-inside text-gray-300 space-y-2 mb-4">
+                    <li><strong>Ancestry</strong>: two fixed boosts, one flaw, one free boost.</li>
+                    <li><strong>Background</strong>: two boosts (often one fixed, one free).</li>
+                    <li><strong>Class</strong>: one boost to your key ability (the stat your class uses most)</li>
+                    <li><strong>Free boosts</strong>: four free boosts to any four different abilities.</li>
+                </ul>
+
+                <TutorialButton ShowFirstButton="false" Message2="Understanding Attributes" Link2="/Tutorials/Understanding-Attributes"/>
+            </div>
+
+            <div>
+                <h5 class="text-lg text-center font-semibold text-amber-400 mb-2">Choose Your Skills and Proficiencies</h5>
+
+                <p class="mb-4">
+                    <strong>Proficiency ranks</strong> replace modifiers from ability scores alone and scale with level. Your proficiency bonus is equal to the rank bonus plus your current level. A level 5 Trained character adds +2+5 = +7. This means level matters a lot; a high-level Untrained character still has +0+5 = +5.
+                </p>
+
+                <ul class="list-disc list-inside text-gray-300 space-y-2">
+                    <li><strong>Untrained</strong>: +0 + level bonus</li>
+                    <li><strong>Trained</strong>: +2 + level bonus</li>
+                    <li><strong>Expert</strong>: +4 + level bonus</li>
+                    <li><strong>Master</strong>: +6 + level bonus</li>
+                    <li><strong>Legendary</strong>: +8 + level bonus</li>
+                </ul>
+
+                <p class="my-4">
+                    Your class gives you a set number of trained skills at level 1. Your INT modifier adds bonus trained skills (minimum 0). There are 17 different skills:
+                </p>
+
+                <ul class="list-disc list-inside text-gray-300 space-y-2 mb-4">
+                    <li><strong>Acrobatics</strong></li>
+                    <li><strong>Arcana</strong></li>
+                    <li><strong>Athletics</strong></li>
+                    <li><strong>Crafting</strong></li>
+                    <li><strong>Deception</strong></li>
+                    <li><strong>Diplomacy</strong></li>
+                    <li><strong>Intimidation</strong></li>
+                    <li><strong>Medicine</strong></li>
+                    <li><strong>Nature</strong></li>
+                    <li><strong>Occultism</strong></li>
+                    <li><strong>Performance</strong></li>
+                    <li><strong>Religion</strong></li>
+                    <li><strong>Society</strong></li>
+                    <li><strong>Stealth</strong></li>
+                    <li><strong>Survival</strong></li>
+                    <li><strong>Thievery</strong></li>
+                </ul>
+
+                <p class="my-4">
+                    <strong>Skill checks</strong> determine success in tasks by rolling a d20 and adding your skill modifier, which includes your ability score modifier, proficiency bonus, and other bonuses. If the result meets or exceeds the difficulty class (DC), you succeed. Class skills grant a +3 bonus when you invest ranks in them.
+                </p>
+
+                <ul class="list-disc list-inside text-gray-300 space-y-2 mb-4">
+                    <li><strong>Critical success</strong>: beat DC by 10 or more (exceptional result).</li>
+                    <li><strong>Success</strong>: meet or beat the DC.</li>
+                    <li><strong>Failure</strong>: miss the DC.</li>
+                    <li><strong>Critical failure</strong>: fail the DC by 10 or more (bad result).</li>
+                </ul>
+
+                <TutorialButton ShowFirstButton="false" Message2="Understanding Attributes" Link2="/Tutorials/Understanding-Attributes"/>
+            </div>
+            
+            <div>
+                <h5 class="text-lg text-center font-semibold text-amber-400 mb-2">Equip Your Character</h5>
+
+                <p class="mb-4">
+                    New characters typically start with class-granted equipment or a starting gold amount (usually 15 gp) to purchase gear. Your class determines your starting armor and weapon proficiencies, which limits what you can effectively use. For example, a Fighter starts with proficiency in all armor and simple and martial weapons, while a Wizard is limited to simple weapons and no armor. Choosing the right equipment is crucial for your character's performance in combat and other situations.
+                </p>
+
+                <h6 class="text-md text-center font-semibold text-amber-400 mt-4 mb-2">Armor Basics</h6>
+                <ul class="list-disc list-inside text-gray-300 space-y-2">
+                    <li><strong>Unarmored</strong>: AC = 10 + DEX mod + proficiency.</li>
+                    <li><strong>Light Armor</strong>: low check penalty, good DEX cap (Ex. leather).</li>
+                    <li><strong>Medium Armor</strong>: balanced, moderate DEX cap (Ex. chain mail).</li>
+                    <li><strong>Heavy Armor</strong>: highest base AC, low DEX cap (Ex. plate mail).</li>
+                </ul>
+
+                <h6 class="text-md text-center font-semibold text-amber-400 mt-4 mb-2">Weapon Traits</h6>
+                <ul class="list-disc list-inside text-gray-300 space-y-2">
+                    <li><strong>Finesse</strong>: can use DEX instead of STR for attack rolls.</li>
+                    <li><strong>Agile</strong>: reduces multiple attack penalty to -4/-8.</li>
+                    <li><strong>Reach</strong>: extends your melee range by 5 ft.</li>
+                    <li><strong>Two-hand</strong>: requires two hands to wield, providing a bonus to damage.</li>
+                    <li><strong>Thrown</strong>: can be thrown as a ranged attack.</li>
+                    <li><strong>Deadly</strong>: adds extra dice on a critical hit.</li>
+                </ul>
+
+                <h6 class="text-md text-center font-semibold text-amber-400 mt-4 mb-2">Currency and Bulk</h6>            
+                <p class="mb-4">
+                    Most classes start with 15 gp to spend on equipment. 1 gp is equal to 10 sp or 100 cp. You can use your gold to purchase weapons, armor, and other gear. Your character can carry a certain amount of weight based on their Strength score, measured in Bulk. Light items are L Bulk (10 L = 1 Bulk), while heavy items are 1 Bulk. You can carry up to 5 + STR modifier Bulk before becoming encumbered and suffer penalties to your speed and actions (and over-encumbered at 10 + STR modifier).
+                </p>
+
+                <TutorialButton ShowFirstButton="false" Message2="Equipment & Gear" Link2="/Tutorials/Equipment-&-Gear"/>
+            </div>
 
             <!-- Video Placeholder -->
-            <YouTubeEmbed Src="Link" Title="Video Name"/>
+            <YouTubeEmbed Src="https://www.youtube.com/embed/zzVYPM5hppM?si=-AEzbM4HGnwCkVNh" Title="Character Creation Process"/>
         </section>
 
         <!-- Quick Tips -->
         <section class="bg-gray-800 rounded-2xl p-4 sm:p-8">
             <h3 class="text-2xl text-center font-semibold text-amber-400 mb-4">Quick Tips</h3>
             <ul class="list-disc list-inside text-gray-300 space-y-2">
-                <li>Don’t min-max too early—balance matters</li>
-                <li>Keep your gear updated regularly</li>
-                <li>Read ability descriptions carefully</li>
-                <li>Experiment with different builds</li>
+                <li>Always think Ancestry → Background → Class when building a character. These three choices together define your ability scores, proficiencies, and starting feats. They should complement each other. A background that boosts your key ability stat is almost always a good choice.</li>
+                <li>Your CON modifier affects every single level. Your HP at each level up is: class HP + CON modifier. A CON modifier of +2 vs +0 adds 20 extra HP by level 10. Frontline characters especially should never dump CON — a low CON Fighter will feel the pain around level 3-5.</li>
+                <li>Avoid "feat traps"; read the full chain before committing. Some feat chains look tempting but have prerequisites that are costly or underwhelming payoffs. Before picking a feat, check if it leads somewhere useful and whether the prerequisite feat is worth having on its own.</li>
+                <li>General feats are easy to overlook. However, don't skip them. You get a General feat at levels 3, 7, 11, 15, and 19. These include incredibly useful options like Toughness (+flat bonus HP per level), Fleet (+5 ft Speed), and Incredible Initiative (+2 to initiative). Toughness is almost always worth it for new players.</li>
+                <li>Consider the narrative and roleplaying aspects of your character. Your choices should reflect who you want your character to be in the world, not just their mechanical benefits.</li>
+                <li>Strategize with your party to ensure your character fits well within the group's dynamics and playstyle. Make sure your character's strengths and weaknesses complement those of your teammates.</li>
+                <li>Read up on free resources and community guides to help create a character. <a href="https://2e.aonprd.com/" target="_blank" class="text-amber-400 hover:text-amber-600 hover:underline">Archives of Nethys</a> has a great wealth of information for when our guides do not answer all of your questions.</li>
             </ul>
-
-            <!-- Video Placeholder -->
-            <YouTubeEmbed Src="link" Title="Title"/>
         </section>
 
     </div>
 
-    <TutorialButton Message2="Understanding Attributes" Link2="/Tutorials/Understanding-Attributes"/>
+    <TutorialButton Message2="Choosing Ancestry, Background, and Class" Link2="/Tutorials/Choosing-ABCs"/>
 
 </div>
