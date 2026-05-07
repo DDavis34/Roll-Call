@@ -8,10 +8,14 @@ namespace RollCallBackend.Controllers;
 public class AuthController : ControllerBase
 {
     private readonly ISupabaseAuthService _authService;
+    private readonly ISupabaseUserContextService _userContextService;
 
-    public AuthController(ISupabaseAuthService authService)
+    public AuthController(
+        ISupabaseAuthService authService,
+        ISupabaseUserContextService userContextService)
     {
         _authService = authService;
+        _userContextService = userContextService;
     }
 
     [HttpPost("signin")]
@@ -19,8 +23,8 @@ public class AuthController : ControllerBase
     {
         var result = await _authService.SignInAsync(request.Email, request.Password);
         return result.IsSuccess
-            ? Ok(new AuthResponse(true, null))
-            : BadRequest(new AuthResponse(false, result.ErrorMessage));
+            ? Ok(new AuthResponse(true, null, result.Session))
+            : BadRequest(new AuthResponse(false, result.ErrorMessage, result.Session));
     }
 
     [HttpPost("signup")]
@@ -28,8 +32,8 @@ public class AuthController : ControllerBase
     {
         var result = await _authService.SignUpAsync(request.Email, request.Password);
         return result.IsSuccess
-            ? Ok(new AuthResponse(true, null))
-            : BadRequest(new AuthResponse(false, result.ErrorMessage));
+            ? Ok(new AuthResponse(true, null, result.Session))
+            : BadRequest(new AuthResponse(false, result.ErrorMessage, result.Session));
     }
 
     [HttpPost("signout")]
@@ -49,8 +53,13 @@ public class AuthController : ControllerBase
     [HttpGet("status")]
     public async Task<IActionResult> GetStatus()
     {
-        var isAuthenticated = await _authService.IsAuthenticatedAsync();
-        return Ok(new { isAuthenticated });
+        var user = await _userContextService.GetCurrentUserAsync();
+        return Ok(new
+        {
+            isAuthenticated = user is not null,
+            userId = user?.UserId,
+            email = user?.Email
+        });
     }
 
     [HttpPost("session")]
@@ -58,12 +67,12 @@ public class AuthController : ControllerBase
     {
         var result = await _authService.SetSessionAsync(request.AccessToken, request.RefreshToken);
         return result.IsSuccess
-            ? Ok(new AuthResponse(true, null))
-            : BadRequest(new AuthResponse(false, result.ErrorMessage));
+            ? Ok(new AuthResponse(true, null, result.Session))
+            : BadRequest(new AuthResponse(false, result.ErrorMessage, result.Session));
     }
 }
 
 public record SessionRequest(string AccessToken, string RefreshToken);
 
 public record AuthRequest(string Email, string Password);
-public record AuthResponse(bool IsSuccess, string? ErrorMessage);
+public record AuthResponse(bool IsSuccess, string? ErrorMessage, AuthSessionInfo? Session);
