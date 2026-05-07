@@ -3,7 +3,9 @@
 @using LumexUI.Common
 @using PF2EGM.Services
 @inject IApiAuthService AuthService
+@inject IApiCharacterService CharacterService
 @inject AuthStateService AuthState
+@inject SupabaseSessionStore SessionStore
 @inject NavigationManager Nav
 
 @rendermode InteractiveServer
@@ -63,6 +65,7 @@
             {
                 <p class="text-gray-300 mt-1">@userEmail</p>
             }
+            <p class="text-gray-400 mt-3">Saved characters linked to this account: @savedCharacterCount</p>
         </div>
 
     </div>
@@ -70,6 +73,7 @@
 
 @code {
     private string? userEmail;
+    private int savedCharacterCount;
 
     protected override async Task OnInitializedAsync()
     {
@@ -79,7 +83,9 @@
             Nav.NavigateTo("/login");
             return;
         }
-        userEmail = AuthState.UserEmail;
+        userEmail = SessionStore.Session?.Email;
+        var savedCharacters = await CharacterService.GetSavedCharactersAsync();
+        savedCharacterCount = savedCharacters.Count;
     }
 
     private async Task HandleSignOut()
