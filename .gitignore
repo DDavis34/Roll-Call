@@ -1,4 +1,7 @@
-bin/
+bin/*
+/PF2EGM/bin/Debug
+!/PF2EGM/bin/lumexui
+/Roll-Call Backend/bin
 obj/
 /packages/
 riderModule.iml

@@ -3,21 +3,36 @@
 @using LumexUI.Shared.Icons
 
 @using PF2EGM.Services
-@inject ISupabaseAuthService AuthService
+@inject IApiAuthService AuthService
 
 @rendermode InteractiveServer
 
 <LumexNavbar Height="4.5rem"
              Bordered="@true"
-             Sticky="@true">
-    <LumexNavbarBrand>
-        <span class="flex items-center gap-2">
-            <span class="nav-brand-mark text-2xl">⬡</span>
+             Sticky="@true"
+             Class="relative">
+    
+    @* Desktop: brand on its own *@
+    <LumexNavbarBrand Class="hidden md:flex">
+        <a href="/" class="flex items-center gap-2">
+            <span class="text-2xl">⬡</span>
             <span class="text-2xl font-bold text-amber-400">Roll Call</span>
-        </span>
+        </a>
     </LumexNavbarBrand>
 
-    <LumexNavbarContent Class="hidden sm:flex gap-4">
+    @* Mobile: toggle absolutely positioned left, brand centered *@
+    <LumexNavbarContent Class="md:hidden w-full">
+        <div class="relative flex items-center justify-center w-full">
+            <LumexNavbarMenuToggle Class="absolute left-0" />
+            <a href="/" class="flex items-center gap-2">
+                <span class="text-2xl">⬡</span>
+                <span class="text-2xl font-bold text-amber-400">Roll Call</span>
+            </a>
+        </div>
+    </LumexNavbarContent>
+
+    @* Desktop nav links *@
+    <LumexNavbarContent Class="hidden md:flex gap-4 absolute left-1/2 -translate-x-1/2">
         <LumexNavbarItem>
             <LumexLink Href="/" Class="text-white hover:text-amber-400 transition-colors">
                 Home
@@ -26,11 +41,6 @@
         <LumexNavbarItem>
             <LumexLink Href="/create-character" Class="text-white hover:text-amber-400 transition-colors">
                 Create Character
-            </LumexLink>
-        </LumexNavbarItem>
-        <LumexNavbarItem>
-            <LumexLink Href="/saved-characters" Class="text-white hover:text-amber-400 transition-colors">
-                Saved Characters
             </LumexLink>
         </LumexNavbarItem>
         <LumexNavbarItem>
@@ -43,37 +53,56 @@
                 Tutorials
             </LumexLink>
         </LumexNavbarItem>
-        <LumexNavbarItem>
-            <LumexLink Href="/account" Class="text-white hover:text-amber-400 transition-colors">
-                Account
-            </LumexLink>
-        </LumexNavbarItem>
     </LumexNavbarContent>
 
-    <LumexNavbarContent Align="@Align.End">
+    @* Auth button, right-aligned on desktop *@
+    <LumexNavbarContent Align="@Align.End" Class="hidden md:flex">
         <LumexNavbarItem>
             @if (isAuthenticated)
             {
-                <LumexButton Size="@Size.Small"
-                             Color="@ThemeColor.Primary"
-                             Variant="@Variant.Flat">
-                    <LumexLink Href="/account" Class="text-white">
-                        Account
-                    </LumexLink>
-                </LumexButton>
+                <a href="/account" class="nav-button">
+                    Account
+                </a>
             }
             else
             {
-                <LumexButton Size="@Size.Small"
-                             Color="@ThemeColor.Primary"
-                             Variant="@Variant.Flat">
-                    <LumexLink Href="/login" Class="text-white">
-                        Log In
-                    </LumexLink>
-                </LumexButton>
+                <a href="/login" class="nav-button">
+                    Log In
+                </a>
             }
         </LumexNavbarItem>
     </LumexNavbarContent>
+
+    @* Mobile slide-down menu *@
+    <LumexNavbarMenu Class="md:hidden items-center overflow-hidden">
+        <LumexNavbarMenuItem>
+            <LumexLink Href="/" Class="w-full hover:text-amber-400">Home</LumexLink>
+        </LumexNavbarMenuItem>
+        <LumexNavbarMenuItem>
+            <LumexLink Href="/create-character" Class="w-full hover:text-amber-400">Create Character</LumexLink>
+        </LumexNavbarMenuItem>
+        <LumexNavbarMenuItem>
+            <LumexLink Href="/campaigns" Class="w-full hover:text-amber-400">Campaigns</LumexLink>
+        </LumexNavbarMenuItem>
+        <LumexNavbarMenuItem>
+            <LumexLink Href="/tutorials" Class="w-full hover:text-amber-400">Tutorials</LumexLink>
+        </LumexNavbarMenuItem>
+        <LumexNavbarMenuItem>
+            @if (isAuthenticated)
+            {
+                <a href="/account" class="nav-button">
+                    Account
+                </a>
+            }
+            else
+            {
+                <a href="/login" class="nav-button">
+                    Log In
+                </a>
+            }
+        </LumexNavbarMenuItem>
+    </LumexNavbarMenu>
+
 </LumexNavbar>
 
 @code {

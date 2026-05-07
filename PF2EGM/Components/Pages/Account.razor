@@ -2,9 +2,8 @@
 @using LumexUI
 @using LumexUI.Common
 @using PF2EGM.Services
-@inject ISupabaseAuthService AuthService
+@inject IApiAuthService AuthService
 @inject AuthStateService AuthState
-@inject Supabase.Client Supabase
 @inject NavigationManager Nav
 
 @rendermode InteractiveServer
@@ -80,7 +79,7 @@
             Nav.NavigateTo("/login");
             return;
         }
-        userEmail = Supabase.Auth.CurrentSession?.User?.Email;
+        userEmail = AuthState.UserEmail;
     }
 
     private async Task HandleSignOut()

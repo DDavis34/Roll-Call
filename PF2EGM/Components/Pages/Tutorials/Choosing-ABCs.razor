@@ -1,21 +1,22 @@
 @page "/Tutorials/Choosing-ABCs"
+@using PF2EGM.Components.Pages.Tutorials.TutorialComponents
 
 <title>Choosing ABCs</title>
 
 <div class="background-image text-gray-100 min-h-screen font-sans">
 
     <!-- Header -->
-    <section class="text-center py-12">
+    <section class="text-center px-2 py-12">
         <h2 class="text-4xl font-extrabold text-amber-400 mb-4">Choosing your ABC - Ancestry, Background, Class</h2>
         <p class="text-gray-300 max-w-2xl mx-auto">
             Learn how to select the right ancestry, background, and class for your playstyle and campaign.
         </p>
     </section>
 
-    <div class="max-w-6xl mx-auto px-6 pb-16 space-y-12">
+    <div class="max-w-6xl mx-auto p-2 sm:p-6 pb-16 space-y-12">
 
         <!-- Ancestry Basics -->
-        <section class="bg-gray-800 rounded-2xl shadow-lg p-8">
+        <section class="bg-gray-800 rounded-2xl shadow-lg p-4 sm:p-8">
             <h3 class="text-2xl text-center font-semibold text-amber-400 mb-4">Ancestry Basics</h3>
             <p class="mb-4">
                 Your ancestry is your character's species/heritage, shaping your biology, lifespan, and cultural origin. It influences your character's appearance, starting attributes, and available ancestry feats.
@@ -32,11 +33,11 @@
                 Ancestry feats are how you customize and deepen your connection to your ancestry over time. You select them at levels 1, 5, 9, 13, and 17, so your ancestry continues to develop throughout your entire adventuring career, not just at character creation. Many of the best ancestry feats require earlier feats as prerequisites, forming chains. Ancestry feats fall into 5 general categories:
             </p>
             <ul class="list-disc list-inside text-gray-300 space-y-2">
-                <li><strong>Physical/Biological Feats</strong> reflect your body's natural capabilities</li>
+                <li><strong>Physical/Biological Feats</strong> reflect your body's natural capabilities.</li>
                 <li><strong>Magical/Innate Spell Feats</strong> access to innate magic: spells tied to their nature that don't require a spellcasting class.</li>
-                <li><strong>Cultural/Training Feats</strong> reflect the traditions and skills passed down through your people</li>
-                <li><strong>Skill and Utility Feats</strong> give you bonus skill feats, extra trained skills, or unique utility options tied to your heritage</li>
-                <li><strong>Reaction and Defensive Feats</strong> have powerful defensive options tied to their resilience</li>
+                <li><strong>Cultural/Training Feats</strong> reflect the traditions and skills passed down through your people.</li>
+                <li><strong>Skill and Utility Feats</strong> give you bonus skill feats, extra trained skills, or unique utility options tied to your heritage.</li>
+                <li><strong>Reaction and Defensive Feats</strong> have powerful defensive options tied to their resilience.</li>
             </ul>
 
             <h5 class="text-lg text-center font-semibold text-amber-400 mt-6 mb-2">Heritages</h5>
@@ -46,16 +47,13 @@
             <ul class="list-disc list-inside text-gray-300 space-y-2">
                 <li>Some heritages (like Dhampir, Aasimar, or Changeling) can be applied on top of any ancestry. These represent magical bloodlines and give you access to unique ancestry feats while keeping your base ancestry intact.</li>
             </ul>
-            <br/><br/>
 
             <!-- Video Placeholder -->
-            <div class="bg-gray-700 rounded-xl p-6 flex justify-center">
-                <iframe width="560" height="315" src="https://www.youtube.com/embed/DQ4hb9QmTMs?si=qWKf1Y8ZTRLCgm_A&amp;start=14" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-            </div>
+            <YouTubeEmbed Src="https://www.youtube.com/embed/DQ4hb9QmTMs?si=qWKf1Y8ZTRLCgm_A&amp;start=14" Title="Ancestry Basics"/>
         </section>
 
         <!-- Background Basics -->
-        <section class="bg-gray-800 rounded-2xl shadow-lg p-8">
+        <section class="bg-gray-800 rounded-2xl p-4 sm:p-8">
             <h3 class="text-2xl text-center font-semibold text-amber-400 mb-4">Background Basics</h3>
             <p class="mb-4">
                 Backgrounds represent what your character did before becoming an adventurer. They give you a small boost to two ability scores, a set of trained skills, and a unique background feat at level 1. Backgrounds are more about roleplaying hooks than mechanical depth, but they can still be impactful. They are largely about character concept and optimization. Ask yourself:
@@ -65,16 +63,13 @@
                 <li><i>What skills do I want?</i> If you want to be the party's social face, look for backgrounds that train Diplomacy or Deception.</li>
                 <li><i>Does the ability boost fit my build? </i>  If your class wants Dexterity, look for backgrounds with a Dex boost option.</li>
             </ul>
-            <br/><br/>
 
             <!-- Video Placeholder -->
-            <div class="bg-gray-700 rounded-xl p-6 flex justify-center">
-                <iframe width="560" height="315" src="https://www.youtube.com/embed/ooxVxnLk5f8?si=yYUYscNCpbiGfeLK&amp;start=27" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-            </div>
+            <YouTubeEmbed Src="https://www.youtube.com/embed/ooxVxnLk5f8?si=yYUYscNCpbiGfeLK&amp;start=27" Title="Background Basics"/>
         </section>
 
         <!-- Class Basics -->
-        <section class="bg-gray-800 rounded-2xl shadow-lg p-8">
+        <section class="bg-gray-800 rounded-2xl p-4 sm:p-8">
             <h3 class="text-2xl text-center font-semibold text-amber-400 mb-4">Class Basics</h3>
             <p class="mb-4">
                 Each class in Pathfinder has unique abilities, strengths, and playstyles. It determines your hit points per level, proficiency progression (how good you get with weapons, armor, saves, and skills), and the class features and abilities you gain as you level up.
@@ -94,16 +89,13 @@
                 <li>Class feats cover an enormous range of effects. Many class feats give you entirely new things to do in combat or exploration, while some feats don't give you new actions but instead improve things you already do. For spellcasting classes, many feats improve how magic works.</li>
                 <li>Like ancestry feats, many class feats have prerequisites, forming chains where later powerful feats require you to have taken earlier ones. This means your feat choices at low levels can open or close doors at higher levels.</li>
             </ul>
-            <br/><br/>
 
             <!-- Video Placeholder -->
-            <div class="bg-gray-700 rounded-xl p-6 flex justify-center">
-                <iframe width="560" height="315" src="https://www.youtube.com/embed/xceyB8LNvCk?si=jOGYQ885n2g3VSQo&amp;start=18" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-            </div>
+            <YouTubeEmbed Src="https://www.youtube.com/embed/xceyB8LNvCk?si=jOGYQ885n2g3VSQo&amp;start=18" Title="Background Basics"/>
         </section>
 
         <!-- Quick Tips -->
-        <section class="bg-gray-800 rounded-2xl shadow-lg p-8">
+        <section class="bg-gray-800 rounded-2xl p-4 sm:p-8">
             <h3 class="text-2xl text-center font-semibold text-amber-400 mb-4">Quick Tips</h3>
             <ul class="list-disc list-inside text-gray-300 space-y-2">
                 <li>Don’t min-max too early - balance matters</li>
@@ -115,5 +107,7 @@
         </section>
 
     </div>
+
+    <TutorialButton Message2="Understanding Attributes" Link2="/Tutorials/Understanding-Attributes"/>
 
 </div>
