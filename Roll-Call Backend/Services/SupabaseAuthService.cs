@@ -14,7 +14,8 @@ public interface ISupabaseAuthService
     Task<AuthResult> SetSessionAsync(string accessToken, string refreshToken);
 }
 
-public record AuthResult(bool IsSuccess, string? ErrorMessage = null);
+public record AuthSessionInfo(string UserId, string? Email, string? AccessToken, string? RefreshToken);
+public record AuthResult(bool IsSuccess, string? ErrorMessage = null, AuthSessionInfo? Session = null);
 
 public class SupabaseAuthService : ISupabaseAuthService
 {
@@ -33,7 +34,14 @@ public class SupabaseAuthService : ISupabaseAuthService
         {
             var session = await _client.Auth.SignIn(email, password);
             return session?.User is not null
-                ? new AuthResult(true)
+                ? new AuthResult(
+                    true,
+                    null,
+                    new AuthSessionInfo(
+                        session.User.Id ?? string.Empty,
+                        session.User.Email,
+                        session.AccessToken,
+                        session.RefreshToken))
                 : new AuthResult(false, "Sign-in failed. Please check your credentials.");
         }
         catch (GotrueException ex)
@@ -54,7 +62,14 @@ public class SupabaseAuthService : ISupabaseAuthService
         {
             var session = await _client.Auth.SignUp(email, password);
             return session?.User is not null
-                ? new AuthResult(true)
+                ? new AuthResult(
+                    true,
+                    null,
+                    new AuthSessionInfo(
+                        session.User.Id ?? string.Empty,
+                        session.User.Email,
+                        session.AccessToken,
+                        session.RefreshToken))
                 : new AuthResult(false, "Sign-up failed.");
         }
         catch (GotrueException ex)
@@ -83,7 +98,17 @@ public class SupabaseAuthService : ISupabaseAuthService
         try
         {
             await _client.Auth.SetSession(accessToken, refreshToken);
-            return new AuthResult(true);
+            var session = _client.Auth.CurrentSession;
+            return session?.User is not null
+                ? new AuthResult(
+                    true,
+                    null,
+                    new AuthSessionInfo(
+                        session.User.Id ?? string.Empty,
+                        session.User.Email,
+                        session.AccessToken,
+                        session.RefreshToken))
+                : new AuthResult(false, "Failed to establish session.");
         }
         catch (Exception ex)
         {

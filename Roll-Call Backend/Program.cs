@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 using RollCallBackend.Data;
 using RollCallBackend.Services;
 using Supabase;
@@ -48,7 +49,7 @@ var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
     var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    await DatabaseInitializer.InitializeAsync(dbContext);
+    await dbContext.Database.EnsureCreatedAsync();
 
     var supabase = scope.ServiceProvider.GetRequiredService<Supabase.Client>();
     await supabase.InitializeAsync();

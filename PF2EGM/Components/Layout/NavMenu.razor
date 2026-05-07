@@ -4,6 +4,9 @@
 
 @using PF2EGM.Services
 @inject IApiAuthService AuthService
+@inject AuthStateService AuthState
+
+@implements IDisposable
 
 @rendermode InteractiveServer
 
@@ -110,6 +113,23 @@
 
     protected override async Task OnInitializedAsync()
     {
+        AuthState.OnAuthStateChanged += OnAuthStateChanged;
+        await UpdateAuthStateAsync();
+    }
+
+    private void OnAuthStateChanged()
+    {
+        _ = UpdateAuthStateAsync();
+    }
+
+    private async Task UpdateAuthStateAsync()
+    {
         isAuthenticated = await AuthService.IsAuthenticatedAsync();
+        await InvokeAsync(StateHasChanged);
+    }
+
+    public void Dispose()
+    {
+        AuthState.OnAuthStateChanged -= OnAuthStateChanged;
     }
 }
