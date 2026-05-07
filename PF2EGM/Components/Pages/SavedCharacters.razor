@@ -1,0 +1,168 @@
+@page "/saved-characters"
+@using PF2EGM.Services
+@using LumexUI
+@using LumexUI.Common
+@inject IApiCharacterService CharacterService
+@inject SupabaseSessionStore SessionStore
+@inject NavigationManager Nav
+
+@rendermode InteractiveServer
+
+<PageTitle>Saved Characters</PageTitle>
+
+<div class="min-h-screen bg-gray-900 text-gray-100 px-4 py-8">
+    <div class="mx-auto max-w-5xl">
+        <div class="mb-6 flex flex-wrap items-center justify-between gap-3">
+            <div>
+                <h1 class="text-3xl font-bold text-amber-400">Saved Characters</h1>
+                <p class="text-sm text-gray-400">Open, manage, and continue characters linked to your account.</p>
+            </div>
+            <div class="flex gap-2">
+                <LumexButton OnClick="LoadCharactersAsync" Disabled="@isLoading">
+                    Refresh
+                </LumexButton>
+                <LumexButton OnClick="@(() => Nav.NavigateTo("/create-character"))" Variant="@Variant.Flat">
+                    New Character
+                </LumexButton>
+            </div>
+        </div>
+
+        @if (!string.IsNullOrWhiteSpace(statusMessage))
+        {
+            <div class="mb-4 rounded-xl border px-4 py-3 text-sm @(statusIsError ? "border-red-800 bg-red-950/40 text-red-200" : "border-emerald-800 bg-emerald-950/30 text-emerald-200")">
+                @statusMessage
+            </div>
+        }
+
+        @if (!SessionStore.IsAuthenticated)
+        {
+            <div class="rounded-2xl border border-gray-700 bg-gray-800 p-6 text-center">
+                <h2 class="text-xl font-semibold text-gray-100">Log in to view saved characters</h2>
+                <p class="mt-2 text-sm text-gray-400">Saved characters are tied to the account you signed in with.</p>
+                <LumexButton OnClick="@(() => Nav.NavigateTo("/login"))" Class="mt-4">
+                    Go to Login
+                </LumexButton>
+            </div>
+        }
+        else if (isLoading)
+        {
+            <div class="rounded-2xl border border-gray-700 bg-gray-800 p-10 text-center text-gray-400">
+                Loading your saved characters…
+            </div>
+        }
+        else if (characters.Count == 0)
+        {
+            <div class="rounded-2xl border border-dashed border-gray-700 bg-gray-800/60 p-10 text-center">
+                <h2 class="text-xl font-semibold text-gray-100">No saved characters yet</h2>
+                <p class="mt-2 text-sm text-gray-400">Save one from the character creator and it will appear here.</p>
+                <LumexButton OnClick="@(() => Nav.NavigateTo("/create-character"))" Class="mt-4">
+                    Create a Character
+                </LumexButton>
+            </div>
+        }
+        else
+        {
+            <div class="grid gap-4 md:grid-cols-2">
+                @foreach (var character in characters)
+                {
+                    <div class="rounded-2xl border border-gray-700 bg-gray-800 p-5 shadow-lg">
+                        <div class="flex items-start justify-between gap-3">
+                            <div>
+                                <h2 class="text-xl font-semibold text-amber-400">@DisplayName(character.Name)</h2>
+                                <p class="mt-1 text-sm text-gray-300">
+                                    Level @character.Level
+                                    @if (!string.IsNullOrWhiteSpace(character.Ancestry) || !string.IsNullOrWhiteSpace(character.CharacterClass))
+                                    {
+                                        <span> • @DisplaySummary(character)</span>
+                                    }
+                                </p>
+                            </div>
+                            <span class="rounded-full bg-gray-700 px-3 py-1 text-xs text-gray-300">
+                                @character.UpdatedUtc.ToLocalTime().ToString("g")
+                            </span>
+                        </div>
+
+                        <div class="mt-4 flex flex-wrap gap-2">
+                            <LumexButton OnClick="@(() => OpenCharacter(character.Id))">
+                                Open
+                            </LumexButton>
+                            <LumexButton OnClick="@(() => DeleteCharacterAsync(character.Id))"
+                                         Variant="@Variant.Flat"
+                                         Color="@ThemeColor.Danger"
+                                         Disabled="@deletingCharacterIds.Contains(character.Id)">
+                                @(deletingCharacterIds.Contains(character.Id) ? "Deleting…" : "Delete")
+                            </LumexButton>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+    </div>
+</div>
+
+@code {
+    private List<SavedCharacterSummary> characters = [];
+    private HashSet<Guid> deletingCharacterIds = [];
+    private bool isLoading = true;
+    private bool statusIsError;
+    private string? statusMessage;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadCharactersAsync();
+    }
+
+    private async Task LoadCharactersAsync()
+    {
+        if (!SessionStore.IsAuthenticated)
+        {
+            isLoading = false;
+            statusIsError = false;
+            statusMessage = null;
+            return;
+        }
+
+        isLoading = true;
+        statusMessage = null;
+
+        var results = await CharacterService.GetSavedCharactersAsync();
+        characters = results.ToList();
+        isLoading = false;
+    }
+
+    private void OpenCharacter(Guid id)
+    {
+        Nav.NavigateTo($"/create-character/{id}");
+    }
+
+    private async Task DeleteCharacterAsync(Guid id)
+    {
+        deletingCharacterIds.Add(id);
+        statusMessage = null;
+
+        var deleted = await CharacterService.DeleteSavedCharacterAsync(id);
+        deletingCharacterIds.Remove(id);
+
+        if (!deleted)
+        {
+            statusIsError = true;
+            statusMessage = "Could not delete that saved character.";
+            return;
+        }
+
+        characters.RemoveAll(character => character.Id == id);
+        statusIsError = false;
+        statusMessage = "Saved character deleted.";
+    }
+
+    private static string DisplayName(string? name) =>
+        string.IsNullOrWhiteSpace(name) ? "Untitled Character" : name;
+
+    private static string DisplaySummary(SavedCharacterSummary character)
+    {
+        var parts = new[] { character.Ancestry, character.CharacterClass }
+            .Where(part => !string.IsNullOrWhiteSpace(part));
+
+        return string.Join(" / ", parts!);
+    }
+}
