@@ -12,11 +12,6 @@
 <PageTitle>Character Sheet</PageTitle>
 
 <div class="bg-gray-900 text-gray-100 min-h-screen" style="font-family: Georgia, serif;">
-    <style>
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: #111827; }
-        ::-webkit-scrollbar-thumb { background: #4b5563; border-radius: 3px; }
-    </style>
 
     <!-- Top Bar -->
     <div class="bg-gray-800 border-b border-gray-700 px-3 py-2 flex items-center justify-between flex-wrap gap-2">
@@ -51,7 +46,7 @@
     </div>
     @if (!string.IsNullOrWhiteSpace(saveStatusMessage))
     {
-        <div class="mx-3 mt-3 rounded-xl border px-4 py-3 text-sm @(saveStatusIsError ? "border-red-800 bg-red-950/40 text-red-200" : "border-emerald-800 bg-emerald-950/30 text-emerald-200")">
+        <div class="mx-3 my-3 rounded-xl border px-4 py-3 text-sm @(saveStatusIsError ? "border-red-800 bg-red-950/40 text-red-200" : "border-emerald-800 bg-emerald-950/30 text-emerald-200")">
             @saveStatusMessage
         </div>
     }
@@ -115,7 +110,7 @@
     <div class="flex flex-col lg:flex-row">
 
         <!-- LEFT SIDEBAR -->
-        <div class="w-full lg:w-48 xl:w-52 bg-gray-800 border-b lg:border-b-0 lg:border-r border-gray-700 p-3 flex-shrink-0 overflow-y-auto" style="max-height: calc(100vh - 150px);">
+        <div class="w-full lg:w-48 xl:w-52 bg-gray-800 border-b lg:border-b-0 lg:border-r border-gray-700 p-3 flex-shrink-0 lg:overflow-y-auto lg:max-h-[calc(100vh-150px)]">
             <!-- Ancestry -->
             <div class="mb-2">
                 <button class="w-full text-left bg-gray-700 border border-gray-600 rounded px-2 py-1.5 text-sm hover:bg-gray-600 transition-colors">
@@ -202,7 +197,7 @@
         </div>
 
         <!-- MIDDLE: Stats Panel -->
-        <div class="w-full lg:w-52 xl:w-56 bg-gray-800 border-b lg:border-b-0 lg:border-r border-gray-700 p-3 flex-shrink-0 overflow-y-auto" style="max-height: calc(100vh - 150px);">
+        <div class="w-full lg:w-52 xl:w-56 bg-gray-800 border-b lg:border-b-0 lg:border-r border-gray-700 p-3 flex-shrink-0 lg:overflow-y-auto lg:max-h-[calc(100vh-150px)]">
 
             <!-- Hero Points -->
             <div class="flex items-center gap-2 mb-3">
@@ -273,7 +268,7 @@
             </div>
 
             <!-- Tab Content -->
-            <div class="flex-1 p-4 bg-gray-900 overflow-y-auto" style="max-height: calc(100vh - 190px);">
+            <div class="flex-1 p-4 bg-gray-900 lg:overflow-y-auto lg:max-h-[calc(100vh-190px)]">
 
                 <!-- ─── WEAPONS ─────────────────────────────────────────── -->
                 @if (activeTab == "Weapons")

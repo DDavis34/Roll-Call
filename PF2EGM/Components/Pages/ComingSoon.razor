@@ -1,0 +1,25 @@
+@code {
+    [Parameter] public string Message { get; set; } = "Back to Home";
+    [Parameter] public string Link { get; set; } = "/";
+}
+
+<div class="background-image text-gray-100 min-h-screen font-sans">
+
+    <!-- Header -->
+    <section class="text-center px-2 py-12">
+        <h2 class="text-4xl font-extrabold text-amber-400 mb-4">Coming Soon</h2>
+        <p class="text-gray-300 max-w-2xl mx-auto">
+            This page hasn't been written yet. Check back later for updates!
+        </p>        
+    </section>
+
+    <section class="max-w-6xl mx-auto pb-16 px-6">
+        <div>
+            <a href="@Link">
+                <button class="w-full bg-amber-500 hover:bg-amber-600 text-gray-900 font-semibold my-4 py-2 px-4 rounded-xl transition">
+                    @Message
+                </button>
+            </a>
+        </div>
+    </section>
+</div>
