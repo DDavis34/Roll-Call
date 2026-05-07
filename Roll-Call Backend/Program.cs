@@ -12,6 +12,7 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlite(connectionString));
+builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddSingleton(_ =>
 {
@@ -24,6 +25,7 @@ builder.Services.AddSingleton(_ =>
 });
 
 builder.Services.AddScoped<ISupabaseAuthService, SupabaseAuthService>();
+builder.Services.AddScoped<ISupabaseUserContextService, SupabaseUserContextService>();
 builder.Services.AddSingleton<IDataTableService, DataTableService>();
 
 builder.Services.AddControllers();
@@ -46,7 +48,7 @@ var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
     var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    await dbContext.Database.EnsureCreatedAsync();
+    await DatabaseInitializer.InitializeAsync(dbContext);
 
     var supabase = scope.ServiceProvider.GetRequiredService<Supabase.Client>();
     await supabase.InitializeAsync();
