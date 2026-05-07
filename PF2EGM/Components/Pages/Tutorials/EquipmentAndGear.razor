@@ -1,0 +1,131 @@
+@page "/Tutorials/Equipment-&-Gear"
+@using PF2EGM.Components.Pages.Tutorials.TutorialComponents
+
+<PageTitle>Equipment & Gear</PageTitle>
+
+<div class="background-image text-gray-100 min-h-screen font-sans">
+
+    <!-- Header -->
+    <section class="text-center px-2 py-12">
+        <h2 class="text-4xl font-extrabold text-amber-400 mb-4">Equipment & Gear</h2>
+        <p class="text-gray-300 max-w-2xl mx-auto">
+            Learn about the various equipment and gear options available in Pathfinder and how to apply them to your character.
+        </p>
+    </section>
+    
+    <div class="max-w-6xl mx-auto p-2 sm:p-6 pb-16 space-y-12">
+
+        <!-- Inventory Basics -->
+        <section class="bg-gray-800 rounded-2xl p-4 sm:p-8">
+            <h3 class="text-2xl text-center font-semibold text-amber-400 mb-4">Inventory Basics</h3>
+            <p class="mb-4">
+                At character creation, your class determines how much gold you start with, which is typically 15 gold pieces (gp) for most classes. This is your budget to outfit your character before the adventure begins. Most classes have a "class kit" laying out suggested items to have at 1st level. You can find them listed <a href="https://2e.aonprd.com/Rules.aspx?ID=3418" class="text-amber-400 hover:text-amber-600 hover:underline">here</a>. You can choose to follow the class kit or spend your starting gold on any equipment you like, as long as it fits within your budget. This allows you to customize your character's gear to fit your concept and playstyle right from the start. However, any money you have left over can be saved for future purchases or emergencies during gameplay, even if you are left with a few silver pieces (1 gp = 10 sp) or copper pieces (1 sp = 10 cp). There are several categories of equipment to consider when outfitting your character:
+            </p>
+
+            <p>
+                1. <b>Weapons:</b> Every weapon has a damage die, a damage type (slashing, piercing, or bludgeoning), and traits that define how it behaves. Weapons are also categorized as Simple, Martial, or Advanced, which your class proficiency determines which you can use effectively. Key traits to know:
+
+                <ul class="list-disc list-inside text-gray-300 space-y-2 my-6">
+                    <li>Finesse: lets you use Dexterity instead of Strength for attack rolls</li>
+                    <li>Thrown: can be hurled as a ranged weapon</li>
+                    <li>Two-hand: deals more damage when used with both hands</li>
+                    <li>Reach: extends your melee range to 10 feet</li>
+                </ul>
+            </p>
+
+            <p>
+                2. <b>Armor:</b> Armor provides an AC (Armor Class) bonus but may impose a Check Penalty on physical skills and a Speed Penalty if it's heavy. Your Dexterity modifier only contributes to AC up to the armor's DEX Cap; heavy armor has a very low cap, so stacking DEX doesn't help much in plate mail. There are three types of armor to choose from, each with its own trade-offs:
+
+                <ul class="list-disc list-inside text-gray-300 space-y-2 my-6">
+                    <li>Light Armor: low AC bonus, minimal penalties</li>
+                    <li>Medium Armor: moderate AC bonus, some penalties</li>
+                    <li>Heavy Armor: high AC bonus, significant penalties</li>
+                </ul>
+            </p>
+
+            <p>
+                3. <b>Shields:</b> You must spend an action to Raise a Shield each turn to gain its AC bonus. Shields also have Hardness and HP, meaning they can absorb damage for you via the Shield Block reaction (if you have that feat), but they'll eventually break if overused.
+            </p>
+
+            <h5 class="text-lg text-center font-semibold text-amber-400 mt-6 mb-2">Bulk</h5>
+            <p class="mb-4">
+                Pathfinder uses an abstract Bulk system instead of tracking exact weight. Each item has a Bulk value (Light, 1, 2, etc.) that contributes to your total Bulk. Light items have a Bulk of 1 Bulk per 10 units of that item, while heavier items have a Bulk value equal to their Bulk level. Your carrying capacity is determined by your Strength score, and you can only carry so much Bulk before becoming encumbered. Your encumbrance limit is 5 + your Strength modifier Bulk before you become Encumbered (and over-encumbered at 10 + Str mod). Managing your inventory and choosing what to carry is an important aspect of gameplay, especially for characters with lower Strength.
+            </p>
+
+            <!-- Equipment Basics Video -->
+            <YouTubeEmbed Src="https://www.youtube.com/embed/f-uuCbnAN0Q?si=zww1rt2MtdUze8Qx" Title="Equipment Basics"/>
+        </section>
+
+        <!-- Adventuring Gear -->
+        <section class="bg-gray-800 rounded-2xl p-4 sm:p-8">
+            <h3 class="text-2xl text-center font-semibold text-amber-400 mb-4">Adventuring Gear</h3>
+            <p class="mb-4">
+                You can also buy adventuring gear for your character, such as backpacks, rope, torches, and other useful items. These can be essential for exploration and problem-solving during your adventures. Additionally, you may want to invest in potions or scrolls if your character has the ability to use them, as they can provide valuable buffs or healing in a pinch. Remember that your starting gold is limited, so prioritize the essentials for your character's role and playstyle while leaving some funds available for future needs.
+            </p>
+            <ul class="list-disc list-inside text-gray-300 space-y-2">
+                <li>Some tools enable skills that allow you to perform specialized tasks. Healer's tools, for example, allow you to use the Medicine skill to treat injuries and diseases, while Thieves' tools let you pick locks and disarm traps.</li>
+                <li>Light sources, like torches and lanterns, are essential for navigating dark areas and can provide illumination for your party, especially if your character lacks low-light vision.</li>
+                <li>Containers, such as backpacks and chests, allow you to store and organize your gear during adventures while giving you increased bulk limits</li>
+                <li>Other gear, like rations, bedrolls, and waterskins, are essential for survival during your adventures and will always be needed for longer campaigns.</li>
+            </ul>
+
+            <h5 class="text-lg text-center font-semibold text-amber-400 mt-6 mb-2">Alchemical Items</h5>
+            <p class="mb-4">
+                Alchemical items are non-magical, meaning they work in antimagic fields and don't require anyone to identify them with Detect Magic. They're produced by Alchemists but can be bought by anyone.
+            </p>
+            <ul class="list-disc list-inside text-gray-300 space-y-2">
+                <li>Alchemical Bombs: Thrown weapons that deal splash damage. They target AC and deal damage in a small area. Splash damage hits all creatures adjacent to the target, including allies, so be careful.</li>
+                <li>Alchemical Elixirs: Drinkable consumables with a wide variety of effects, such as antidotes, enabling darkvision, and even invisibility.</li>
+                <li>Alchemical Tools: Specialized equipment used to disrupt enemies. Smokesticks create a 10-foot radius of smoke when activated, while tanglefoot bags immobilize or slow a target's movement on a failed Reflex save.</li>
+            </ul>
+        </section>
+
+        <!-- Magical Items -->
+        <section class="bg-gray-800 rounded-2xl p-4 sm:p-8">
+            <h3 class="text-2xl text-center font-semibold text-amber-400 mb-4">Magical Items</h3>
+            <p class="mb-4">
+                Magical items are objects that have enchantments or other magical properties that set them apart from normal adventuring gear. These items can provide significant advantages in combat, exploration, and problem-solving. They can be found as treasure, bought from merchants, or crafted by characters with the right skills and resources. Magical items come in various forms, such as weapons that deal extra damage, armor that provides additional protection, rings that grant special abilities, and wands that allow you to cast spells. While magical items can be powerful, they are often more expensive than regular gear and may require attunement or specific conditions to use effectively.
+            </p>
+
+            <h5 class="text-lg text-center font-semibold text-amber-400 mt-6 mb-2">Magical Consumables</h5>
+            <p class="mb-4">
+                Magical consumables are items that can be used once and then discarded, providing temporary benefits or effects. They can be found as treasure, bought from merchants, or crafted by characters with the right skills and resources. Because they are magical, they're suppressed by antimagic and can be identified with Detect Magic.
+            </p>
+            <ul class="list-disc list-inside text-gray-300 space-y-2">
+                <li>Healing Potions: The most universally important consumables in the game. Drinking a potion is a single action, making them faster than casting most healing spells in a pinch. A party member can administer a potion to an unconscious ally as a 2-action activity.</li>
+                <li>Scroll of Spells: Scrolls let anyone cast a spell once, even if it's not on their spell list, though non-casters must succeed on an Arcana/Religion/etc. check or waste it. For casters, scrolls are a way to access spells outside your daily prepared slots. The cost scales with spell level.</li>
+                <li>Wands: Single-use per day (you can overcharge them once for a 10% chance of destroying them). Wands hold a specific spell and let you cast it without expending a spell slot. More expensive than scrolls but reusable daily.</li>
+                <li>Talismans: Small magical items, such as amulets, gems, and runes, that are attached to a weapon, armor, or shield. They activate automatically or as a free action when a trigger occurs, and are destroyed on use.</li>
+            </ul>
+
+            <h5 class="text-lg text-center font-semibold text-amber-400 mt-6 mb-2">Permanent Magical Items</h5>
+            <p class="mb-4">
+                Permanent magical items are those that provide ongoing benefits or effects and can be used repeatedly. These are the lasting upgrades your character accumulates over a campaign.
+            </p>
+            <ul class="list-disc list-inside text-gray-300 space-y-2">
+                <li>Find more on runes <a href="https://2e.aonprd.com/Equipment.aspx?Category=23" class="text-amber-400 hover:text-amber-600 hover:underline">here</a>.</li>
+                <li>Find more on worn magic items (invested items) <a href="https://2e.aonprd.com/Rules.aspx?ID=768" class="text-amber-400 hover:text-amber-600 hover:underline">here</a>.</li>
+                <li>Find more on held/stowed items <a href="https://2e.aonprd.com/Equipment.aspx?Category=21" class="text-amber-400 hover:text-amber-600 hover:underline">here</a>.</li>
+            </ul>
+
+            <!-- Equipment Basics Video -->
+            <YouTubeEmbed Src="https://www.youtube.com/embed/rt_KjMjRJIY?si=0UkHkDBXI1L1hVQs" Title="Magical Items"/>
+        </section>
+
+        <!-- Quick Tips -->
+        <section class="bg-gray-800 rounded-2xl p-4 sm:p-8">
+            <h3 class="text-2xl text-center font-semibold text-amber-400 mb-4">Quick Tips</h3>
+            <ul class="list-disc list-inside text-gray-300 space-y-2">
+                <li>Match your armor to your build. Make sure you use the heaviest armor you are proficient in while not incurring any penalties for not having enough STR.</li>
+                <li>Check your class's Starting Equipment. Most classes have a default kit listed that's optimized for them that you can use that instead of buying manually.</li>
+                <li>Save a little money for when you'll want to buy food, lodging, and incidentals during gameplay.</li>
+                <li>If your character has a high DEX, consider using finesse weapons, as they use DEX instead of STR for attack rolls.</li>
+                <li>Don't hoard too much gp, as any money you have saved up is money you are not using for the benefit of your party.</li>
+            </ul>
+        </section>
+
+    </div>
+
+    <TutorialButton Message2="Choosing Ancestries, Backgrounds, and Classes" Link2="/Tutorials/Choosing-ABCs"/>
+
+</div>
