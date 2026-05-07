@@ -1,21 +1,22 @@
 @page "/Tutorials/Character-Creation-Basics"
+@using PF2EGM.Components.Pages.Tutorials.TutorialComponents
 
 <title>Character Creation Basics</title>
 
 <div class="background-image text-gray-100 min-h-screen font-sans">
 
     <!-- Header -->
-    <section class="text-center py-12">
+    <section class="text-center px-2 py-12">
         <h2 class="text-4xl font-extrabold text-amber-400 mb-4">Character Creation Guide</h2>
         <p class="text-gray-300 max-w-2xl mx-auto">
             Learn the fundamentals of building an effective Pathfinder character.
         </p>
     </section>
 
-    <div class="max-w-6xl mx-auto px-6 pb-16 space-y-12">
+    <div class="max-w-6xl mx-auto p-2 sm:p-6 pb-16 space-y-12">
 
         <!-- Gameplay Basics -->
-        <section class="bg-gray-800 rounded-2xl shadow-lg p-8">
+        <section class="bg-gray-800 rounded-2xl p-4 sm:p-8">
             <h3 class="text-2xl text-center font-semibold text-amber-400 mb-4">Gameplay Basics</h3>
             <p class="mb-4">
                 Pathfinder revolves around strategic combat, character progression, and teamwork. Understanding how turns, actions, and dice rolls work is essential.
@@ -25,16 +26,13 @@
                 <li>Dice rolls determine success or failure</li>
                 <li>Team composition impacts survivability</li>
             </ul>
-            <br/><br/>
 
             <!-- Video Placeholder -->
-            <div class="bg-gray-700 rounded-xl p-6 flex justify-center">
-                <p class="text-gray-400">[ YouTube Video Placeholder: Gameplay Basics ]</p>
-            </div>
+            <YouTubeEmbed Src="link" Title="Title"/>
         </section>
 
         <!-- Character Considerations -->
-        <section class="bg-gray-800 rounded-2xl shadow-lg p-8">
+        <section class="bg-gray-800 rounded-2xl p-4 sm:p-8">
             <h3 class="text-2xl text-center font-semibold text-amber-400 mb-4">Character Creation Considerations</h3>
             <p class="text-gray-300 mb-4">
                 When creating your character, think about how your choices will affect gameplay and synergy with your party.
@@ -46,13 +44,11 @@
             </ul>
 
             <!-- Video Placeholder -->
-            <div class="mt-6 bg-gray-700 rounded-xl p-6 text-center">
-                <p class="text-gray-400">[ YouTube Video Placeholder: Character Creation ]</p>
-            </div>
+            <YouTubeEmbed Src="Link" Title="Video Name"/>
         </section>
 
         <!-- Quick Tips -->
-        <section class="bg-gray-800 rounded-2xl shadow-lg p-8">
+        <section class="bg-gray-800 rounded-2xl p-4 sm:p-8">
             <h3 class="text-2xl text-center font-semibold text-amber-400 mb-4">Quick Tips</h3>
             <ul class="list-disc list-inside text-gray-300 space-y-2">
                 <li>Don’t min-max too early—balance matters</li>
@@ -62,11 +58,11 @@
             </ul>
 
             <!-- Video Placeholder -->
-            <div class="mt-6 bg-gray-700 rounded-xl p-6 text-center">
-                <p class="text-gray-400">[ YouTube Video Placeholder: Tips & Tricks ]</p>
-            </div>
+            <YouTubeEmbed Src="link" Title="Title"/>
         </section>
 
     </div>
+
+    <TutorialButton Message2="Understanding Attributes" Link2="/Tutorials/Understanding-Attributes"/>
 
 </div>
