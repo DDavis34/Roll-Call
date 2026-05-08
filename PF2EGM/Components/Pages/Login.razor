@@ -16,7 +16,15 @@
 <div class="login-wrapper">
     <LumexCard Class="login-card">
         <LumexCardHeader Class="flex flex-col items-center gap-1 pb-2">
-            <div class="brand-mark">⬡</div>
+            <div class="brand-mark">
+                <svg viewBox="0 0 52 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <polygon points="26,2 50,15 50,45 26,58 2,45 2,15"
+                             fill="rgba(217,119,6,0.15)" stroke="#f59e0b" stroke-width="2.5" stroke-linejoin="round"/>
+                    <polygon points="26,10 42,19 42,41 26,50 10,41 10,19"
+                             fill="rgba(245,158,11,0.1)" stroke="#fbbf24" stroke-width="1.5" stroke-linejoin="round"/>
+                    <text x="26" y="35" text-anchor="middle" font-size="16" font-weight="bold" fill="#fbbf24" font-family="Georgia,serif">RC</text>
+                </svg>
+            </div>
             <h1 class="text-2xl font-bold tracking-tight text-foreground">Welcome back</h1>
             <p class="text-sm text-default-500">Sign in to continue</p>
         </LumexCardHeader>
@@ -47,7 +55,7 @@
                     <div class="flex flex-col gap-1">
                         <div class="flex justify-between items-center">
                             <span class="text-xs font-medium text-default-600">Password</span>
-                            <a href="/forgot-password" class="text-xs text-primary hover:opacity-75 transition-opacity">Forgot?</a>
+                            <a href="/forgot-password" class="text-xs text-amber-400 hover:text-amber-300 transition-colors">Forgot?</a>
                         </div>
                         <LumexTextbox @bind-Value="loginModel.Password"
                                       Type="@InputType.Password"
@@ -81,6 +89,7 @@
             </div>
 
             <LumexButton Variant="@Variant.Outlined"
+                         Color="@ThemeColor.Primary"
                          Class="w-full"
                          OnClick="HandleGoogleLogin">
                 <svg width="18" height="18" viewBox="0 0 18 18" class="shrink-0">
@@ -96,7 +105,7 @@
         <LumexCardFooter Class="justify-center pt-0">
             <p class="text-sm text-default-500">
                 Don't have an account?
-                <a href="/register" class="text-primary font-medium hover:opacity-75 transition-opacity">Create one</a>
+                <a href="/register" class="text-amber-400 font-medium hover:text-amber-300 transition-colors">Create one</a>
             </p>
         </LumexCardFooter>
     </LumexCard>

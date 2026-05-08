@@ -84,9 +84,7 @@ window.widgetDrag = {
         el.style.left = clampedLeft + 'px';
         el.style.top  = this._currentTop + 'px';
 
-        const snapLeft = this.snap(clampedLeft);
-        const snapTop  = this.snap(this._currentTop);
-        this._pushColliding(snapLeft, snapTop, el);
+        this._pushColliding(this.snap(clampedLeft), this.snap(this._currentTop), el);
 
         this._rafId = requestAnimationFrame(() => this._animate());
     },
