@@ -20,17 +20,17 @@
 }
 
 :root {
-    --lumex-color-primary-DEFAULT: #1e3a5f;
-    --lumex-color-primary-50:  #e8eef5;
-    --lumex-color-primary-100: #c5d4e8;
-    --lumex-color-primary-200: #9eb8d8;
-    --lumex-color-primary-300: #779cc8;
-    --lumex-color-primary-400: #5a86bb;
-    --lumex-color-primary-500: #1e3a5f;
-    --lumex-color-primary-600: #1a3356;
-    --lumex-color-primary-700: #152a4a;
-    --lumex-color-primary-800: #10213d;
-    --lumex-color-primary-900: #091628;
+    --lumex-color-primary-DEFAULT: #d97706;
+    --lumex-color-primary-50:  #fffbeb;
+    --lumex-color-primary-100: #fef3c7;
+    --lumex-color-primary-200: #fde68a;
+    --lumex-color-primary-300: #fcd34d;
+    --lumex-color-primary-400: #fbbf24;
+    --lumex-color-primary-500: #f59e0b;
+    --lumex-color-primary-600: #d97706;
+    --lumex-color-primary-700: #b45309;
+    --lumex-color-primary-800: #92400e;
+    --lumex-color-primary-900: #78350f;
     --lumex-color-primary-foreground: #ffffff;
 }
 
@@ -39,16 +39,13 @@
     --lumex-surface1: rgba(17, 24, 39, 0.8);
 }
 
-.theme-orange {
-    --lumex-primary: var(--color-orange-600);
-    --lumex-primary-foreground: var(--color-white);
-    --lumex-focus: var(--color-orange-600);
-}
-
+.theme-orange,
 .theme-orange:is(.dark *) {
-    --lumex-primary: var(--color-orange-500);
-    --lumex-primary-foreground: var(--color-white);
-    --lumex-focus: var(--color-orange-500);
+    --lumex-primary: #f59e0b;
+    --lumex-primary-foreground: #ffffff;
+    --lumex-focus: #f59e0b;
+    --lumex-color-primary: #f59e0b;
+    --lumex-color-primary-foreground: #ffffff;
 }
 
 html, body {
@@ -129,28 +126,37 @@ h1:focus {
     text-align: start;
 }
 
-.auth-wrapper {
+.auth-wrapper,
+.login-wrapper {
     min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 1.5rem;
-    background-image: 
-        radial-gradient(ellipse 80% 60% at 50% -10%, rgba(241, 177, 99, 0.25) 0%, transparent 70%),
+    background: #111827;
+    background-image:
+        radial-gradient(ellipse 80% 60% at 50% -10%, rgba(217, 119, 6, 0.2) 0%, transparent 70%),
         url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.02'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
 }
- 
-.auth-card {
+
+.auth-card,
+.login-card {
     width: 100%;
     max-width: 420px;
 }
- 
+
 .brand-mark {
-    font-size: 2rem;
-    color: var(--lumex-primary);
-    margin-bottom: 0.25rem;
-    filter: drop-shadow(0 0 12px color-mix(in srgb, var(--lumex-primary) 60%, transparent));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.5rem;
+    filter: drop-shadow(0 0 14px rgba(217, 119, 6, 0.7));
     animation: brand-pulse 3s ease-in-out infinite;
+}
+
+.brand-mark svg {
+    width: 52px;
+    height: 60px;
 }
 
 .background-effect{

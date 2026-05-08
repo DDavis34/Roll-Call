@@ -15,9 +15,8 @@
 
 <PageTitle>Character Sheet</PageTitle>
 
-<div class="bg-gray-900 text-gray-100 min-h-screen" style="font-family: Georgia, serif;">
+<div class="background-image text-gray-100 min-h-screen" style="font-family: Georgia, serif;">
 
-    <!-- Fixed top toolbar (always visible, not a widget) -->
     <div class="bg-gray-900 border-b border-gray-700/60 px-4 py-2 flex items-center justify-between flex-wrap gap-2 sticky top-0 z-30">
         <div class="flex items-center gap-2">
             <span class="text-sm font-semibold text-gray-300">Level</span>
@@ -46,12 +45,12 @@
                     Log in to save
                 </LumexButton>
             }
-            <LumexButton Variant="@Variant.Flat" Size="@Size.Small" OnClick="ToggleWidgetMode">
+            <LumexButton Variant="@Variant.Flat" Color="@ThemeColor.Primary" Size="@Size.Small" OnClick="ToggleWidgetMode">
                 @(widgetMode ? "⊞ Lock Layout" : "⊞ Widget Mode")
             </LumexButton>
             @if (widgetMode)
             {
-                <LumexButton Variant="@Variant.Flat" Size="@Size.Small" OnClick="@(() => showCustomizePanel = !showCustomizePanel)">
+                <LumexButton Variant="@Variant.Flat" Color="@ThemeColor.Primary" Size="@Size.Small" OnClick="@(() => showCustomizePanel = !showCustomizePanel)">
                     ⚙ Customize
                 </LumexButton>
             }
@@ -67,46 +66,42 @@
     <!-- Content area: normal layout or widget canvas -->
     <div class="@(widgetMode ? "relative overflow-x-hidden" : "")" id="@(widgetMode ? "widget-canvas" : "")" style="@(widgetMode ? "min-height: calc(100vh - 52px);" : "")">
 
-    @if (widgetMode)
+    @if (widgetMode && showCustomizePanel)
     {
-        <!-- Widget mode: floating customize panel -->
-        @if (showCustomizePanel)
-        {
-            <div class="fixed right-4 top-16 z-50 w-64 bg-gray-800 border border-gray-700/60 rounded-2xl shadow-2xl overflow-hidden">
-                <div class="px-4 py-3 bg-gray-900/70 border-b border-gray-700/60 flex items-center justify-between">
-                    <div>
-                        <div class="text-xs font-bold text-amber-400 uppercase tracking-widest">Widget Visibility</div>
-                        <div class="text-[11px] text-gray-500 mt-0.5">Toggle panels on or off</div>
-                    </div>
-                    <button @onclick="@(() => showCustomizePanel = false)"
-                            class="w-6 h-6 rounded-md flex items-center justify-center text-gray-500 hover:text-red-400 hover:bg-gray-700/60 transition-colors text-xs">
-                        ✕
-                    </button>
+        <div class="fixed right-4 top-16 z-50 w-64 bg-gray-800 border border-gray-700/60 rounded-2xl shadow-2xl overflow-hidden">
+            <div class="px-4 py-3 bg-gray-900/70 border-b border-gray-700/60 flex items-center justify-between">
+                <div>
+                    <div class="text-xs font-bold text-amber-400 uppercase tracking-widest">Widget Visibility</div>
+                    <div class="text-[11px] text-gray-500 mt-0.5">Toggle panels on or off</div>
                 </div>
-                <div class="p-4 space-y-3">
-                    @foreach (var ws in widgetStates)
-                    {
-                        <div class="flex items-center justify-between">
-                            <span class="text-sm text-gray-300">@widgetLabels[ws.Key]</span>
-                            <button @onclick="() => ToggleWidgetVisible(ws.Key)"
-                                    class="relative inline-flex h-5 w-9 items-center rounded-full transition-colors @(ws.Value.Visible ? "bg-amber-500" : "bg-gray-600")">
-                                <span class="inline-block h-3.5 w-3.5 transform rounded-full bg-white shadow transition-transform @(ws.Value.Visible ? "translate-x-4" : "translate-x-1")"></span>
-                            </button>
-                        </div>
-                    }
-                    <div class="pt-2 border-t border-gray-700/60">
-                        <LumexButton Variant="@Variant.Flat" Size="@Size.Small" Class="w-full" OnClick="ResetWidgetPositions">
-                            Reset Positions
-                        </LumexButton>
+                <button @onclick="@(() => showCustomizePanel = false)"
+                        class="w-6 h-6 rounded-md flex items-center justify-center text-gray-500 hover:text-red-400 hover:bg-gray-700/60 transition-colors text-xs">
+                    ✕
+                </button>
+            </div>
+            <div class="p-4 space-y-3">
+                @foreach (var ws in widgetStates)
+                {
+                    <div class="flex items-center justify-between">
+                        <span class="text-sm text-gray-300">@widgetLabels[ws.Key]</span>
+                        <button @onclick="() => ToggleWidgetVisible(ws.Key)"
+                                class="relative inline-flex h-5 w-9 items-center rounded-full transition-colors @(ws.Value.Visible ? "bg-amber-500" : "bg-gray-600")">
+                            <span class="inline-block h-3.5 w-3.5 transform rounded-full bg-white shadow transition-transform @(ws.Value.Visible ? "translate-x-4" : "translate-x-1")"></span>
+                        </button>
                     </div>
+                }
+                <div class="pt-2 border-t border-gray-700/60">
+                    <LumexButton Variant="@Variant.Flat" Color="@ThemeColor.Primary" Size="@Size.Small" Class="w-full" OnClick="ResetWidgetPositions">
+                        Reset Positions
+                    </LumexButton>
                 </div>
             </div>
-        }
+        </div>
     }
 
     <!-- Stats Header -->
     <DraggableWidget WidgetId="combat-stats" Title="Combat Stats" Subtitle="AC · Abilities · Saves"
-                     IsDragMode="@widgetMode" State="@widgetStates["combat-stats"]" OnHide="HideWidget"
+                     IsDragMode="@widgetMode" State="@(widgetStates["combat-stats"])" OnHide="HideWidget"
                      MaxHeight="220">
     <div class="bg-gray-800 @(widgetMode ? "" : "border-b border-gray-700") p-3">
         <div class="flex flex-wrap items-start gap-4">
@@ -155,9 +150,9 @@
 
             <!-- Actions -->
             <div class="flex gap-2">
-                <LumexButton Size="@Size.Small" Variant="@Variant.Flat">Rest</LumexButton>
-                <LumexButton Size="@Size.Small" Variant="@Variant.Flat">Add Condition</LumexButton>
-                <LumexButton Size="@Size.Small" Variant="@Variant.Flat">Add Custom Buff</LumexButton>
+                <LumexButton Size="@Size.Small" Variant="@Variant.Flat" Color="@ThemeColor.Primary">Rest</LumexButton>
+                <LumexButton Size="@Size.Small" Variant="@Variant.Flat" Color="@ThemeColor.Primary">Add Condition</LumexButton>
+                <LumexButton Size="@Size.Small" Variant="@Variant.Flat" Color="@ThemeColor.Primary">Add Custom Buff</LumexButton>
             </div>
         </div>
     </div>
@@ -168,7 +163,7 @@
 
         <!-- LEFT SIDEBAR -->
         <DraggableWidget WidgetId="background-leveling" Title="Background & Leveling" Subtitle="Ancestry · Class · Feats"
-                         IsDragMode="@widgetMode" State="@widgetStates["background-leveling"]" OnHide="HideWidget"
+                         IsDragMode="@widgetMode" State="@(widgetStates["background-leveling"])" OnHide="HideWidget"
                          MaxHeight="600">
         <div class="@(widgetMode ? "" : "w-full lg:w-48 xl:w-52") bg-gray-800 @(widgetMode ? "" : "border-b lg:border-b-0 lg:border-r border-gray-700") p-3 flex-shrink-0 overflow-y-auto" style="@(widgetMode ? "" : "max-height: calc(100vh - 150px)")">
             <!-- Ancestry -->
@@ -259,7 +254,7 @@
 
         <!-- MIDDLE: Stats Panel -->
         <DraggableWidget WidgetId="skills-panel" Title="Skills & Stats" Subtitle="Perception · Initiative · Skills"
-                         IsDragMode="@widgetMode" State="@widgetStates["skills-panel"]" OnHide="HideWidget"
+                         IsDragMode="@widgetMode" State="@(widgetStates["skills-panel"])" OnHide="HideWidget"
                          MaxHeight="600">
         <div class="@(widgetMode ? "" : "w-full lg:w-52 xl:w-56") bg-gray-800 @(widgetMode ? "" : "border-b lg:border-b-0 lg:border-r border-gray-700") p-3 flex-shrink-0 overflow-y-auto" style="@(widgetMode ? "" : "max-height: calc(100vh - 150px)")">
 
@@ -321,7 +316,7 @@
 
         <!-- RIGHT: Main Character Panel -->
         <DraggableWidget WidgetId="weapons-gear" Title="Weapons & Gear" Subtitle="Weapons · Defense · Gear · Spells"
-                         IsDragMode="@widgetMode" State="@widgetStates["weapons-gear"]" OnHide="HideWidget"
+                         IsDragMode="@widgetMode" State="@(widgetStates["weapons-gear"])" OnHide="HideWidget"
                          MaxHeight="600">
         <div class="@(widgetMode ? "" : "flex-1") flex flex-col min-w-0">
 
@@ -675,9 +670,8 @@
 
             </div><!-- end tab content -->
         </div><!-- end right panel -->
-        </DraggableWidget>
-    </div><!-- end flex row / widget canvas -->
-    </div><!-- end content area -->
+    </div><!-- end flex row -->
+    </div><!-- end widget canvas -->
 
     <!-- ═══════════════════════════════════════════════════════════════════ -->
     <!-- MODALS                                                             -->
@@ -906,14 +900,12 @@
 
     private void ToggleWidgetVisible(string id)
     {
-        if (widgetStates.TryGetValue(id, out var ws))
-            ws.Visible = !ws.Visible;
+        if (widgetStates.TryGetValue(id, out var ws)) ws.Visible = !ws.Visible;
     }
 
     private void HideWidget(string id)
     {
-        if (widgetStates.TryGetValue(id, out var ws))
-            ws.Visible = false;
+        if (widgetStates.TryGetValue(id, out var ws)) ws.Visible = false;
     }
 
     private void ResetWidgetPositions()
@@ -927,17 +919,13 @@
     [JSInvokable]
     public void OnWidgetMoved(string widgetId, double x, double y)
     {
-        if (widgetStates.TryGetValue(widgetId, out var ws))
-        {
-            ws.X = x;
-            ws.Y = y;
-        }
+        if (widgetStates.TryGetValue(widgetId, out var ws)) { ws.X = x; ws.Y = y; }
     }
 
     public async ValueTask DisposeAsync()
     {
         _dotnetRef?.Dispose();
-        await JS.InvokeVoidAsync("widgetDrag.dispose");
+        try { await JS.InvokeVoidAsync("widgetDrag.dispose"); } catch { }
     }
 
     protected override async Task OnParametersSetAsync()
