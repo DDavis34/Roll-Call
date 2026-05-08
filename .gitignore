@@ -6,3 +6,7 @@ obj/
 /packages/
 riderModule.iml
 /_ReSharper.Caches/
+
+# SQLite WAL temp files (locked while backend runs — keep out of git)
+*.db-shm
+*.db-wal

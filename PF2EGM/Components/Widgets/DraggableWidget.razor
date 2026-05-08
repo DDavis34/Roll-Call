@@ -1,0 +1,66 @@
+@using LumexUI
+@inject IJSRuntime JS
+
+@if (IsDragMode)
+{
+    <div id="widget-@WidgetId"
+         class="absolute shadow-2xl rounded-2xl overflow-hidden border border-gray-700/60 bg-gray-800 min-w-[260px]"
+         style="left: @(State.X + 6)px; top: @(State.Y + 6)px; width: @(State.Width > 0 ? (State.Width - 12) + "px" : "auto"); display: @(State.Visible ? "block" : "none"); z-index: 10;">
+
+        <div class="flex items-center justify-between px-4 py-3 bg-gray-900/70 border-b border-gray-700/60 cursor-grab select-none"
+             @onmousedown="HandleMouseDown"
+             @onmousedown:preventDefault="true">
+            <div>
+                <div class="text-xs font-bold text-amber-400 uppercase tracking-widest">@Title</div>
+                @if (!string.IsNullOrEmpty(Subtitle))
+                {
+                    <div class="text-[11px] text-gray-500 mt-0.5">@Subtitle</div>
+                }
+            </div>
+            <div class="flex items-center gap-1">
+                <button @onclick="ToggleMinimize"
+                        @onclick:stopPropagation="true"
+                        class="w-6 h-6 rounded-md flex items-center justify-center text-gray-500 hover:text-amber-400 hover:bg-gray-700/60 transition-colors text-sm font-bold">
+                    @(State.Minimized ? "+" : "−")
+                </button>
+                <button @onclick="HideWidget"
+                        @onclick:stopPropagation="true"
+                        class="w-6 h-6 rounded-md flex items-center justify-center text-gray-500 hover:text-red-400 hover:bg-gray-700/60 transition-colors text-xs">
+                    ✕
+                </button>
+            </div>
+        </div>
+
+        @if (!State.Minimized)
+        {
+            <div class="@BodyClass overflow-y-auto" style="max-height: @(MaxHeight > 0 ? MaxHeight + "px" : "none")">
+                @ChildContent
+            </div>
+        }
+    </div>
+}
+else
+{
+    @ChildContent
+}
+
+@code {
+    [Parameter] public string WidgetId { get; set; } = "";
+    [Parameter] public string Title { get; set; } = "";
+    [Parameter] public string Subtitle { get; set; } = "";
+    [Parameter] public string BodyClass { get; set; } = "";
+    [Parameter] public double MaxHeight { get; set; } = 500;
+    [Parameter] public bool IsDragMode { get; set; }
+    [Parameter] public WidgetState State { get; set; } = new();
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+    [Parameter] public EventCallback<string> OnHide { get; set; }
+
+    private async Task HandleMouseDown(MouseEventArgs e)
+    {
+        await JS.InvokeVoidAsync("widgetDrag.startDrag", e.ClientX, e.ClientY, WidgetId);
+    }
+
+    private void ToggleMinimize() => State.Minimized = !State.Minimized;
+
+    private async Task HideWidget() => await OnHide.InvokeAsync(WidgetId);
+}

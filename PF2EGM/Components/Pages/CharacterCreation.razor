@@ -4,27 +4,31 @@
 @using LumexUI.Common
 @using LumexUI.Shared.Icons
 @using PF2EGM.Services
+@using PF2EGM.Components.Widgets
 
 @inject IApiCharacterService CharacterService
 @inject NavigationManager Nav
 @inject SupabaseSessionStore SessionStore
+@inject IJSRuntime JS
+
+@implements IAsyncDisposable
 
 <PageTitle>Character Sheet</PageTitle>
 
 <div class="bg-gray-900 text-gray-100 min-h-screen" style="font-family: Georgia, serif;">
 
-    <!-- Top Bar -->
-    <div class="bg-gray-800 border-b border-gray-700 px-3 py-2 flex items-center justify-between flex-wrap gap-2">
+    <!-- Fixed top toolbar (always visible, not a widget) -->
+    <div class="bg-gray-900 border-b border-gray-700/60 px-4 py-2 flex items-center justify-between flex-wrap gap-2 sticky top-0 z-30">
         <div class="flex items-center gap-2">
             <span class="text-sm font-semibold text-gray-300">Level</span>
-            <span class="text-sm font-bold bg-gray-700 border border-gray-600 rounded px-2 py-0.5 text-amber-400">@character.Level</span>
+            <span class="text-sm font-bold bg-gray-800 border border-gray-600 rounded px-2 py-0.5 text-amber-400">@character.Level</span>
             <span class="text-sm font-semibold text-gray-300">XP</span>
-            <span class="text-sm font-bold bg-gray-700 border border-gray-600 rounded px-2 py-0.5 text-gray-100">@character.XP</span>
+            <span class="text-sm font-bold bg-gray-800 border border-gray-600 rounded px-2 py-0.5 text-gray-100">@character.XP</span>
         </div>
         <div class="flex items-center gap-2">
             <span class="text-sm text-gray-300">Name</span>
             <input type="text" @bind="character.Name" placeholder="Name"
-                class="text-sm bg-gray-700 border border-gray-600 rounded px-2 py-0.5 w-36 focus:outline-none focus:border-amber-500 text-gray-100 placeholder-gray-400" />
+                class="text-sm bg-gray-800 border border-gray-600 rounded px-2 py-0.5 w-36 focus:outline-none focus:border-amber-500 text-gray-100 placeholder-gray-400" />
         </div>
         <div class="flex items-center gap-4 text-sm text-gray-300">
             <span>SIZE <strong class="text-gray-100">@character.Size</strong></span>
@@ -33,13 +37,22 @@
             <span>HP Shield</span>
         </div>
         <div class="flex items-center gap-2">
-            <LumexButton OnClick="SaveCharacterAsync" Color="@ThemeColor.Primary" Disabled="@isSaving">
+            <LumexButton OnClick="SaveCharacterAsync" Color="@ThemeColor.Primary" Disabled="@isSaving" Size="@Size.Small">
                 @(isSaving ? "Saving…" : characterId.HasValue ? "Save Changes" : "Save Character")
             </LumexButton>
             @if (!SessionStore.IsAuthenticated)
             {
-                <LumexButton Variant="@Variant.Outlined" OnClick="@(() => Nav.NavigateTo("/login"))">
+                <LumexButton Variant="@Variant.Outlined" Size="@Size.Small" OnClick="@(() => Nav.NavigateTo("/login"))">
                     Log in to save
+                </LumexButton>
+            }
+            <LumexButton Variant="@Variant.Flat" Size="@Size.Small" OnClick="ToggleWidgetMode">
+                @(widgetMode ? "⊞ Lock Layout" : "⊞ Widget Mode")
+            </LumexButton>
+            @if (widgetMode)
+            {
+                <LumexButton Variant="@Variant.Flat" Size="@Size.Small" OnClick="@(() => showCustomizePanel = !showCustomizePanel)">
+                    ⚙ Customize
                 </LumexButton>
             }
         </div>
@@ -51,8 +64,51 @@
         </div>
     }
 
+    <!-- Content area: normal layout or widget canvas -->
+    <div class="@(widgetMode ? "relative overflow-x-hidden" : "")" id="@(widgetMode ? "widget-canvas" : "")" style="@(widgetMode ? "min-height: calc(100vh - 52px);" : "")">
+
+    @if (widgetMode)
+    {
+        <!-- Widget mode: floating customize panel -->
+        @if (showCustomizePanel)
+        {
+            <div class="fixed right-4 top-16 z-50 w-64 bg-gray-800 border border-gray-700/60 rounded-2xl shadow-2xl overflow-hidden">
+                <div class="px-4 py-3 bg-gray-900/70 border-b border-gray-700/60 flex items-center justify-between">
+                    <div>
+                        <div class="text-xs font-bold text-amber-400 uppercase tracking-widest">Widget Visibility</div>
+                        <div class="text-[11px] text-gray-500 mt-0.5">Toggle panels on or off</div>
+                    </div>
+                    <button @onclick="@(() => showCustomizePanel = false)"
+                            class="w-6 h-6 rounded-md flex items-center justify-center text-gray-500 hover:text-red-400 hover:bg-gray-700/60 transition-colors text-xs">
+                        ✕
+                    </button>
+                </div>
+                <div class="p-4 space-y-3">
+                    @foreach (var ws in widgetStates)
+                    {
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm text-gray-300">@widgetLabels[ws.Key]</span>
+                            <button @onclick="() => ToggleWidgetVisible(ws.Key)"
+                                    class="relative inline-flex h-5 w-9 items-center rounded-full transition-colors @(ws.Value.Visible ? "bg-amber-500" : "bg-gray-600")">
+                                <span class="inline-block h-3.5 w-3.5 transform rounded-full bg-white shadow transition-transform @(ws.Value.Visible ? "translate-x-4" : "translate-x-1")"></span>
+                            </button>
+                        </div>
+                    }
+                    <div class="pt-2 border-t border-gray-700/60">
+                        <LumexButton Variant="@Variant.Flat" Size="@Size.Small" Class="w-full" OnClick="ResetWidgetPositions">
+                            Reset Positions
+                        </LumexButton>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+
     <!-- Stats Header -->
-    <div class="bg-gray-800 border-b border-gray-700 p-3">
+    <DraggableWidget WidgetId="combat-stats" Title="Combat Stats" Subtitle="AC · Abilities · Saves"
+                     IsDragMode="@widgetMode" State="@widgetStates["combat-stats"]" OnHide="HideWidget"
+                     MaxHeight="220">
+    <div class="bg-gray-800 @(widgetMode ? "" : "border-b border-gray-700") p-3">
         <div class="flex flex-wrap items-start gap-4">
 
             <!-- AC Shield -->
@@ -105,12 +161,16 @@
             </div>
         </div>
     </div>
+    </DraggableWidget>
 
     <!-- Main Content -->
-    <div class="flex flex-col lg:flex-row">
+    <div class="@(widgetMode ? "" : "flex flex-col lg:flex-row")">
 
         <!-- LEFT SIDEBAR -->
-        <div class="w-full lg:w-48 xl:w-52 bg-gray-800 border-b lg:border-b-0 lg:border-r border-gray-700 p-3 flex-shrink-0 lg:overflow-y-auto lg:max-h-[calc(100vh-150px)]">
+        <DraggableWidget WidgetId="background-leveling" Title="Background & Leveling" Subtitle="Ancestry · Class · Feats"
+                         IsDragMode="@widgetMode" State="@widgetStates["background-leveling"]" OnHide="HideWidget"
+                         MaxHeight="600">
+        <div class="@(widgetMode ? "" : "w-full lg:w-48 xl:w-52") bg-gray-800 @(widgetMode ? "" : "border-b lg:border-b-0 lg:border-r border-gray-700") p-3 flex-shrink-0 overflow-y-auto" style="@(widgetMode ? "" : "max-height: calc(100vh - 150px)")">
             <!-- Ancestry -->
             <div class="mb-2">
                 <button class="w-full text-left bg-gray-700 border border-gray-600 rounded px-2 py-1.5 text-sm hover:bg-gray-600 transition-colors">
@@ -195,9 +255,13 @@
                 <span class="text-gray-100">Skill Increase</span>
             </button>
         </div>
+        </DraggableWidget>
 
         <!-- MIDDLE: Stats Panel -->
-        <div class="w-full lg:w-52 xl:w-56 bg-gray-800 border-b lg:border-b-0 lg:border-r border-gray-700 p-3 flex-shrink-0 lg:overflow-y-auto lg:max-h-[calc(100vh-150px)]">
+        <DraggableWidget WidgetId="skills-panel" Title="Skills & Stats" Subtitle="Perception · Initiative · Skills"
+                         IsDragMode="@widgetMode" State="@widgetStates["skills-panel"]" OnHide="HideWidget"
+                         MaxHeight="600">
+        <div class="@(widgetMode ? "" : "w-full lg:w-52 xl:w-56") bg-gray-800 @(widgetMode ? "" : "border-b lg:border-b-0 lg:border-r border-gray-700") p-3 flex-shrink-0 overflow-y-auto" style="@(widgetMode ? "" : "max-height: calc(100vh - 150px)")">
 
             <!-- Hero Points -->
             <div class="flex items-center gap-2 mb-3">
@@ -253,9 +317,13 @@
                 </div>
             }
         </div>
+        </DraggableWidget>
 
         <!-- RIGHT: Main Character Panel -->
-        <div class="flex-1 flex flex-col min-w-0">
+        <DraggableWidget WidgetId="weapons-gear" Title="Weapons & Gear" Subtitle="Weapons · Defense · Gear · Spells"
+                         IsDragMode="@widgetMode" State="@widgetStates["weapons-gear"]" OnHide="HideWidget"
+                         MaxHeight="600">
+        <div class="@(widgetMode ? "" : "flex-1") flex flex-col min-w-0">
 
             <!-- Tab Buttons -->
             <div class="bg-gray-800 border-b border-gray-700 flex flex-wrap">
@@ -607,7 +675,9 @@
 
             </div><!-- end tab content -->
         </div><!-- end right panel -->
-    </div><!-- end flex row -->
+        </DraggableWidget>
+    </div><!-- end flex row / widget canvas -->
+    </div><!-- end content area -->
 
     <!-- ═══════════════════════════════════════════════════════════════════ -->
     <!-- MODALS                                                             -->
@@ -801,6 +871,74 @@
     private bool isSaving;
     private bool saveStatusIsError;
     private string? saveStatusMessage;
+
+    // ── Widget system ──────────────────────────────────────────────────────
+    private bool widgetMode;
+    private bool showCustomizePanel;
+    private DotNetObjectReference<CharacterCreation>? _dotnetRef;
+
+    private Dictionary<string, WidgetState> widgetStates = new()
+    {
+        ["combat-stats"]        = new() { X = 0,   Y = 0,   Width = 960 },
+        ["background-leveling"] = new() { X = 0,   Y = 160, Width = 320 },
+        ["skills-panel"]        = new() { X = 320, Y = 160, Width = 320 },
+        ["weapons-gear"]        = new() { X = 640, Y = 160, Width = 480 },
+    };
+
+    private Dictionary<string, string> widgetLabels = new()
+    {
+        ["combat-stats"]        = "Combat Stats",
+        ["background-leveling"] = "Background & Leveling",
+        ["skills-panel"]        = "Skills & Stats",
+        ["weapons-gear"]        = "Weapons & Gear",
+    };
+
+    private async Task ToggleWidgetMode()
+    {
+        widgetMode = !widgetMode;
+        showCustomizePanel = false;
+        if (widgetMode)
+        {
+            _dotnetRef ??= DotNetObjectReference.Create(this);
+            await JS.InvokeVoidAsync("widgetDrag.init", _dotnetRef);
+        }
+    }
+
+    private void ToggleWidgetVisible(string id)
+    {
+        if (widgetStates.TryGetValue(id, out var ws))
+            ws.Visible = !ws.Visible;
+    }
+
+    private void HideWidget(string id)
+    {
+        if (widgetStates.TryGetValue(id, out var ws))
+            ws.Visible = false;
+    }
+
+    private void ResetWidgetPositions()
+    {
+        widgetStates["combat-stats"]        = new() { X = 0,   Y = 0,   Width = 960 };
+        widgetStates["background-leveling"] = new() { X = 0,   Y = 160, Width = 320 };
+        widgetStates["skills-panel"]        = new() { X = 320, Y = 160, Width = 320 };
+        widgetStates["weapons-gear"]        = new() { X = 640, Y = 160, Width = 480 };
+    }
+
+    [JSInvokable]
+    public void OnWidgetMoved(string widgetId, double x, double y)
+    {
+        if (widgetStates.TryGetValue(widgetId, out var ws))
+        {
+            ws.X = x;
+            ws.Y = y;
+        }
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        _dotnetRef?.Dispose();
+        await JS.InvokeVoidAsync("widgetDrag.dispose");
+    }
 
     protected override async Task OnParametersSetAsync()
     {
